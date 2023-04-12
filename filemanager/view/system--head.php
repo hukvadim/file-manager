@@ -18,15 +18,9 @@
 	<meta name="msapplication-config" content="<?=setPath('favicon')?>browserconfig.xml">
 	<meta name="msapplication-TileColor" content="#da532c">
 	<meta name="theme-color" content="#ffffff">
-
-
-	<?php if ($systemOption['admin']): ?>
-		<link rel="stylesheet" href="<?=setPath('css')?>admin/admin.css<?=addTmpView()?>">
-	<?php endif ?>
-
-	<meta name="author" content="Zahar">
+	<meta name="author" content="Vadim Huk">
 </head>
-<body id="to-top" class="nav-padding sticky-footer<?=$systemOption['bodyCssClass']?>">
+<body id="to-top" class="nav-padding sticky-footer <?=implode(' ', $systemOption['bodyCssClass'])?>">
 	<noscript><div class="alert alert-danger container" role="alert"><strong>Oops!</strong> You have javascript disabled! Some elements of the site may not work. We recommend enabling javascript for greater convenience</div></noscript>
 
 	<?php

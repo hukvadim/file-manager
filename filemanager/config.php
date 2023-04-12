@@ -21,6 +21,8 @@ if (!include('functions.php'))
 // View page with this key
 $viewPage = 'home';
 
+// Add class to html body
+$systemOption['bodyCssClass'] = [];
 
 // General seo text
 $seo['title'] = 'File manager';
