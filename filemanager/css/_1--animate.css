@@ -1,0 +1,7 @@
+/**
+ * Button play game
+ */
+@keyframes shakeUpDown {
+	0%  { transform: translateY(-2.5px) }
+	90% { transform: translateY(0) }
+}

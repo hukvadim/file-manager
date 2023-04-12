@@ -1,0 +1,15 @@
+/* For better flexibility in styles, we will split them into files */
+@import url('_0--main.css');
+@import url('_1--animate.css');
+@import url('_1--helpers.css');
+@import url('_1--btn.css');
+@import url('_1--form.css');
+@import url('_1--bootstrap-redefine.css');
+@import url('_1--typography.css');
+
+@import url('_form--search.css');
+
+@import url('_block--navbar.css');
+@import url('_block--user.css');
+
+@import url('_page--login.css');

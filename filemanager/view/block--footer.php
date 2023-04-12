@@ -3,8 +3,7 @@
 ?>
 
 <footer class="footer border-top">
-	<div class="container d-flex flex-wrap justify-content-between align-items-center">
-		<p class="text-muted lh-1 my-0 fz-12px">Copyright © 2023 <?=DOMAIN?>. All rights reserved.</p>
-		<a href="#" class="text-muted lh-1 my-0 fz-12px animate">Developer Zakhar</a>
+	<div class="container d-flex justify-content-center align-items-center">
+		<p class="text-muted lh-1 my-0 fz-12px">Copyright © <?=date('Y', time())?>. All rights reserved.</p>
 	</div>
 </footer>

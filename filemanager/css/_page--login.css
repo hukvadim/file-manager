@@ -1,0 +1,17 @@
+
+.form-signup,
+.form-login {
+	min-width: 325px;
+}
+
+.form-wrapper {
+	max-width: 725px;
+	margin: 0 auto;
+	gap: 78px;
+}
+.form-login .btn-recover-pass {
+	--bs-btn-color: rgba(var(--pr-link-rgb), .7);
+	--bs-btn-font-size: 14px;
+	padding: 10px 0;
+	margin: 10px 0;
+}

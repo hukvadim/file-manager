@@ -18,8 +18,8 @@ include MANAGERFOLDER.'baseController.php';
 // HTML head
 include setPath('view').'system--head.php';
 
-// // Switch the page
-// include setPath('view').'page--'.$viewPage.'.php';
+// Switch the page
+include setPath('view').'page--'.$systemOption['page'].'.php';
 
-// // HTML footer
-// include setPath('view').'system--footer.php';
+// HTML footer
+include setPath('view').'system--footer.php';

@@ -1,0 +1,38 @@
+.typography {
+	--base-margin: 28px;
+
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+.typography p {
+	margin-bottom: var(--base-margin);
+}
+
+.typography img {
+	width: 100%;
+	border-radius: var(--bd-radius);
+	margin-bottom: 10px;
+}
+
+.typography h1, .h1 {}
+.typography h2, .h2 {}
+.typography h3, .h3 {}
+.typography h4, .h4 {}
+.typography h5, .h5 {}
+.typography h6, .h6 {}
+
+.typography h1, .h1,
+.typography h2, .h2,
+.typography h3, .h3,
+.typography h4, .h4,
+.typography h5, .h5,
+.typography h6, .h6 {
+	margin-bottom: var(--base-margin);
+}
+
+.typography ul,
+.typography ol {
+	padding-left: 18px;
+	margin-bottom: var(--base-margin);
+}

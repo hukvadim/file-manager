@@ -1,0 +1,193 @@
+.required-label {
+	position: relative
+}
+.required-label::before {
+	content: '*';
+	position: absolute;
+	top: -4px;
+	right: -13px;
+	color: var(--bs-red);
+}
+
+
+/**
+ * Default input, textarea, select
+ */
+.form-control {
+	--bs-border-color: #eee;
+	border-radius: var(--bd-radius);
+	font-weight: var(--bs-body-font-weight);
+	padding: 10px 18px;
+	min-height: 40px;
+}
+.form-control,
+.form-control-lg,
+.form-control-sm {
+	font-size: 1rem;
+}
+
+.form-control:focus {
+	border-color: rgba(var(--pr-btn-rgba), .85);
+	box-shadow: 0 0 0 5px rgba(var(--pr-btn-rgba), .25);
+}
+.form-control::placeholder {
+	color: var(--bs-gray-500);
+}
+.form-control:-ms-input-placeholder {
+	color: var(--bs-gray-500);
+}
+.form-control::-ms-input-placeholder {
+	color: var(--bs-gray-500);
+}
+.form-control-lg {
+	padding: 12px 20px;
+}
+.form-control-sm {
+	padding: 6px 12px;
+}
+
+
+
+/**
+ * Select avatar
+ */
+.select-file {
+	position: relative;
+	background-color: rgba(var(--pr-bg-rgb), .2);
+	border-radius: var(--bd-radius);
+	text-align: center;
+	color: var(--pr-link);
+	height: 170px;
+	cursor: pointer;
+	padding: 20px;
+	transition: .25s;
+	width: 100%;
+}
+.select-file,
+.select-file .select-file__text-holder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.select-file.has-preview {
+	padding: 15px;
+}
+.select-file.has-preview .select-file__text-holder{
+	display: none;
+}
+.select-file:hover {
+	background-color: rgba(var(--pr-bg-rgb), .35);
+}
+.select-file:hover .select-file__icon {
+	top: -2px;
+}
+.select-file .select-file__input-file {
+	opacity: 0;
+	z-index: -1;
+}
+.select-file .select-file__icon {
+	font-size: 20px;
+	position: relative;
+	top: 0;
+	transition: .25s;
+}
+.select-file .select-file__btn-link {
+	padding: 10px 0;
+}
+.select-file .select-file__info {
+	font-size: 11px;
+	color: var(--bs-gray-600);
+	font-weight: 400;
+}
+.select-file .select-file__box-preview {
+	width: 100%;
+	height: 100%;
+}
+.select-file .select-file__img-preview {
+	max-width: 100%;
+	max-height: 100%;
+	border-radius: var(--bd-radius);
+}
+
+.select-file.select-file--btn {
+	padding: 0;
+	height: auto;
+	background-color: transparent;
+}
+.select-file.select-file--btn,
+.select-file.select-file--btn .select-file__text-holder {
+	flex-direction: row;
+}
+.select-file.select-file--btn .select-file__icon {
+	font-size: 17px;
+}
+.select-file.select-file--btn .select-file__btn {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 210px;
+	min-height: 50px;
+	margin-right: 17px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.select-file.select-file--btn .select-file__info {
+	text-align: left;
+	padding: 2px 0 2px 13px;
+	border-left: 2px solid var(--bs-gray-200);
+}
+.select-file.select-file--btn .select-file__btn-img-name.text-truncate {
+	max-width: 210px;
+	font-size: 14px;
+}
+.select-file.select-file--btn.has-preview .select-file__btn .icon {
+	animation: shakeUpDown .8s ease-in-out infinite alternate;
+	color: var(--bs-green-hover);
+}
+.select-file.select-file--btn .select-file__img-preview {
+	max-height: 50px;
+}
+.select-file.select-file--btn.has-preview .select-file__img-preview {
+	order: -1;
+	margin-right: 18px;
+}
+.select-file.select-file--btn.has-preview .select-file__btn-link,
+.select-file.select-file--btn .select-file__btn-img-name {
+	display: none;
+}
+.select-file.select-file--btn.has-preview .select-file__btn-img-name,
+.select-file.select-file--btn.has-preview .select-file__text-holder {
+	display: flex;
+}
+
+
+
+
+
+/**
+ * Default form style
+ */
+.form-style {
+	--label-size: 230px;
+}
+.form-style--center {
+	width: 100%;
+	max-width: 360px;
+	margin: 0 auto;
+}
+.form-style .box-input {
+	margin-bottom: 20px;
+}
+.form-style .box-input__label {
+	min-width: var(--label-size);
+	text-align: right;
+	padding: 12px 35px 12px 0;
+}
+.form-style .label-offset {
+	padding-left: var(--label-size);
+}
+.form-style .form-select {
+	--bs-form-select-bg-img:  url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2354a468' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+	background-position: right 13px center;
+}
