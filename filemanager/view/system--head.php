@@ -11,6 +11,7 @@
 	<title><?=viewStr($seo['title'])?></title>
 
 	<link rel="stylesheet" href="<?=setPath('libs')?>bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="<?=setPath('libs')?>mCustomScrollbar/jquery.mCustomScrollbar.min.css">
 	<link rel="stylesheet" href="<?=setPath('css')?>style.css<?=addTmpView()?>">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">

@@ -19,6 +19,7 @@ function setPath($filePathKey, $basePath = '')
 	$filePath['libs']        = 'libs/';
 	$filePath['view']        = 'view/';
 	$filePath['img']         = 'img/';
+	$filePath['users']       = $filePath['img'].'users/';
 	$filePath['favicon']     = $filePath['img'].'favicon/';
 
 	// Check if the key exists in the $filePath array.
@@ -56,6 +57,193 @@ function setLang($langKey = false)
 {
 	return ($langKey) ? $GLOBALS['lang'][$langKey] : '!!!NoLangKey!!!';
 }
+
+
+
+/**
+ * Заносимо всі файли, папки в масив
+ * @param  [type]  $dir      [ Шлях до папки ]
+ * @param  boolean $skip_add [ Які папки пропустити ]
+ * @return [type]            [ array || false ]
+ */
+function dirToArray($dir = '.', $skipAdd = false)
+{
+	// Якщо назва папки без слеша, core/modal > core/modal/
+	if ($dir[-1] !== '/') {
+		$dir .= '/';
+	}
+
+	// Вказуємо значення, що будемо пропускати
+	$skip = ['.', '..', 'index.html'];
+
+	// Якщо передали папки (через кому), що треба пропустити, тоді об'єднюємо з масивом $skip
+	if ($skipAdd) {
+		$skip = array_unique(array_merge($skip, explode(',', str_replace(' ', '', $skipAdd)))); // Очищаємо від пробілів, розбиваємо в масив і об'єднуємо з масивом $skip
+	}
+
+	// Скануємо вказану папку
+	$files = scandir($dir);
+
+	// Формуємо масив файлів та директорій з їхньою інформацією
+	$dirArr = [];
+	foreach ($files as $file) {
+		// Пропускаємо файли, папки, які вказали вище
+		if (in_array($file, $skip))
+			continue;
+
+		// Записуємо дані файлу
+		$fileInfo = pathinfo($file);
+		$fullPath = $dir . $file;
+		$fileData = [
+			'name'     => $file,
+			'path'     => $fullPath,
+			'ext'      => isset($fileInfo['extension']) ? $fileInfo['extension'] : '',
+			'type'     => is_dir($fullPath) ? 'dir' : 'file',
+			'size'     => filesize($fullPath),
+			'modified' => date("d-m-Y H:i:s", filemtime($fullPath))
+		];
+
+		$dirArr[] = $fileData;
+	}
+
+	return $dirArr;
+}
+
+
+
+/**
+ * Функція, яка сортує список файлів так, щоб папки йшли першими, а потім файли, за алфавітом
+ */
+function sortFiles($files)
+{
+	$dirs = array();
+	$files_only = array();
+
+	// розділяємо файли на папки та файли
+	foreach ($files as $file) {
+		if ($file['type'] == 'dir') {
+			$dirs[] = $file;
+		} else {
+			$files_only[] = $file;
+		}
+	}
+
+	// сортуємо папки та файли окремо
+	usort($dirs, function($a, $b) {
+		return strcmp($a['name'], $b['name']);
+	});
+
+	usort($files_only, function($a, $b) {
+		return strcmp($a['name'], $b['name']);
+	});
+
+	// з'єднуємо два списки
+	return array_merge($dirs, $files_only);
+}
+
+
+
+
+/**
+ * Display the number of days between a given date and the current date
+ */
+function timeAgo($date)
+{
+	// Check if $date is valid
+	if (!is_numeric($date) && !is_string($date)) return;
+
+	// Convert $date to a timestamp if it's a string
+	if (!is_numeric($date) && is_string($date))
+		$date = strtotime($date);
+
+	// Get today's date
+	$now = time();
+	
+	// Get the time difference
+	$diff = $now - $date;
+
+	// Define periods in seconds
+	$minute = 60;
+	$hour   = 60 * $minute;
+	$day    = 24 * $hour;
+	$month  = 30 * $day;
+	$year   = 12 * $month;
+
+	// Calculate the number of years, months, and days
+	$years  = floor($diff / $year);
+	$months = floor(($diff - $years * $year) / $month);
+	$days   = floor(($diff - $years * $year - $months * $month) / $day);
+
+	// Create the response
+	if ($years > 0) {
+		return declensionWord($years, ['year ago', 'years ago', 'years ago']);
+	} elseif ($months > 0) {
+		return declensionWord($months, ['month ago', 'months ago', 'months ago']);
+	} elseif ($days > 0) {
+		return declensionWord($days, ['day ago', 'days ago', 'days ago']);
+	} else {
+		return 'Today';
+	}
+}
+
+
+
+/**
+ * Word declension (hour, hours, hours)
+ */
+function declensionWord($number = false, $word  = false, $viewWithNum = true)
+{
+	if (!$word) return;
+	$ar     = [2, 0, 1, 1, 1, 2];
+	$index  = ($number%100 > 4 && $number%100 < 20) ? 2 : $ar[min($number%10, 5)];
+	return $number.' '.$word[$index];
+}
+
+
+
+
+
+/**
+ * Виводимо іконку 
+ */
+function viewIcon($ext = false)
+{
+	if ($ext) {
+		return '<div class="icon-file img-size hover-scale" style="--ext: \''.$ext.'\'"></div>';
+	} else {
+		return '<svg class="icon img-size icon-folder hover-scale"><use xlink:href="#icon-folder"></use></svg>';
+	}
+}
+
+
+
+
+
+/**
+ * Перетворення розміру файлу з байтів у зручніші для сприйняття одиниці виміру
+ */
+function viewSize($fileType, $bytes)
+{
+	if ($fileType != 'dir') {
+	    if ($bytes >= 1073741824) {
+	        $bytes = number_format($bytes / 1073741824, 2) . ' GB';
+	    } elseif ($bytes >= 1048576) {
+	        $bytes = number_format($bytes / 1048576, 2) . ' MB';
+	    } elseif ($bytes >= 1024) {
+	        $bytes = number_format($bytes / 1024, 2) . ' KB';
+	    } elseif ($bytes > 1) {
+	        $bytes = $bytes . ' Byte';
+	    } elseif ($bytes == 1) {
+	        $bytes = $bytes . ' Byte';
+	    } else {
+	        $bytes = '0 Byte';
+	    }
+
+	    return $bytes;
+	}
+}
+
+
 
 
 

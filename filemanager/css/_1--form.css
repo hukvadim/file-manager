@@ -15,10 +15,12 @@
  */
 .form-control {
 	--bs-border-color: #eee;
+	--bs-input-bg: var(--bs-body-bg);
 	border-radius: var(--bd-radius);
 	font-weight: var(--bs-body-font-weight);
 	padding: 10px 18px;
 	min-height: 40px;
+	background-color: var(--bs-input-bg);
 }
 .form-control,
 .form-control-lg,
@@ -27,8 +29,8 @@
 }
 
 .form-control:focus {
-	border-color: rgba(var(--pr-btn-rgba), .85);
-	box-shadow: 0 0 0 5px rgba(var(--pr-btn-rgba), .25);
+	border-color: transparent;
+	box-shadow: 0 0 0 4px rgba(var(--pr-btn-rgba), .25);
 }
 .form-control::placeholder {
 	color: var(--bs-gray-500);
@@ -45,7 +47,35 @@
 .form-control-sm {
 	padding: 6px 12px;
 }
-
+.form-check-label {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+.form-check-input {
+	--bs-form-check-bg: #ebebeb;
+	--input-size: 20px;
+	width: var(--input-size);
+	height: var(--input-size);
+	cursor: pointer;
+	transition: .25s;
+	margin: 0;
+}
+.form-check-input[type=checkbox] {
+	border-radius: 7px;
+	background-size: 74%;
+}
+.form-check-input:hover {
+	--bs-form-check-bg: rgba(var(--pr-btn-rgba), .1);
+	box-shadow: 0 0 0 3px rgba(var(--pr-btn-rgba), .2);
+}
+.form-check-input:focus {
+	box-shadow: 0 0 0 3px rgba(var(--pr-btn-rgba), .25);
+}
+.form-check-input:checked {
+	background-color: var(--pr-btn);
+	border-color: var(--pr-btn);
+}
 
 
 /**

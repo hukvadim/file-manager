@@ -1,0 +1,15 @@
+/**
+ * Simplebar
+ */
+.simplebar-scrollbar.simplebar-visible {
+	cursor: pointer !important;
+	pointer-events: painted;
+}
+.simplebar-scrollbar.simplebar-visible:before {
+	opacity: .2;
+	transition: .25s;
+}
+.simplebar-dragging .simplebar-scrollbar.simplebar-visible:before,
+.simplebar-scrollbar.simplebar-visible.simplebar-hover:before {
+	opacity: .5;
+}

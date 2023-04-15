@@ -13,6 +13,9 @@ define('DEFAULTPAGE', 'home');
 // The default translation language key
 define('DEFAULTLANG', 'uk');
 
+// Allowed file size in bytes (1 MB = 1048576 Bytes)
+define('MAX_UPLOAD_SIZE', 10485760);
+
 // Default lang
 $needLang = ($_GET['lang']) ? ($_GET['lang']) : DEFAULTLANG;;
 
@@ -45,3 +48,10 @@ $systemOption['setError'] = false;
 // No result info
 $systemOption['noResultImg']  = 'no-result-v1.png';
 $systemOption['noResultText'] = setLang('blockNoResult');
+
+// Access to the site
+$users = [
+	'admin' => '$2y$10$/K.hjNr84lLNDt8fTXjoI.DBp6PpeyoJ.mGwrrLuCZfAwfSAGqhOW', //admin@inderio.com
+	'user'  => '$2y$10$Fg6Dz8oH9fPoZ2jJan5tZuv6Z4Kp7avtQ9bDfrdRntXtPeiMAZyGO' //12345
+];
+

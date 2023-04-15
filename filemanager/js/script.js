@@ -36,3 +36,20 @@ if (textareaAutogrow) {
 		this.style.height = (this.scrollHeight + 2) + 'px';
 	});
 }
+
+
+
+/**
+ * Scroll
+ */
+$(".js-scroll-horizontal").mCustomScrollbar({
+	theme: "dark",
+	axis: "x",
+	scrollInertia: 350,
+});
+
+
+
+
+
+

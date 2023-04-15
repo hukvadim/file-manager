@@ -3,3 +3,8 @@ defined('security') or die('Access denied'); // Add light protection against fil
 
 // Seo data
 $seo['title'] = setLang('pageTitleHome');
+
+// Дістаємо файли для головної сторінки
+$files = sortFiles(dirToArray('filemanager'));
+
+// print_arr($files); exit;
