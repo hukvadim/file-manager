@@ -52,7 +52,7 @@
 						<input class="form-check-input" type="checkbox" value="">
 					</label>
 					<a href="#" class="folder-item__img-hold folder-item__el img-box">
-						<?=viewIcon($file['ext'])?>
+						<?=viewIcon($file['type'], $file['ext'])?>
 						<!-- <?php if ($file == 'img'): ?>
 							<img src="<?=setPath('img')?>demo-img.jpg" alt="" class="folder-item__img img-size hover-scale">
 						<?php elseif (is_dir($file)): ?>

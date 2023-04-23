@@ -206,12 +206,16 @@ function declensionWord($number = false, $word  = false, $viewWithNum = true)
 /**
  * Виводимо іконку 
  */
-function viewIcon($ext = false)
+function viewIcon($fileType = false, $ext = false)
 {
-	if ($ext) {
-		return '<div class="icon-file img-size hover-scale" style="--ext: \''.$ext.'\'"></div>';
-	} else {
+	if ($fileType == 'dir') {
 		return '<svg class="icon img-size icon-folder hover-scale"><use xlink:href="#icon-folder"></use></svg>';
+	} else {
+		if ($ext) {
+			return '<div class="icon-file img-size hover-scale" style="--ext: \''.$ext.'\'"></div>';
+		} else {
+			return '<div class="icon-file img-size hover-scale" style="--ext: \'-\'"></div>';
+		}
 	}
 }
 
