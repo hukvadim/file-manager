@@ -6,6 +6,20 @@
 }
 
 
+/**
+ * Tooltip
+ */
+.tooltip-inner {
+	font-size: 10px;
+	height: 23px;
+	padding: 0 8px 1px;
+	line-height: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
 
 /**
  * Dropdown

@@ -10,6 +10,7 @@
 	--pr-btn-rgba: 13,110,253;
 	--pr-btn-hover: #0064f8;
 	--nav-size: 76px;
+	--number-font: 'Tahoma';
 
 	--bs-body-font-family: 'Montserrat', sans-serif;
 	--bs-body-bg: #F7F9FC;
@@ -304,6 +305,9 @@ textarea.autogrow {
 	overflow: hidden;
 	white-space: nowrap;
 	line-height: .85;
+}
+.icon-file.icon-file--no-ext::before {
+	display: none;
 }
 
 

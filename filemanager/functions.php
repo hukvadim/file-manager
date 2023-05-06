@@ -61,6 +61,28 @@ function setLang($langKey = false)
 
 
 /**
+ * Tooltip ale
+ */
+function setTooltip($text = false, $placement = 'top')
+{
+	return 'data-bs-toggle="tooltip" data-bs-title="'.$text.'" data-bs-placement="'.$placement.'"';
+}
+
+
+
+
+/**
+ * Word declension (hour, hours, hours)
+ */
+function declensionWord($number = false, $word  = false, $viewWithNum = true) {
+	$index = ($number%100 > 4 && $number%100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][min($number%10, 5)];
+	return $viewWithNum ? $number.' '.$word[$index] : $word[$index];
+}
+
+
+
+
+/**
  * Заносимо всі файли, папки в масив
  * @param  [type]  $dir      [ Шлях до папки ]
  * @param  boolean $skip_add [ Які папки пропустити ]
@@ -69,43 +91,63 @@ function setLang($langKey = false)
 function dirToArray($dir = '.', $skipAdd = false)
 {
 	// Якщо назва папки без слеша, core/modal > core/modal/
-	if ($dir[-1] !== '/') {
+	if ($dir[-1] !== '/')
 		$dir .= '/';
-	}
+
+	// Розширення, які треба замінити
+	include 'extSwap.php';
 
 	// Вказуємо значення, що будемо пропускати
 	$skip = ['.', '..', 'index.html'];
 
 	// Якщо передали папки (через кому), що треба пропустити, тоді об'єднюємо з масивом $skip
-	if ($skipAdd) {
+	if ($skipAdd)
 		$skip = array_unique(array_merge($skip, explode(',', str_replace(' ', '', $skipAdd)))); // Очищаємо від пробілів, розбиваємо в масив і об'єднуємо з масивом $skip
-	}
 
 	// Скануємо вказану папку
 	$files = scandir($dir);
 
 	// Формуємо масив файлів та директорій з їхньою інформацією
 	$dirArr = [];
-	foreach ($files as $file) {
-		// Пропускаємо файли, папки, які вказали вище
-		if (in_array($file, $skip))
-			continue;
 
-		// Записуємо дані файлу
-		$fileInfo = pathinfo($file);
-		$fullPath = $dir . $file;
-		$fileData = [
-			'name'     => $file,
-			'path'     => $fullPath,
-			'ext'      => isset($fileInfo['extension']) ? $fileInfo['extension'] : '',
-			'type'     => is_dir($fullPath) ? 'dir' : 'file',
-			'size'     => filesize($fullPath),
-			'modified' => date("d-m-Y H:i:s", filemtime($fullPath))
-		];
+	// Перебираємо файли і папки
+	if (arrExist($files)) {
+		foreach ($files as $file) {
 
-		$dirArr[] = $fileData;
+			// Пропускаємо файли, папки, які вказали вище
+			if (in_array($file, $skip))
+				continue;
+
+			// Формуємо дані файлу
+			$fileInfo = pathinfo($file);
+			$fullPath = $dir . $file;
+
+			// Формуємо розширення
+			$ext = isset($fileInfo['extension']) ? $fileInfo['extension'] : '';
+
+			// Дивимося чи потрібно підміняти розширення
+			$ext = (array_key_exists($ext, $extList)) ? $extList[$ext] : $ext;
+
+			// Time modified
+			$timeModified = filemtime($fullPath);
+
+			// Записуємо дані файлу
+			$fileData = [
+				'name'              => $file,
+				'path'              => $fullPath,
+				'ext'               => $ext,
+				'type'              => is_dir($fullPath) ? 'dir' : 'file',
+				'size'              => filesize($fullPath),
+				'modified_date'     => date("d.m.Y H:i", $timeModified),
+				'modified_time_ago' => timeAgo($timeModified),
+			];
+
+			// Добавляємо до масиву файлів
+			$dirArr[] = $fileData;
+		}
 	}
 
+	// Повертаємо масив файлів
 	return $dirArr;
 }
 
@@ -188,19 +230,6 @@ function timeAgo($date)
 
 
 
-/**
- * Word declension (hour, hours, hours)
- */
-function declensionWord($number = false, $word  = false, $viewWithNum = true)
-{
-	if (!$word) return;
-	$ar     = [2, 0, 1, 1, 1, 2];
-	$index  = ($number%100 > 4 && $number%100 < 20) ? 2 : $ar[min($number%10, 5)];
-	return $number.' '.$word[$index];
-}
-
-
-
 
 
 /**
@@ -214,7 +243,7 @@ function viewIcon($fileType = false, $ext = false)
 		if ($ext) {
 			return '<div class="icon-file img-size hover-scale" style="--ext: \''.$ext.'\'"></div>';
 		} else {
-			return '<div class="icon-file img-size hover-scale" style="--ext: \'-\'"></div>';
+			return '<div class="icon-file icon-file--no-ext img-size hover-scale"></div>';
 		}
 	}
 }

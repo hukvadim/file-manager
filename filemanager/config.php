@@ -5,7 +5,7 @@ defined('security') or die('Access denied'); // Add light protection against fil
 session_start();
 
 // Attitude to errors
-error_reporting(E_ERROR); // E_ERROR | E_WARNING | E_PARSE | E_NOTICE
+error_reporting(); // E_ERROR | E_WARNING | E_PARSE | E_NOTICE
 
 // Displaying a partition by default
 define('DEFAULTPAGE', 'home');

@@ -2,7 +2,7 @@
 	defined('security') or die('Access denied'); // Add light protection against file access
 ?>
 
-<footer class="footer border-top d-none d-lg-none d-md-block py-3">
+<footer class="footer border-top d-lg-none py-3">
 	<div class="container text-center">
 		<div class="dropdown">
 			<button class="btn btn-action btn-sm btn-body-color btn-similar-y btn-options" type="button" data-bs-toggle="dropdown">
