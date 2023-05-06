@@ -45,11 +45,10 @@
 <script src="<?=setPath('libs')?>mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
 <script src="<?=setPath('js')?>script.js<?=addTmpView()?>"></script>
 
-<?php if ($systemOption['page'] == 'examples'): ?>
-	<script src="<?=setPath('js')?>examples.js"></script>
-<?php endif ?>
-
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 <?php unset($_SESSION['answer']); // Errors, we will output in an array $_SESSION['answer'] and it must be shown once  ?>
+
+<!-- Код призначеня для LiveServer -->
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
 </body>
 </html>

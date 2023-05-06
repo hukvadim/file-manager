@@ -89,7 +89,14 @@ function declensionWord($number = false, $word  = false, $viewWithNum = true) {
  * @param  boolean $skip_add [ Які папки пропустити ]
  * @return [type]            [ array || false ]
  */
-function dirToArray($dir = '.', $skipAdd = false)
+/**
+ * Заносимо всі файли, папки в масив
+ * @param  string  $dir          [ Шлях до папки ]
+ * @param  boolean $foldersFirst [ Папки перед файлами або файли над папками ]
+ * @param  boolean $skipAdd      [ Які папки пропустити ]
+ * @return [type]                [ array || false ]
+ */
+function dirToArray($dir = '.', $foldersFirst = true, $skipAdd = false)
 {
 	// Якщо назва папки без слеша, core/modal > core/modal/
 	if ($dir[-1] !== '/')
@@ -99,7 +106,7 @@ function dirToArray($dir = '.', $skipAdd = false)
 	include 'extSwap.php';
 	
 	// Вказуємо значення, що будемо пропускати
-	$skip = ['.', '..', 'index.html', '.git'];
+	$skip = ['./.git'];
 	
 	// Якщо передали папки (через кому), що треба пропустити, тоді об'єднюємо з масивом $skip
 	if ($skipAdd)
@@ -140,41 +147,36 @@ function dirToArray($dir = '.', $skipAdd = false)
 		}
 	}
 
-	// Повертаємо масив файлів
-	return $dirArr;
+	// Повертаємо масив файлів і відразу їх фільтруємо
+	return sortFiles($dirArr, $foldersFirst);
 }
 
 
 
 /**
- * Функція, яка сортує список файлів так, щоб папки йшли першими, а потім файли, за алфавітом
+ * Функція, яка сортує список файлів так, щоб папки йшли першими, а потім файли, за алфавітом.
+ * Також може виводити файли вище ніж папки, якщо параметр $foldersFirst встановлено в false.
+ *
+ * @param array $files       Список файлів для сортування.
+ * @param bool  $foldersFirst Вказує, чи повинні папки розташовуватися перед файлами (true) або після файлів (false).
+ * @return array             Відсортований список файлів.
  */
-function sortFiles($files)
+function sortFiles($files, $foldersFirst = true)
 {
-	$dirs = array();
-	$files_only = array();
+	// Сортуємо список файлів, використовуючи функцію порівняння, яка розглядає тип файлу та його ім'я.
+	usort($files, function ($a, $b) use ($foldersFirst) {
+		// Якщо типи файлів різні (один є папкою, а інший - файлом), розміщуємо папку або файл згідно з параметром $foldersFirst.
+		if ($a['type'] !== $b['type'])
+			return ($a['type'] === 'dir' xor $foldersFirst) ? 1 : -1;
 
-	// розділяємо файли на папки та файли
-	foreach ($files as $file) {
-		if ($file['type'] == 'dir') {
-			$dirs[] = $file;
-		} else {
-			$files_only[] = $file;
-		}
-	}
-
-	// сортуємо папки та файли окремо
-	usort($dirs, function($a, $b) {
+		// Якщо типи файлів однакові, порівнюємо їхні імена за алфавітом.
 		return strcmp($a['name'], $b['name']);
 	});
 
-	usort($files_only, function($a, $b) {
-		return strcmp($a['name'], $b['name']);
-	});
-
-	// з'єднуємо два списки
-	return array_merge($dirs, $files_only);
+	return $files;
 }
+
+
 
 
 
@@ -251,21 +253,21 @@ function viewIcon($fileType = false, $ext = false)
 function viewSize($fileType, $bytes)
 {
 	if ($fileType != 'dir') {
-	    if ($bytes >= 1073741824) {
-	        $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-	    } elseif ($bytes >= 1048576) {
-	        $bytes = number_format($bytes / 1048576, 2) . ' MB';
-	    } elseif ($bytes >= 1024) {
-	        $bytes = number_format($bytes / 1024, 2) . ' KB';
-	    } elseif ($bytes > 1) {
-	        $bytes = $bytes . ' Byte';
-	    } elseif ($bytes == 1) {
-	        $bytes = $bytes . ' Byte';
-	    } else {
-	        $bytes = '0 Byte';
-	    }
+		if ($bytes >= 1073741824) {
+			$bytes = number_format($bytes / 1073741824, 2) . ' GB';
+		} elseif ($bytes >= 1048576) {
+			$bytes = number_format($bytes / 1048576, 2) . ' MB';
+		} elseif ($bytes >= 1024) {
+			$bytes = number_format($bytes / 1024, 2) . ' KB';
+		} elseif ($bytes > 1) {
+			$bytes = $bytes . ' Byte';
+		} elseif ($bytes == 1) {
+			$bytes = $bytes . ' Byte';
+		} else {
+			$bytes = '0 Byte';
+		}
 
-	    return $bytes;
+		return $bytes;
 	}
 }
 
