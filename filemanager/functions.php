@@ -82,6 +82,7 @@ function declensionWord($number = false, $word  = false, $viewWithNum = true) {
 
 
 
+
 /**
  * Заносимо всі файли, папки в масив
  * @param  [type]  $dir      [ Шлях до папки ]
@@ -96,48 +97,40 @@ function dirToArray($dir = '.', $skipAdd = false)
 
 	// Розширення, які треба замінити
 	include 'extSwap.php';
-
+	
 	// Вказуємо значення, що будемо пропускати
-	$skip = ['.', '..', 'index.html'];
-
+	$skip = ['.', '..', 'index.html', '.git'];
+	
 	// Якщо передали папки (через кому), що треба пропустити, тоді об'єднюємо з масивом $skip
 	if ($skipAdd)
-		$skip = array_unique(array_merge($skip, explode(',', str_replace(' ', '', $skipAdd)))); // Очищаємо від пробілів, розбиваємо в масив і об'єднуємо з масивом $skip
+		$skip = array_unique(array_merge($skip, explode(',', str_replace(' ', '', $skipAdd))));
+	
+	// Створюємо шаблон для glob, щоб відфільтрувати файли та папки
+	$pattern = sprintf('%s{,.}[!.,!..]*', $dir);
 
-	// Скануємо вказану папку
-	$files = scandir($dir);
+	// Використовуємо glob з опціями GLOB_BRACE для сканування вказаної папки
+	$files = array_diff(glob($pattern, GLOB_BRACE), $skip);
 
 	// Формуємо масив файлів та директорій з їхньою інформацією
 	$dirArr = [];
-
+	
 	// Перебираємо файли і папки
 	if (arrExist($files)) {
 		foreach ($files as $file) {
 
-			// Пропускаємо файли, папки, які вказали вище
-			if (in_array($file, $skip))
-				continue;
-
 			// Формуємо дані файлу
-			$fileInfo = pathinfo($file);
-			$fullPath = $dir . $file;
-
-			// Формуємо розширення
-			$ext = isset($fileInfo['extension']) ? $fileInfo['extension'] : '';
-
-			// Дивимося чи потрібно підміняти розширення
-			$ext = (array_key_exists($ext, $extList)) ? $extList[$ext] : $ext;
-
-			// Time modified
-			$timeModified = filemtime($fullPath);
-
+			$fileInfo     = pathinfo($file);
+			$ext          = isset($fileInfo['extension']) ? $fileInfo['extension'] : ''; // Формуємо розширення
+			$ext          = array_key_exists($ext, $extList) ? $extList[$ext] : $ext; // Дивимося чи потрібно підміняти розширення
+			$timeModified = filemtime($file); // Time modified
+			
 			// Записуємо дані файлу
 			$fileData = [
-				'name'              => $file,
-				'path'              => $fullPath,
+				'name'              => basename($file),
+				'path'              => is_dir($file) ? $file.'/' : $file,
 				'ext'               => $ext,
-				'type'              => is_dir($fullPath) ? 'dir' : 'file',
-				'size'              => filesize($fullPath),
+				'type'              => is_dir($file) ? 'dir' : 'file',
+				'size'              => filesize($file),
 				'modified_date'     => date("d.m.Y H:i", $timeModified),
 				'modified_time_ago' => timeAgo($timeModified),
 			];

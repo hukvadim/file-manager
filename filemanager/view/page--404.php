@@ -7,3 +7,4 @@
 		<h1 class="page-title">404 page</h1>
 	</div>
 </div>
+
