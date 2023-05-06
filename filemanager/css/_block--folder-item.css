@@ -21,9 +21,13 @@
 }
 .folder-item .folder-item__text {
 	width: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 }
 .folder-item .folder-item__title {
-	display: block;
+	display: inline-block;
+	padding-top: 1px;
 }
 .folder-item .folder-item__size {
 	min-width: 100px;
@@ -49,6 +53,8 @@
 	font-size: 9px;
 	color: var(--bs-gray-600);
 	font-family: var(--number-font);
+	margin-right: 40px;
+	margin-left: auto;
 }
 
 @media screen and (max-width: 992px) {

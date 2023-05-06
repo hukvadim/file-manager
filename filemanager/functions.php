@@ -65,7 +65,7 @@ function setLang($langKey = false)
  */
 function setTooltip($text = false, $placement = 'top')
 {
-	return 'data-bs-toggle="tooltip" data-bs-title="'.$text.'" data-bs-placement="'.$placement.'"';
+	return 'data-bs-toggle="tooltip" title="'.$text.'" data-bs-placement="'.$placement.'"';
 }
 
 

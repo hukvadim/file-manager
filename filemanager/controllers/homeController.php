@@ -7,4 +7,4 @@ $seo['title'] = setLang('pageTitleHome');
 // Дістаємо файли для головної сторінки
 $files = dirToArray('.');
 
-print_arr($files); exit;
+// print_arr($files); exit;

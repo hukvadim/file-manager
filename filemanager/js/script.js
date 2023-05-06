@@ -3,11 +3,12 @@ const isUndefined = (el) => typeof el === 'undefined';
 const isObject    = (el) => typeof el === 'object';
 const isJSON      = (str) => { try { return (JSON.parse(str) && !!str); } catch (e) { return false; } };
 
-// Do not allow clicking on a link if class is active
-$('.js-active-self-link.active').click((e) => e.preventDefault());
-
 // Tooltips for bootstrap
-const tooltipList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+// const tooltipList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 /**
  * Doesn't call the script multiple times

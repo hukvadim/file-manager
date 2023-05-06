@@ -89,10 +89,9 @@
 						<?php endif ?> -->
 					</a>
 					<div class="folder-item__text folder-item__el">
-						<a href="#" class="folder-item__title text-truncate"><?=viewStr($file['name'])?></a>
+						<a href="#" class="folder-item__title text-truncate" <?=setTooltip(($file['size']) ? htmlspecialchars(viewSize($file['type'], $file['size'])) : '')?>><?=viewStr($file['name'])?></a>
 					</div>
 				</div>
-				<div class="folder-item__size fz-info hide-tablet"><?=($file['size']) ? viewSize($file['type'], $file['size']) : ''?></div>
 				<div class="folder-item__date-create fz-info hide-tablet" <?=setTooltip($file['modified_time_ago'])?>><?=$file['modified_date']?></div>
 				<div class="dropdown dropstart folder-item__action folder-item__el">
 					<button class="btn btn-action btn-sm btn-icon btn-body-color btn-pr-bg hover-scale" type="button" data-bs-toggle="dropdown">
