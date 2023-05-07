@@ -24,6 +24,7 @@
 <div class="page-content">
 	<div class="container">
 
+
 		<div class="btn-folder-group">
 			<a href="#" class="btn btn-action btn-sm btn-folder btn-similar-y">Libs</a>
 			<a href="#" class="btn btn-action btn-sm btn-folder btn-similar-y">Jquery</a>
@@ -51,6 +52,7 @@
 			</div>
 		</div>
 
+
 		<div class="folder-list-header d-flex-sides mb-2">
 			<div class="folder-list-header__left d-flex-side-left gap-10">
 				<label class="form-check-label">
@@ -70,6 +72,7 @@
 			</div>
 		</div>
 
+
 		<div class="folder-list folder-list-items">
 
 			<?php foreach ($files as $file): ?>
@@ -78,21 +81,12 @@
 					<label class="folder-item__checkbox folder-item__el form-check-label hover-scale">
 						<input class="form-check-input" type="checkbox" value="">
 					</label>
-					<a href="#" class="folder-item__img-hold folder-item__el img-box">
-						<?=viewIcon($file['type'], $file['ext'])?>
-						<!-- <?php if ($file == 'img'): ?>
-							<img src="<?=setPath('img')?>demo-img.jpg" alt="" class="folder-item__img img-size hover-scale">
-						<?php elseif (is_dir($file)): ?>
-							<div class="icon-file img-size hover-scale" style="--ext: 'txt';"></div>
-						<?php else: ?>
-							<svg class="icon img-size icon-folder hover-scale"><use xlink:href="#icon-folder"></use></svg>
-						<?php endif ?> -->
-					</a>
+					<div class="folder-item__img-hold folder-item__el img-box"><?=viewIcon($file)?></div>
 					<div class="folder-item__text folder-item__el">
-						<a href="#" class="folder-item__title text-truncate" <?=setTooltip(($file['size']) ? htmlspecialchars(viewSize($file['type'], $file['size'])) : '')?>><?=viewStr($file['name'])?></a>
+						<a href="#" class="folder-item__title text-truncate js-click-item" <?=setTooltip(($file['size']) ? htmlspecialchars(viewSize($file['type'], $file['size'])) : '')?>><?=viewStr($file['name'])?></a>
 					</div>
 				</div>
-				<div class="folder-item__date-create fz-info hide-tablet" <?=setTooltip($file['modified_time_ago'])?>><?=$file['modified_date']?></div>
+				<div class="folder-item__date-create fz-info hide-tablet" <?=setTooltip($file['modified_date'])?>><?=$file['modified_time_ago']?></div>
 				<div class="dropdown dropstart folder-item__action folder-item__el">
 					<button class="btn btn-action btn-sm btn-icon btn-body-color btn-pr-bg hover-scale" type="button" data-bs-toggle="dropdown">
 						<svg class="icon icon-more-vertical"><use xlink:href="#icon-more-vertical"></use></svg>
@@ -119,9 +113,12 @@
 			<?php endforeach ?>
 		</div>
 
-
 	</div>
 </div>
+
+
+
+
 
 
 

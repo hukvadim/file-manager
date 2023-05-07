@@ -12,31 +12,19 @@
 	if (is_array($_POST) AND $formType OR $_FILES) {
 		
 		// Connect the config file
-		include 'app/config.php';
+		include 'config.php';
 
-		// If the administrator parameter is passed, then we take additional steps
-		if (isset($_POST['admin'])) {
-		
-			// Connect the config file
-			@include 'app/admin/config.php';
+		// Change path to controller 
+		$baseControllersPath = './';
 
-			// Create a page type
-			$pageType = (clean($_POST['pageType'])) ? clean($_POST['pageType']) : 'users';
-
-			// Add path to form controller
-			$systemOption['page'] = 'admin/forAjax/'.clean($_POST['form-type']);
-
-		} else {
-
-			// Add path to form controller
-			$systemOption['page'] = 'forAjax/'.clean($_POST['form-type']);
-		}
+		// Add path to form controller
+		$systemOption['page'] = 'forAjax/'.clean($_POST['form-type']);
 
 		// Switch whether to load the controller or just issue a message
 		$systemOption['errorControllerNeed'] = false;
 
 		// Connect the base controller
-		include 'app/baseController.php';
+		include 'baseController.php';
 
 	} else {
 

@@ -5,7 +5,14 @@ defined('security') or die('Access denied'); // Add light protection against fil
 session_start();
 
 // Attitude to errors
-error_reporting(); // E_ERROR | E_WARNING | E_PARSE | E_NOTICE
+error_reporting(E_ERROR); // E_ERROR | E_WARNING | E_PARSE | E_NOTICE
+
+// Folder for file manager
+define('MANAGERFOLDER', 'filemanager/');
+
+// Абсолютний шлях до сайту
+define('DOMAIN', 'file-manager');
+define('PATH',   'http://'.DOMAIN.'/filemanager/');
 
 // Displaying a partition by default
 define('DEFAULTPAGE', 'home');
@@ -15,6 +22,9 @@ define('DEFAULTLANG', 'uk');
 
 // Allowed file size in bytes (1 MB = 1048576 Bytes)
 define('MAX_UPLOAD_SIZE', 10485760);
+
+// Path to conrollers folder
+$baseControllersPath = MANAGERFOLDER;
 
 // Default lang
 $needLang = ($_GET['lang']) ? ($_GET['lang']) : DEFAULTLANG;;

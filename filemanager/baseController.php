@@ -6,7 +6,7 @@ include setPath('controllers').'0--beforeController.php';
 
 // Try to connect the page controller
 // @ - does not display an error if the file is not found
-if(!@include(setPath('controllers').$systemOption['page'].'Controller.php')) {
+if(!@include(setPath('controllers', $baseControllersPath).$systemOption['page'].'Controller.php')) {
 
 	// If failed to connect the page controller, connect the 404 page controller
 	if ($systemOption['errorControllerNeed'])

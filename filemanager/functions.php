@@ -82,13 +82,23 @@ function declensionWord($number = false, $word  = false, $viewWithNum = true) {
 
 
 
-
 /**
- * Заносимо всі файли, папки в масив
- * @param  [type]  $dir      [ Шлях до папки ]
- * @param  boolean $skip_add [ Які папки пропустити ]
- * @return [type]            [ array || false ]
+ * Determine whether it is a picture or not
  */
+function isImage($ext = false)
+{
+	// Valid image file extensions
+	$images = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+
+	// Check if the file extension is among the valid ones
+	return in_array($ext, $images);
+}
+
+
+
+
+
+
 /**
  * Заносимо всі файли, папки в масив
  * @param  string  $dir          [ Шлях до папки ]
@@ -228,20 +238,33 @@ function timeAgo($date)
 
 
 /**
- * Виводимо іконку 
+ * Функція для відображення іконки файлу або папки.
+ *
+ * @param array|bool $file Масив, що містить інформацію про файл або папку.
+ * @return string|null HTML-розмітка для відображення іконки файлу або папки.
  */
-function viewIcon($fileType = false, $ext = false)
+function viewIcon($file = false)
 {
-	if ($fileType == 'dir') {
+	// Перевірка, чи є вхідний параметр масивом
+	if (!is_array($file))
+		return null;
+
+	// Якщо тип елемента є папкою, відображаємо іконку папки
+	if ($file['type'] == 'dir')
 		return '<svg class="icon img-size icon-folder hover-scale"><use xlink:href="#icon-folder"></use></svg>';
-	} else {
-		if ($ext) {
-			return '<div class="icon-file img-size hover-scale" style="--ext: \''.$ext.'\'"></div>';
-		} else {
-			return '<div class="icon-file icon-file--no-ext img-size hover-scale"></div>';
-		}
-	}
+
+	// Якщо файл є зображенням, відображаємо мініатюру зображення
+	if (isImage($file['ext']))
+		return '<img src="' . $file['path'] . '" alt="" class="folder-item__img img-size hover-scale">';
+
+	// Якщо файл має розширення, відображаємо іконку файлу з відповідним розширенням
+	if ($file['ext'])
+		return '<div class="icon-file img-size hover-scale" style="--ext: \'' . $file['ext'] . '\'"></div>';
+
+	// Якщо файл не має розширення, відображаємо іконку файлу без розширення
+	return '<div class="icon-file icon-file--no-ext img-size hover-scale"></div>';
 }
+
 
 
 

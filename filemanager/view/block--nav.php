@@ -12,7 +12,7 @@
 			</div>
 			<div class="navbase__middle navbase__box-item">
 				<form class="navbase__search w-100">
-					<input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+					<input type="search" class="form-control" placeholder="Шукати...">
 				</form>
 			</div>
 			<div class="navbase__right navbase__box-item d-md-none d-lg-flex">

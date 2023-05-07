@@ -33,7 +33,7 @@
 <script>
 	// Settings that will be passed to js
 	const option = {
-		path: '<?=__DIR__?>',
+		path: '<?=PATH?>',
 	}
 
 	// Error from php

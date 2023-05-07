@@ -1,11 +1,8 @@
 <?php
 define('security', TRUE); // Add light protection against file access
 
-// Folder for file manager
-define('MANAGERFOLDER', 'filemanager/');
-
 // Connect the config file
-include MANAGERFOLDER.'config.php';
+include 'filemanager/config.php';
 
 // Connect the base controller
 include MANAGERFOLDER.'baseController.php';

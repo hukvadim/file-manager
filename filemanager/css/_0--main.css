@@ -295,7 +295,7 @@ textarea.autogrow {
 	padding: var(--ext-padding);	
 	font-size: var(--ext-font);
 	top: var(--ext-top);
-	max-width: 85%;
+	max-width: 94%;
 	text-transform: uppercase;
 	text-align: center;
 	display: block;
