@@ -58,6 +58,17 @@
 	--bs-btn-hover-color: var(--bs-link-hover-color);
 	--bs-btn-hover-bg: rgba(var(--bs-primary-rgb), 0.1);
 }
+.btn-action.btn-action--refresh {
+	--bs-btn-color: #41bce4;
+	--bs-btn-hover-bg: #2dbeed26;
+	--bs-btn-hover-color: #19a2ce;
+}
+.btn-action.btn-action--info {
+	--bs-btn-color: #f6b17f;
+	--bs-btn-hover-bg: #f6b17f38;
+	--bs-btn-hover-color: #e2965f;
+}
+
 
 .btn-link.btn-link-primary {
 	--bs-btn-color: var(--bs-green);
@@ -122,16 +133,23 @@
 	margin: 0 var(--btn-margin);
 }
 .btn-folder-group .btn-folder::before {
-	content: '/';
+	content: '\203A';
 	position: absolute;
-	top: 52%;
+	top: 45%;
 	right: -12px;
-	transform: translateY(-50%) rotate(6deg);
-	color: #b7bcc0;
+	transform: translateY(-50%);
+	color: #d0d2d3;
 	font-weight: 400;
+	font-size: 20px;
 }
 .btn-folder-group .btn-folder:first-child {
 	margin-left: var(--btn-margin);
+}
+.btn-folder-group .btn-folder:last-child {
+	--bs-btn-color: var(--bs-body-color);
+}
+.btn-folder-group .btn-folder:last-child::before {
+	display: none;
 }
 .btn-folder-group .btn-action.btn-icon {
 	margin: 0 var(--btn-margin);

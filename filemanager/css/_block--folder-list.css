@@ -3,9 +3,11 @@
 }
 .folder-list-header .folder-list-header__left {
 	margin-left: 24px;
+	gap: 7px;
 }
 .folder-list-header .folder-list-header__right {
-	margin-right: 0;
+	margin-right: 17px;
+	gap: 5px;
 }
 .folder-list-header.header-type-card .folder-list-header__left {
 	margin-left: 10px;
