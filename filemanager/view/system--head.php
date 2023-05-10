@@ -28,7 +28,7 @@
 	<meta name="theme-color" content="#ffffff">
 	<meta name="author" content="Vadim Huk">
 </head>
-<body id="to-top" class="nav-padding sticky-footer <?=implode(' ', $systemOption['bodyCssClass'])?>">
+<body id="to-top" class="nav-padding sticky-footer body-checkbox-file <?=implode(' ', $systemOption['bodyCssClass'])?>">
 	<noscript><div class="alert alert-danger container" role="alert"><strong>Oops!</strong> You have javascript disabled! Some elements of the site may not work. We recommend enabling javascript for greater convenience</div></noscript>
 
 	<?php

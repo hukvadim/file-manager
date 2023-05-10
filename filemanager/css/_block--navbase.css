@@ -29,13 +29,9 @@
 @media screen and (max-width: 992px) {
 	.navbase .navbase__middle {
 		padding: 0;
+		padding-left: 18px;
 	}
 	.navbase .navbase__right {
 		display: none;
-	}
-}
-@media screen and (max-width: 600px) {
-	.navbase .navbase__wrap {
-		flex-wrap: wrap;
 	}
 }

@@ -2,7 +2,7 @@
 	padding: 5px;
 	background-color: var(--bs-white);
 	border-radius: var(--bd-radius-lg);
-	transition: .25s;
+	transition: .25s ease-out;
 	position: relative;
 }
 .folder-item:hover {
@@ -12,6 +12,9 @@
 }
 .folder-item .folder-item__checkbox {
 	margin: 0 10px 0 8px;
+}
+.folder-item .folder-item__checkbox .form-check-input {
+	--bs-form-check-bg: #eff2f5;
 }
 .folder-item .folder-item__img-hold {
 }
@@ -36,6 +39,9 @@
 .folder-item .folder-item__action {
 	display: flex;
 	gap: 6px;
+}
+.folder-item .folder-item__action .btn {
+	--bs-btn-color: #84899f;
 }
 .folder-item .folder-item__main-info {
 	display: flex;

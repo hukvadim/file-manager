@@ -1,0 +1,42 @@
+.dropdown-folder-set-path {
+	margin-left: 8px !important;
+}
+.dropdown-folder-set-path .dropdown-menu {
+	min-width: 260px;
+}
+.dropdown-folder-set-path .btn-group-folders .btn,
+.dropdown-folder-set-path .input-hold-folder-path .form-control {
+	--bs-btn-border-color: rgba(31, 35, 40, .06);
+	--bs-btn-hover-border-color: rgba(31, 35, 40, .06);
+	--bs-btn-hover-color: var(--bs-link-color);
+}
+.dropdown-folder-set-path .input-hold-folder-path .form-control {
+	font-size: 12px;
+	font-weight: 600;
+	min-height: 35px;
+	color: var(--bs-link-color);
+	border-color: var(--bs-btn-border-color);
+	padding-left: 15px;
+}
+.dropdown-folder-set-path .input-hold-folder-path .btn-edit {
+	margin: 0;
+	font-size: 12px;
+}
+.dropdown-folder-set-path .btn-group-folders {
+	
+}
+.dropdown-folder-set-path .btn-group-folders .btn {
+	--bs-btn-padding-x: 12px;
+    --bs-btn-padding-y: 7px;
+    --bs-btn-font-size: 13px;
+    justify-content: flex-start;
+    transition: .24s ease;
+}
+.dropdown-folder-set-path .btn-group-folders .btn .icon {
+	font-size: 92%;
+	top: .3px;
+	color: var(--bs-gray-500);
+}
+.dropdown-folder-set-path .btn-group-folders .btn:hover {
+	padding-left: 16px;
+}

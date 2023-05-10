@@ -43,12 +43,6 @@
 	--dropdown-arrow: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 330 330' stroke='none' fill='%23222' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M329.155,100.036c-2.108-6.011-7.784-10.035-14.154-10.035h-300c-6.371,0-12.046,4.024-14.154,10.035 c-2.109,6.011-0.19,12.699,4.784,16.678l150.004,120c2.739,2.191,6.055,3.287,9.37,3.287c3.316,0,6.631-1.096,9.371-3.287 l149.996-120C329.346,112.734,331.264,106.047,329.155,100.036z'/></svg>");
 }
 
-@media screen and (max-width: 600px) {
-	:root {
-		--nav-size: 140px;
-	}
-}
-
 
 body {
 	scroll-behavior: smooth;
@@ -119,6 +113,11 @@ textarea.autogrow {
 
 .page-content {
 	padding: 10px 0 100px;
+}
+@media screen and (max-width: 600px) {
+	.page-content {
+		padding-top: 0;
+	}
 }
 
 .page-title {
@@ -331,4 +330,25 @@ textarea.autogrow {
 	cursor: default;
 	user-select: none;
 	margin: 0;
+}
+
+
+
+
+
+.body-checkbox-file .checkbox-file {
+	display: none;
+}
+.body-checkbox-file .folder-list-items .folder-item {
+	padding-left: 10px;
+}
+
+.body-checkbox-file .folder-list-header .folder-list-header__left {
+	margin-left: -8px;
+}
+
+@media screen and (max-width: 575px) {
+	.folder-list-header .folder-list-header__left {
+		margin-left: -8px;
+	}
 }

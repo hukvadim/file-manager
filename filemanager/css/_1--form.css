@@ -53,7 +53,7 @@
 	align-items: center;
 }
 .form-check-input {
-	--bs-form-check-bg: #ebebeb;
+	--bs-form-check-bg: #ecedf1;
 	--input-size: 20px;
 	width: var(--input-size);
 	height: var(--input-size);

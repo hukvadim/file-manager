@@ -25,19 +25,36 @@
 	<div class="container">
 
 
+
 		<div class="folder-list-header d-flex-sides mb-2">
-			<div class="folder-list-header__left d-flex-side-left">
-				<label class="form-check-label">
+			<div class="folder-list-header__left d-flex-side-left position-relative">
+				<label class="form-check-label checkbox-file">
 					<input class="form-check-input" type="checkbox" value="">
 				</label>
 				<div class="btn-folder-group js-box-header-left">
-					<button class="btn btn-sm btn-icon btn-action btn-folder">
-						<svg class="icon icon-more-horizontal"><use xlink:href="#icon-more-horizontal"></use></svg>
-					</button>
-					<a href="#" class="btn btn-action btn-sm btn-folder btn-similar-y">libs</a>
+					<div class="dropdown btn-folder dropdown-folder-set-path">
+						<button class="btn btn-sm btn-icon btn-action btn-show-breadcrumbs" data-bs-toggle="dropdown">
+							<svg class="icon icon-more-horizontal"><use xlink:href="#icon-more-horizontal"></use></svg>
+						</button>
+						<div class="dropdown-menu">
+							<div class="input-hold-folder-path position-relative">
+								<input type="text" class="form-control form-control-sm" placeholder="Шлях до файлу" value="libs/jquery/">
+								<button class="btn btn-sm btn-icon btn-action btn-edit btn-pr-bg btn-similar-y position-absolute top-50 end-0 translate-middle-y">
+									<svg class="icon icon-maximize"><use xlink:href="#icon-maximize"></use></svg>
+								</button>
+							</div>
+							<div class="btn-group-vertical w-100 btn-group-folders mt-2">
+								<button type="button" class="btn btn-sm btn-light"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>libs</button>
+								<button type="button" class="btn btn-sm btn-light"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>jquery</button>
+							</div>
+						</div>
+					</div>
+					<span class="btn btn-action btn-sm btn-folder btn-similar-y">libs</span>
 					<span class="btn btn-action btn-sm btn-folder btn-similar-y">Jquery</span>
 				</div>
 			</div>
+
+
 			<div class="folder-list-header__right d-flex-side-right">
 				<div class="folder-list-header__action-btns d-flex js-box-header-right">
 					<button class="btn btn-sm btn-icon btn-action">
@@ -57,12 +74,13 @@
 		</div>
 
 
+
 		<div class="folder-list folder-list-items">
 
 			<?php foreach ($files as $file): ?>
 			<div class="folder-item d-flex-sides">
 				<div class="folder-item__main-info">
-					<label class="folder-item__checkbox folder-item__el form-check-label hover-scale">
+					<label class="folder-item__checkbox folder-item__el form-check-label hover-scale checkbox-file">
 						<input class="form-check-input" type="checkbox" value="">
 					</label>
 					<div class="folder-item__img-hold folder-item__el img-box"><?=viewIcon($file)?></div>
@@ -139,3 +157,11 @@
 		</div>
 	</div>
 </div>
+
+
+
+
+
+
+
+

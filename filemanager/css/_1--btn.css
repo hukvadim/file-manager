@@ -118,9 +118,13 @@
 	--bs-btn-border-radius: var(--bd-radius-lg);
 }
 
+.btn-similar-y {
+	--bs-btn-padding-x: var(--bs-btn-padding-y);
+}
+
 
 .btn-folder-group {
-	--btn-margin: 10px;
+	--btn-margin: 13px;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -136,7 +140,7 @@
 	content: '\203A';
 	position: absolute;
 	top: 45%;
-	right: -12px;
+	right: -40%;
 	transform: translateY(-50%);
 	color: #d0d2d3;
 	font-weight: 400;
@@ -152,9 +156,16 @@
 	display: none;
 }
 .btn-folder-group .btn-action.btn-icon {
-	margin: 0 var(--btn-margin);
+	
 }
 
-.btn-similar-y {
-	--bs-btn-padding-x: var(--bs-btn-padding-y);
+@media screen and (max-width: 767px) {
+	.btn-folder-group {
+		--btn-margin: 10px;
+	}
+	.btn-folder-group .btn-folder::before {
+		right: -37%;
+	}
 }
+
+
