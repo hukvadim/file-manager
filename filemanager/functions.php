@@ -122,6 +122,10 @@ function dirToArray($dir = '.', $needAjax = false, $foldersFirst = true, $skipAd
 	if ($dir[-1] !== '/')
 		$dir .= '/';
 
+	// // Якщо назва папки тільки ./ тоді робимо просто крапку
+	if ($dir === '/')
+		$dir = '.';
+
 	// Розширення, які треба замінити
 	include 'extSwap.php';
 	
@@ -320,19 +324,31 @@ function viewSize($fileType, $bytes)
  */
 function getPrevPath($data)
 {
-	// Отримуємо попередній шлях, який містить папку або файл
-	$prevPathArr = explode('/', $data['path']);
+	// Отримуємо шлях, який чистимо від пустих значень
+	$prevPathArr = array_diff(explode('/', $data['path']), array(''));
+	
+	// Видаляємо останнє значення і формуємо попередній шлях
+	unset($prevPathArr[array_key_last($prevPathArr)]);
 
-	// Формуємо попередній шлях, видаляючи назву файлу або папки
-	$prevPathArr = array_filter($prevPathArr, function ($value) use ($data) {
-		return $value !== $data['name'];
-	});
+	// Повертаємо також назву папки
+	$result['prevName'] = $prevPathArr[array_key_last($prevPathArr)];
+
+	// Не влаштовує, що в назві може бути просто крапка, робимо пусте значення, якщо це основна папка
+	if ($result['prevName'] === '.')
+		$result['prevName'] = '';
 
 	// Збираємо шлях знову разом
-	return implode('/', $prevPathArr);
+	$result['url'] = implode('/', $prevPathArr);
+
+	// Формуємо назву файлу
+	$result['name'] = '<svg class="icon icon-more-horizontal"><use xlink:href="#icon-more-horizontal"></use></svg>';
+
+	// Формуємо іконку папки
+	$result['icon'] = viewIcon(['type' => 'dir']);
+
+	// Повертаємо сформовані дані
+	return $result;
 }
-
-
 
 
 

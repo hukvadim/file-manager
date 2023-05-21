@@ -49,6 +49,16 @@ const FileManager = function ()
 	}
 
 
+	
+	// Виводимо інформацію про папку
+	this.setDir = function (result) {
+		// console.log("result", result);
+
+		// Оновлюємо записи в таблиці
+		self.updateTableItems(result);
+	}
+
+
 
 	// Отримужмо список папок по заданому шляху
 	this.getDir = function (e)
@@ -67,28 +77,14 @@ const FileManager = function ()
 		// // Generating data for ajax
 		self.setAction('getDir', mergeData, 'setDir');
 	}
-	
-
-	// Виводимо інформацію про папку
-	this.setDir = function (result)
-	{
-		// Оновлюємо записи в таблиці
-		self.updateTableItems(result);
-	}
 
 
 
 	// Html карточка в таблиці
 	this.updateTableItems = function (result)
 	{
-		console.log(result);
 		// Щоб залишилася можливість подивитися result в console.log диструктуризуємо його на цьому етапі
 		const { list, prevPath } = result;
-
-		// Зберігаємо попердній шлях
-		this.prevPath = prevPath.url;
-		console.log('this', this.prevPath);
-
 
 		// Витягуємо блок в який будемо поміщати шаблон
 		const boxFolderList = $('.js-folder-list');
@@ -96,15 +92,26 @@ const FileManager = function ()
 		// Очищаємо перед добавленням
 		boxFolderList.html('');
 
-		// Виводимо попердній шлях
-		boxFolderList.append(`<div class="folder-item d-flex-sides">
-								<div class="folder-item__main-info">
-									<div class="folder-item__img-hold folder-item__el img-box" data-js-action="get-prev-folder">${prevPath.icon}</div>
-									<div class="folder-item__text folder-item__el">
-										<button class="folder-item__title text-truncate w-h-100 js-click-item" data-js-action="get-prev-folder">${prevPath.name}</button>
+		// Зберігаємо попердній шлях
+		this.prevPath = prevPath.url;
+
+		// Якщо є зворотній шлях тоді добавляємо кнопку повернутися назад
+		if (this.prevPath) {			
+
+			// Виводимо попердній шлях
+			boxFolderList.append(`<div class="folder-item d-flex-sides">
+									<div class="folder-item__main-info">
+										<div class="folder-item__img-hold folder-item__el img-box" data-js-action="get-prev-folder">${prevPath.icon}</div>
+										<div class="folder-item__text folder-item__el">
+											<button class="folder-item__title text-truncate w-h-100 js-click-item"
+												data-path="${this.prevPath}" 
+												data-name="${prevPath.prevName}" 
+												data-js-action="get-folder">${prevPath.name}</button>
+										</div>
 									</div>
-								</div>
-							</div>`);
+								</div>`);
+
+		}
 
 		// Перебираємо масив і виводимо html в таблицю
 		$.each(list, function (key, listItemData) {
