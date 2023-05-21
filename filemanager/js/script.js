@@ -5,10 +5,30 @@ const isJSON      = (str) => { try { return (JSON.parse(str) && !!str); } catch 
 
 // Tooltips for bootstrap
 // const tooltipList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-	return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+function initializeTooltips() {
+	let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+	tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+		new bootstrap.Tooltip(tooltipTriggerEl);
+	});
+}
+initializeTooltips();
+
+
+
+// /**
+//  * Php answer alert with js
+//  */
+// if (phpAnswer) {
+
+// 	// Decode json
+// 	phpAnswer = JSON.parse(phpAnswer);
+// 	phpAnswer.value = (Array.isArray(phpAnswer.value)) ? phpAnswer.value.join('\n\r') : phpAnswer.value;
+
+// 	// Display alerts for the user
+// 	$.notify(phpAnswer.value, { className: phpAnswer.type, autoHideDelay: 7000 }); // notify type: success | info | warn | error
+// 	runNotify({ levelMessage: type, message: value }); // notify type: notify | error | success | warning
+// }
+
 
 /**
  * Doesn't call the script multiple times
@@ -55,7 +75,7 @@ $(".js-scroll-horizontal").mCustomScrollbar({
 /**
  * A general AJAX function for sending POST requests
  */
-function setAjax(data = {}, form = false, successCallback = null, dataType = 'json')
+function setAjax(data = {}, form = false, successCallback = null, dataType = 'text')
 {
 	if (dataType !== 'json' && dataType !== 'text')
 		throw new Error(`Invalid data type '${dataType}'`);
@@ -82,7 +102,7 @@ function setAjax(data = {}, form = false, successCallback = null, dataType = 'js
 
 	return $.ajax({
 		type: 'POST',
-		url: option.path + 'ajax.php',
+		url: option.pathManagerFile,
 		dataType: dataType,
 		data: data,
 		cache: false,
@@ -94,22 +114,26 @@ function setAjax(data = {}, form = false, successCallback = null, dataType = 'js
 		},
 		success: function(response) {
 
-			console.log("response", response);
+			// console.log("response", response);
 
 			// We check if the json has really come to us.
-			if (!isJSON(response)) return $.notify('Ajax cannot accept a response from the controller');
+			if (!isJSON(response)) return runNotify({ message: 'Ajax cannot accept a response from the controller' });
+
+			// Перекодовуємо в об'єкт для js
+			response = JSON.parse(response);
 
 			// Generate settings from the answer
-			let {value, type, link, callFunc, callFuncData} = JSON.parse(response);
+			let { value, type, link, callFunc, callFuncData } = response;
 
 			// Display alerts for the user
-			if (value) $.notify(value, { className: type, autoHideDelay: 12000 });
+			// if (value) $.notify(value, { className: type, autoHideDelay: 12000 });
+			if (value) runNotify({ levelMessage: type, message: value, timer: 100000 });
 
 			// If you need something more, we can additionally create a function
 			if (callFunc) window[callFunc](callFuncData, response);
 
 			// If you need something more, we can additionally create a function
-			if (successCallback) successCallback(response);
+			if (successCallback) fileManager[successCallback](response);
 
 			// Link to the link, if available
 			if (link) setTimeout(() => { window.location.href = link }, 1500);
@@ -126,48 +150,3 @@ function setAjax(data = {}, form = false, successCallback = null, dataType = 'js
 
 
 
-/**
- * Викликаємо якусь подію відносно типу
- */
-function setAction(type = false, params = false, callFunctionResult = false)
-{
-	// Generating data for ajax
-	const data = {
-		'form-type': type,
-		'params': params
-	}
-
-	// Calling a ajax
-	setAjax(data, false, callFunctionResult);
-}
-
-
-
-
-
-/**
- * Функціонал файлового менеджера
- */
-const fileManager = {
-
-	action: {
-		clickItem: '.js-click-item'
-	},
-
-	getDir: function(e) {
-		e.preventDefault();
-
-		console.log("CLICK");
-
-		// Generating data for ajax
-		setAction('getDir', 'file');
-	},
-
-	init: function() {
-
-		// Отримуємо список файлів з папки
-		$(document).on('click', this.action.clickItem, this.getDir);
-	}
-}
-
-fileManager.init();

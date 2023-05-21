@@ -30,10 +30,12 @@
 	</div>
 </footer>
 
+
 <script>
 	// Settings that will be passed to js
 	const option = {
-		path: '<?=PATH?>',
+		path: '<?= DOMAIN_URL ?>',
+		pathManagerFile: '<?= DOMAIN_URL . MANAGERFILE ?>',
 	}
 
 	// Error from php
@@ -43,12 +45,14 @@
 <script src="<?=setPath('libs')?>jquery/jquery-3.6.3.min.js"></script>
 <script src="<?=setPath('libs')?>bootstrap/bootstrap.bundle.min.js"></script>
 <script src="<?=setPath('libs')?>mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script src="<?=setPath('libs') ?>notifyMessage/notifyMessage.js"></script>
+<script src="<?=setPath('js') ?>fileManager.js<?= addTmpView() ?>"></script>
 <script src="<?=setPath('js')?>script.js<?=addTmpView()?>"></script>
 
 <?php unset($_SESSION['answer']); // Errors, we will output in an array $_SESSION['answer'] and it must be shown once  ?>
 
 <!-- Код призначеня для LiveServer -->
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+<!-- <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script> -->
 
 </body>
 </html>

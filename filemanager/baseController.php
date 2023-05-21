@@ -15,6 +15,7 @@ if(!@include(setPath('controllers', $baseControllersPath).$systemOption['page'].
 		exit(setLang('error__controller'));
 }
 
+
 // If something is not found at all, should display a 404 error
 if ($systemOption['setError'])
 	require_once setPath('controllers').'404Controller.php';
@@ -22,5 +23,6 @@ if ($systemOption['setError'])
 // Do something after connecting the controller
 include setPath('controllers').'0--afterController.php';
 
-
+// Перевіряємо чи потрібно далі виводити html
+if (!$systemOption['viewHtmlNeed']) exit;
 

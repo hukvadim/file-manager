@@ -9,10 +9,12 @@ error_reporting(E_ERROR); // E_ERROR | E_WARNING | E_PARSE | E_NOTICE
 
 // Folder for file manager
 define('MANAGERFOLDER', 'filemanager/');
+define('MANAGERFILE', 'filemanager.php');
 
 // Абсолютний шлях до сайту
 define('DOMAIN', 'file-manager');
-define('PATH',   'http://'.DOMAIN.'/filemanager/');
+define('DOMAIN_URL', 'http://'.DOMAIN.'/');
+define('PATH', DOMAIN_URL.'/filemanager/');
 
 // Displaying a partition by default
 define('DEFAULTPAGE', 'home');
@@ -52,6 +54,9 @@ $systemOption['bodyCssClass'] = [];
 // Switch whether to load the controller or just issue a message
 $systemOption['errorControllerNeed'] = true;
 
+// Переключалка для відображення html
+$systemOption['viewHtmlNeed'] = true;
+
 // If it is not found at all, should display a 404 error
 $systemOption['setError'] = false;
 
@@ -64,4 +69,5 @@ $users = [
 	'admin' => '$2y$10$/K.hjNr84lLNDt8fTXjoI.DBp6PpeyoJ.mGwrrLuCZfAwfSAGqhOW', //admin@inderio.com
 	'user'  => '$2y$10$Fg6Dz8oH9fPoZ2jJan5tZuv6Z4Kp7avtQ9bDfrdRntXtPeiMAZyGO' //12345
 ];
+
 

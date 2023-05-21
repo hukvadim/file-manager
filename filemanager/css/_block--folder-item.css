@@ -32,6 +32,16 @@
 .folder-item .folder-item__title {
 	display: inline-block;
 	padding-top: 1px;
+	background-color: transparent;
+    border: none;
+    text-align: left;
+	padding: 0;
+	cursor: pointer;
+	color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity,1));
+	font-weight: var(--bs-body-font-weight);
+}
+.folder-item .folder-item__title:hover {
+	--bs-link-color-rgb: var(--bs-link-hover-color-rgb);
 }
 .folder-item .folder-item__size {
 	min-width: 100px;

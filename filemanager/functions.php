@@ -27,7 +27,7 @@ function setPath($filePathKey, $basePath = '')
 		throw new InvalidArgumentException(setLang('error__filePathKey'));
 
 	// Construct the file path by concatenating the base path (if provided) and the file path from the $filePath array.
-	return ($basePath) ? $basePath . $filePath[$filePathKey] : MANAGERFOLDER . $filePath[$filePathKey];
+	return MANAGERFOLDER . $filePath[$filePathKey];
 }
 
 
@@ -37,6 +37,16 @@ function setPath($filePathKey, $basePath = '')
 function print_arr($arr)
 {
 	echo '<pre>'; print_r($arr); echo "</pre>";
+}
+
+
+
+/**
+ * Making text from an array without duplicate values
+ */
+function arrayToString($arr = [], $glue = "\n\r")
+{
+	return (arrExist($arr)) ? implode($glue, array_filter($arr)) : false;
 }
 
 
@@ -106,7 +116,7 @@ function isImage($ext = false)
  * @param  boolean $skipAdd      [ Які папки пропустити ]
  * @return [type]                [ array || false ]
  */
-function dirToArray($dir = '.', $foldersFirst = true, $skipAdd = false)
+function dirToArray($dir = '.', $needAjax = false, $foldersFirst = true, $skipAdd = false)
 {
 	// Якщо назва папки без слеша, core/modal > core/modal/
 	if ($dir[-1] !== '/')
@@ -116,7 +126,7 @@ function dirToArray($dir = '.', $foldersFirst = true, $skipAdd = false)
 	include 'extSwap.php';
 	
 	// Вказуємо значення, що будемо пропускати
-	$skip = ['./.git'];
+	$skip = ['./.git', '.git'];
 	
 	// Якщо передали папки (через кому), що треба пропустити, тоді об'єднюємо з масивом $skip
 	if ($skipAdd)
@@ -151,6 +161,13 @@ function dirToArray($dir = '.', $foldersFirst = true, $skipAdd = false)
 				'modified_date'     => date("d.m.Y H:i", $timeModified),
 				'modified_time_ago' => timeAgo($timeModified),
 			];
+
+			// Якщо потрібна додаткова інформація для ajax
+			if ($needAjax) {
+				$fileData['icon']    = viewIcon($fileData);
+				$fileData['tooltipDate'] = setTooltip($fileData['modified_date']);
+				$fileData['tooltipSize'] = setTooltip(($fileData['size']) ? htmlspecialchars(viewSize($fileData['type'], $fileData['size'])) : '');
+			}
 
 			// Добавляємо до масиву файлів
 			$dirArr[] = $fileData;
@@ -299,6 +316,28 @@ function viewSize($fileType, $bytes)
 
 
 /**
+ * Отримує попередній шлях до папки або файлу.
+ */
+function getPrevPath($data)
+{
+	// Отримуємо попередній шлях, який містить папку або файл
+	$prevPathArr = explode('/', $data['path']);
+
+	// Формуємо попередній шлях, видаляючи назву файлу або папки
+	$prevPathArr = array_filter($prevPathArr, function ($value) use ($data) {
+		return $value !== $data['name'];
+	});
+
+	// Збираємо шлях знову разом
+	return implode('/', $prevPathArr);
+}
+
+
+
+
+
+
+/**
  * Hang up and receive data for user augmentation
  */
 function authData($type = 'get', $id = false, $token = false)
@@ -351,6 +390,40 @@ function authData($type = 'get', $id = false, $token = false)
 			return true;
 	}
 }
+
+
+
+
+
+/**
+ * Set alert for ajax response
+ */
+function jsonAlert($value = false, $type = 'error', $callbackArray = [], $callback = false, $redirect = false)
+{
+	// Check if the message was transmitted
+	if (!$value)
+		return;
+
+	// Generate main data
+	$data['type'] = $type;
+	$data['value'] = (arrExist($value)) ? arrayToString($value) : $value;
+
+	// If you need to send the user somewhere, create a link
+	if ($redirect)
+		$data['link'] = $redirect;
+
+	// We are sending a message that an additional function needs to be performed
+	if ($callback)
+		$data['callFunc'] = $callback;
+
+	// We are sending a message that an additional function needs to be performed
+	if (arrExist($callbackArray))
+		$data = $data + $callbackArray;
+
+	// Encode data for ajax response
+	exit(json_encode($data));
+}
+
 
 
 

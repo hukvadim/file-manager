@@ -74,44 +74,48 @@
 		</div>
 
 
+		<div class="folder-list folder-list-items js-folder-list">
 
-		<div class="folder-list folder-list-items">
-
-			<?php foreach ($files as $file): ?>
-			<div class="folder-item d-flex-sides">
-				<div class="folder-item__main-info">
-					<label class="folder-item__checkbox folder-item__el form-check-label hover-scale checkbox-file">
-						<input class="form-check-input" type="checkbox" value="">
-					</label>
-					<div class="folder-item__img-hold folder-item__el img-box"><?=viewIcon($file)?></div>
-					<div class="folder-item__text folder-item__el">
-						<a href="#" class="folder-item__title text-truncate js-click-item" <?=setTooltip(($file['size']) ? htmlspecialchars(viewSize($file['type'], $file['size'])) : '')?>><?=viewStr($file['name'])?></a>
+			<?php foreach ($files as $key => $file): ?>
+				<?php
+				$folderKey = 'folder-item-' . $key;
+				?>
+				<div class="folder-item d-flex-sides js-card-item-in-table" id="<?= $folderKey ?>">
+					<div class="folder-item__main-info">
+						<label class="folder-item__checkbox folder-item__el form-check-label hover-scale checkbox-file">
+							<input class="form-check-input" type="checkbox" value="">
+						</label>
+							<div class="folder-item__img-hold folder-item__el img-box" data-js-action="get-folder" data-path="<?= $file['path'] ?>" data-name="<?=$file['name']?>">
+								<?= viewIcon($file) ?>
+							</div>
+							<div class="folder-item__text folder-item__el">
+									<a href="#" class="folder-item__title text-truncate js-click-item"
+										data-js-action="get-folder"
+										data-path="<?= $file['path'] ?>"
+										data-name="<?=$file['name']?>"
+										<?=setTooltip(($file['size']) ? htmlspecialchars(viewSize($file['type'], $file['size'])) : '') ?>><?= viewStr($file['name']) ?></a>
+									</div>
+									</div>
+									<div class="folder-item__date-create fz-info hide-tablet" <?= setTooltip($file['modified_date']) ?>>
+										<?= $file['modified_time_ago'] ?></div>
+									<div class="dropdown dropstart folder-item__action folder-item__el">
+										<button class="btn btn-action btn-sm btn-icon btn-body-color btn-pr-bg hover-scale" type="button"
+											data-bs-toggle="dropdown">
+											<svg class="icon icon-more-vertical">
+												<use xlink:href="#icon-more-vertical"></use>
+											</svg>
+										</button>
+										<ul class="dropdown-menu dropdown-menu-end">
+											<li>
+												<a class="dropdown-item" href="#">
+													<svg class="icon icon-article">
+														<use xlink:href="#icon-home"></use>
+													</svg>Action
+												</a>
+											</li>
+							</ul>
+						</div>
 					</div>
-				</div>
-				<div class="folder-item__date-create fz-info hide-tablet" <?=setTooltip($file['modified_date'])?>><?=$file['modified_time_ago']?></div>
-				<div class="dropdown dropstart folder-item__action folder-item__el">
-					<button class="btn btn-action btn-sm btn-icon btn-body-color btn-pr-bg hover-scale" type="button" data-bs-toggle="dropdown">
-						<svg class="icon icon-more-vertical"><use xlink:href="#icon-more-vertical"></use></svg>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end">
-						<li>
-							<a class="dropdown-item" href="#">
-								<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>Action
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">
-								<svg class="icon icon-article"><use xlink:href="#icon-article"></use></svg>Another action
-							</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">
-								<svg class="icon icon-article"><use xlink:href="#icon-squares"></use></svg>Something else here
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
 			<?php endforeach ?>
 		</div>
 

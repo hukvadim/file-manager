@@ -1,6 +1,6 @@
 /**
- * Simplebar
- */
+* Simplebar
+*/
 .simplebar-scrollbar.simplebar-visible {
 	cursor: pointer !important;
 	pointer-events: painted;
@@ -12,4 +12,110 @@
 .simplebar-dragging .simplebar-scrollbar.simplebar-visible:before,
 .simplebar-scrollbar.simplebar-visible.simplebar-hover:before {
 	opacity: .5;
+}
+
+
+
+
+
+
+/**
+* NotifyMessage
+*/
+.alertNotify {
+	border: 1px solid transparent;
+	max-width: 30rem;
+	position: fixed;
+	z-index: 1030;
+	padding: 8px 18px;
+	border-radius: 13px;
+	font-size: 12px;
+	font-weight: 700;
+	transition: opacity .15s .25s ease-out;
+}
+@media screen and (max-width: 560px) {
+	.alertNotify {
+		width: 96%;
+		max-width: 100%;
+		right: 2% !important;
+		top: 0 !important;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+}
+
+.alertNotify.error {
+	color: #721c24;
+	background-color: #f8d7da;
+	border-color: #f5c6cb;
+}
+.alertNotify.notify {
+	color: #004085;
+	background-color: #cce5ff;
+	border-color: #b8daff;
+}
+
+.alertNotify.success {
+	color: #155724;
+	background-color: #d4edda;
+	border-color: #c3e6cb;
+}
+
+.alertNotify.warning {
+	color: #856404;
+	background-color: #fff3cd;
+	border-color: #ffeeba;
+}
+
+.alertNotify.top-right {
+	top: 1rem;
+	right: -30rem;
+}
+.alertNotify.top-left {
+	top: 1rem;
+	left: -30rem;
+}
+.alertNotify.bottom-right {
+	bottom: 1rem;
+	right: -30rem;
+}
+.alertNotify.bottom-left {
+	bottom: 1rem;
+	left: -30rem;
+}
+
+.allertNotifyButton {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	cursor: pointer;
+	color: currentColor;
+	fill: currentColor;
+}
+
+.allertNotifyReadMore {
+	cursor: pointer;
+}
+
+.allertNotifyReadMore:hover {
+	font-weight: bolder;
+}
+
+.modalNotify {
+	padding: 0.75rem 1.25rem;
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+	width: 30rem;
+	height: auto;
+	z-index: 1050;
+	top: 4rem;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	position: fixed;
+	display: none;
+}
+.notificationItem-old {
+	opacity: 0;
 }
