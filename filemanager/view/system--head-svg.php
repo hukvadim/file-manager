@@ -37,6 +37,12 @@
 		<symbol id="icon-folder" viewBox="0 0 72 72">
 			<path d="M60.72,30.09H34.93a3.66,3.66,0,0,1-3.66-3.67V16a3.66,3.66,0,0,1,3.66-3.66H60.72A3.66,3.66,0,0,1,64.38,16V26.42A3.66,3.66,0,0,1,60.72,30.09Z" fill="#6c87fe"/><path d="M64.14,65.56H7.86A7.63,7.63,0,0,1,.53,57.75V14.24a7.63,7.63,0,0,1,7.33-7.8H29.73a5.47,5.47,0,0,1,4.85,3.07l3.78,12.3H64.14a7,7,0,0,1,7.33,7.09V57.75A7.63,7.63,0,0,1,64.14,65.56Z" fill="#8aa3ff"/><path d="M2.54,63.19C5.14,66,8.09,65.56,10,65.56H63.2a7.82,7.82,0,0,0,6.26-2.37Z" fill="#798bff"/>
 		</symbol>
+		<symbol id="icon-folder-color" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+		</symbol>
+		<symbol id="icon-file-color" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+		</symbol>
 		<symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 			<polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
 		</symbol>
@@ -67,7 +73,19 @@
 		<symbol id="icon-maximize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 			<polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line>
 		</symbol>
-		
+		</symbol>
+		<symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+			<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+		</symbol>
+		<symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+			<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>
+		</symbol>
+		<symbol id="icon-plus-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+			<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line>
+		</symbol>
+		<symbol id="icon-external-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+		</symbol>
 
 
 	</svg>

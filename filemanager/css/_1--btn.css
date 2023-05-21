@@ -37,7 +37,7 @@
 .btn-light {
 	--bs-btn-color: var(--bs-gray-900);
 	--bs-btn-bg: #f6f8fa;
-	--bs-btn-border-color: rgba(31, 35, 40, .15);
+	--bs-btn-border-color: rgba(31, 35, 40, .09);
 	--bs-btn-shadow-color: 0 1px 0 rgba(31,35,40,0.04);
 	--bs-btn-hover-bg: #f3f4f6;
 	--bs-btn-hover-border-color: rgba(31, 35, 40, .15);
@@ -67,6 +67,9 @@
 	--bs-btn-color: #f6b17f;
 	--bs-btn-hover-bg: #f6b17f38;
 	--bs-btn-hover-color: #e2965f;
+}
+.btn-action.btn-action--upload {
+	
 }
 
 
@@ -155,9 +158,6 @@
 .btn-folder-group .btn-folder:last-child::before {
 	display: none;
 }
-.btn-folder-group .btn-action.btn-icon {
-	
-}
 
 @media screen and (max-width: 767px) {
 	.btn-folder-group {
@@ -169,3 +169,7 @@
 }
 
 
+.btn-close {
+	--bs-btn-close-bg: var(--icon-close);
+	transition: .2s;
+}

@@ -2,11 +2,35 @@
 
 }
 .folder-list-header .folder-list-header__left {
-	margin-left: 24px;
+	margin-left: 0;
 	gap: 7px;
+	max-width: 100%;
+	border: var(--bs-border-width) solid var(--bs-border-color);
+	border-radius: calc(var(--bd-radius-lg) + 2px);
+	background: var(--bs-btn-bg);
+	position: relative;
+	overflow: hidden;
+}
+.folder-list-header .folder-list-header__left::before,
+.folder-list-header .folder-list-header__left::after {
+	content: '';
+	z-index: 2;
+	position: absolute;
+	top: 0;
+	width: 8px;
+	height: 100%;
+	background: linear-gradient(270deg, rgba(var(--bs-body-bg-rgb),0) 0%, rgba(var(--bs-body-bg-rgb),1) 80%, rgba(var(--bs-body-bg-rgb),1) 100%);
+}
+.folder-list-header .folder-list-header__left::before {
+	left: 0;
+}
+.folder-list-header .folder-list-header__left::after {
+	right: 0;
+	transform: rotate(180deg);
+	width: 12px;
 }
 .folder-list-header .folder-list-header__right {
-	margin-right: 17px;
+	margin-right: 0;
 	gap: 5px;
 }
 .folder-list-header.header-type-card .folder-list-header__left {
@@ -15,7 +39,23 @@
 .folder-list-header.header-type-card .folder-list-header__right {
 	margin-right: 0;
 }
-
+.folder-list-header .mCSB_horizontal.mCSB_inside>.mCSB_container {
+	margin-bottom: 0;
+}
+.folder-list-header .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar {
+	margin: 0 auto;
+}
+.folder-list-header .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_draggerRail {
+	margin: 0;
+}
+.folder-list-header .mCSB_scrollTools.mCSB_scrollTools_horizontal,
+.folder-list-header .mCSB_scrollTools .mCSB_draggerContainer,
+.folder-list-header .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger {
+	height: 4px;
+}
+.folder-list-header .mCSB_scrollTools.mCSB_scrollTools_horizontal {
+	opacity: 0 !important;
+}
 
 
 .folder-list-items {

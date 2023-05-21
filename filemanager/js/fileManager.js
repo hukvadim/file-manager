@@ -36,7 +36,9 @@ const FileManager = function ()
 
 
 
-	// Викликаємо якусь подію відносно типу
+	/**
+	 * Викликаємо якусь подію відносно типу
+	 */
 	this.setAction = function (type = false, params = false, callFunctionResult = false)
 	{
 		// Generating data for ajax
@@ -49,8 +51,10 @@ const FileManager = function ()
 	}
 
 
-	
-	// Виводимо інформацію про папку
+
+	/**
+	 * Виводимо інформацію про папку
+	 */
 	this.setDir = function (result) {
 		// console.log("result", result);
 
@@ -60,7 +64,9 @@ const FileManager = function ()
 
 
 
-	// Отримужмо список папок по заданому шляху
+	/**
+	 * Отримужмо список папок по заданому шляху
+	 */
 	this.getDir = function (e)
 	{
 		// Забороняємо стандарний функціонал html
@@ -80,7 +86,9 @@ const FileManager = function ()
 
 
 
-	// Html карточка в таблиці
+	/**
+	 * Html карточка в таблиці
+	 */
 	this.updateTableItems = function (result)
 	{
 		// Щоб залишилася можливість подивитися result в console.log диструктуризуємо його на цьому етапі
@@ -126,7 +134,9 @@ const FileManager = function ()
 
 
 
-	// Виводимо html єдиного запису в списку файлів і папок
+	/**
+	 * Виводимо html єдиного запису в списку файлів і папок
+	 */
 	this.viewListItem = function (key, { icon, tooltipSize, tooltipDate, name, path, ext, type, size, modified_date, modified_time_ago }) {
 
 		// Формуємо id елементу
@@ -164,7 +174,9 @@ const FileManager = function ()
 
 
 
-	// Перша функція, яка буде викликана
+	/**
+	 * Перша функція, яка буде викликана
+	 */
 	this.init = function () {
 
 		// console.log('self', self)
@@ -175,6 +187,8 @@ const FileManager = function ()
 }
 
 
-// Запускаємо скріпт
+/**
+ * Запускаємо скріпт
+ */
 const fileManager = new FileManager();
 fileManager.init();
