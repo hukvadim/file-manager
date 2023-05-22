@@ -1,15 +1,16 @@
 .folder-list-header {
-
+	margin-bottom: 15px;
 }
 .folder-list-header .folder-list-header__left {
 	margin-left: 0;
 	gap: 7px;
-	max-width: 100%;
+	width: 100%;
 	border: var(--bs-border-width) solid var(--bs-border-color);
 	border-radius: calc(var(--bd-radius-lg) + 2px);
 	background: var(--bs-btn-bg);
 	position: relative;
 	overflow: hidden;
+	background-color: var(--bs-white);
 }
 .folder-list-header .folder-list-header__left::before,
 .folder-list-header .folder-list-header__left::after {
@@ -19,7 +20,7 @@
 	top: 0;
 	width: 8px;
 	height: 100%;
-	background: linear-gradient(270deg, rgba(var(--bs-body-bg-rgb),0) 0%, rgba(var(--bs-body-bg-rgb),1) 80%, rgba(var(--bs-body-bg-rgb),1) 100%);
+	background: linear-gradient(270deg, rgba(var(--bs-white-rgb),0) 0%, rgba(var(--bs-white-rgb),1) 80%, rgba(var(--bs-white-rgb),1) 100%);
 }
 .folder-list-header .folder-list-header__left::before {
 	left: 0;
@@ -61,18 +62,17 @@
 .folder-list-items {
 	--bs-gutter-x: 30px;
 	border-radius: var(--bd-radius-lg);
-	border: 1px solid #f2f2f2;
 	background-color: var(--bs-white);
+	border: 1px solid #f2f2f2;
 	padding: 10px 0;
+	min-height: 100px;
 }
 .folder-list-items .folder-item {
 	margin: 0 10px;
 }
 
 @media screen and (max-width: 992px) {
-	.folder-list-items .hide-tablet {
-		display: none;
-	}
+	.folder-list-items .hide-tablet,
 	.folder-list-items .hide-mobile {
 		display: none;
 	}

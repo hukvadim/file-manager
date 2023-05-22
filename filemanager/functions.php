@@ -326,22 +326,38 @@ function getPrevPath($data)
 {
 	// Отримуємо шлях, який чистимо від пустих значень
 	$prevPathArr = array_diff(explode('/', $data['path']), array(''));
-	
+
+	// Останній ключ в масиві
+	$key = array_key_last($prevPathArr);
+
+	// Формуємо назву поточного файлу
+	$result['nameLabel'] = $prevPathArr[$key];
+
 	// Видаляємо останнє значення і формуємо попередній шлях
-	unset($prevPathArr[array_key_last($prevPathArr)]);
+	unset($prevPathArr[$key]);
 
 	// Повертаємо також назву папки
-	$result['prevName'] = $prevPathArr[array_key_last($prevPathArr)];
+	$result['prevName'] = $prevPathArr[$key];
+
+	// Формуємо тип матеріалу
+	$result['type'] = clean($data['type']);
 
 	// Не влаштовує, що в назві може бути просто крапка, робимо пусте значення, якщо це основна папка
-	if ($result['prevName'] === '.')
-		$result['prevName'] = '';
+	if ($result['prevName'] === NULL || $result['prevName'] === '.') {
+		
+		$result['prevName'] = 'Головна';
+		$result['type']     = 'dir';
+
+	}
+
+	// Перехоплюємо назву головної, просто крапку
+	$result['nameLabel'] = ($result['nameLabel'] === '.') ? $result['prevName'] : $result['nameLabel'];
+
+	// Формуємо просто назву, нічого технічного
+	$result['name'] = '<svg class="icon icon-more-horizontal"><use xlink:href="#icon-more-horizontal"></use></svg>';
 
 	// Збираємо шлях знову разом
 	$result['url'] = implode('/', $prevPathArr);
-
-	// Формуємо назву файлу
-	$result['name'] = '<svg class="icon icon-more-horizontal"><use xlink:href="#icon-more-horizontal"></use></svg>';
 
 	// Формуємо іконку папки
 	$result['icon'] = viewIcon(['type' => 'dir']);

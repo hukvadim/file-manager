@@ -196,15 +196,15 @@
 	position: relative;
 }
 .nav-files .nav-item .btn-close {
-	--bs-btn-hover-bg: transparent;
-    width: 34px;
-    height: 34px;
+    --bs-btn-hover-bg: rgba(var(--bs-danger-rgb), .08);
+    width: 32px;
+    height: 33px;
     position: absolute;
     top: 2px;
     right: 2px;
     padding: 0;
-    border-radius: var(--bd-radius);
-    opacity: .2;
+    border-radius: calc(var(--bd-radius) - 1px);
+    opacity: .15;
 }
 .nav-files .btn-close:hover {
 	opacity: 1;
@@ -216,17 +216,18 @@
 	--bs-btn-color: var(--bs-body-color);
 	--bs-nav-link-font-size: 14px;
     --bs-nav-pills-border-radius: var(--bd-radius);
-	--bs-btn-icon-fill: rgba(var(--bs-body-color-rgb), .1);
-	--bs-btn-icon-stroke: rgba(var(--bs-body-color-rgb), .32);
+	--bs-btn-icon-fill: rgba(var(--pr-link-rgb), .28);
+	--bs-btn-icon-stroke: rgba(var(--pr-link-rgb), .68);
 	box-shadow: none;
 }
 .nav-files .nav-link:not(.btn-icon) {
 	min-width: var(--max-size);
 	justify-content: flex-start;
 	padding-right: 40px;
-	
 }
 .nav-files .btn-close:hover ~ .nav-link {
+	--bs-btn-icon-fill: rgba(var(--bs-danger-rgb), .32);
+	--bs-btn-icon-stroke: rgba(var(--bs-danger-rgb), .8);
 	background-color: rgba(var(--bs-danger-rgb), .08);
     color: var(--bs-danger);
 }
@@ -238,10 +239,12 @@
 	--bs-btn-active-border-color: var(--bs-btn-hover-border-color);
 }
 .nav-files .btn-new-tab {
+	--bs-btn-icon-fill: rgba(var(--pr-link-rgb), .32);
+	--bs-btn-icon-stroke: rgba(var(--pr-link-rgb), .8);
 	font-size: 18px;
 	opacity: .6;
 	min-width: 51px;
-	margin-right: 0;
+	margin-right: -1px;
 }
 .nav-files .btn-new-tab:hover {
 	opacity: 1;
@@ -260,18 +263,10 @@
 	
 }
 .nav-files .nav-link.active {
-	--bs-btn-icon-fill: rgba(var(--bs-body-color-rgb), .085);
-	--bs-btn-icon-stroke: rgba(var(--bs-body-color-rgb), .38);
+	--bs-btn-icon-fill: rgba(var(--pr-link-rgb), .32);
+	--bs-btn-icon-stroke: rgba(var(--pr-link-rgb), .8);
 }
 .nav-files .nav-link:not(.active):hover {
-	--bs-btn-icon-fill: rgba(var(--pr-link-rgb), .06);
-	--bs-btn-icon-stroke: rgba(var(--pr-link-rgb), .6);
-}
-@media screen and (min-width: 768px) {
-	/* .nav-files .nav-item .btn-close {
-		opacity: 0;
-	}
-	.nav-files .nav-item:hover .btn-close {
-		opacity: 1;
-	} */
+	--bs-btn-icon-fill: rgba(var(--pr-link-rgb), .35);
+	--bs-btn-icon-stroke: rgba(var(--pr-link-rgb), .85);
 }

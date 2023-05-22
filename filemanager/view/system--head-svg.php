@@ -37,7 +37,7 @@
 		<symbol id="icon-folder" viewBox="0 0 72 72">
 			<path d="M60.72,30.09H34.93a3.66,3.66,0,0,1-3.66-3.67V16a3.66,3.66,0,0,1,3.66-3.66H60.72A3.66,3.66,0,0,1,64.38,16V26.42A3.66,3.66,0,0,1,60.72,30.09Z" fill="#6c87fe"/><path d="M64.14,65.56H7.86A7.63,7.63,0,0,1,.53,57.75V14.24a7.63,7.63,0,0,1,7.33-7.8H29.73a5.47,5.47,0,0,1,4.85,3.07l3.78,12.3H64.14a7,7,0,0,1,7.33,7.09V57.75A7.63,7.63,0,0,1,64.14,65.56Z" fill="#8aa3ff"/><path d="M2.54,63.19C5.14,66,8.09,65.56,10,65.56H63.2a7.82,7.82,0,0,0,6.26-2.37Z" fill="#798bff"/>
 		</symbol>
-		<symbol id="icon-folder-color" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+		<symbol id="icon-dir-color" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
 			<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
 		</symbol>
 		<symbol id="icon-file-color" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">

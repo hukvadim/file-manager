@@ -25,15 +25,13 @@ const FileManager = function ()
 	const self = this;
 
 	// Загальна інфа для роботи скірпта
-	this.dataType    = 'data-js-action';
-	this.currentPath = '.';
-	this.prevPath    = '';
-
-	// Отримужмо список папок по заданому шляху
-	this.test = function (e) {
-		console.log("Test");
-	}
-
+	this.dataType       = 'data-js-action';
+	this.folderList     = '.js-folder-list';
+	this.boxFolderGroup = '.js-box-folder-group';
+	this.currentPath    = '.';
+	this.currentTabId   = '';
+	this.prevPath       = '';
+	this.nameMaterial   = '';
 
 
 	/**
@@ -56,7 +54,6 @@ const FileManager = function ()
 	 * Виводимо інформацію про папку
 	 */
 	this.setDir = function (result) {
-		// console.log("result", result);
 
 		// Оновлюємо записи в таблиці
 		self.updateTableItems(result);
@@ -68,19 +65,27 @@ const FileManager = function ()
 	 * Отримужмо список папок по заданому шляху
 	 */
 	this.getDir = function (e)
-	{
-		// Забороняємо стандарний функціонал html
-		e.preventDefault();
+	{	
+		// Цей об'єкт відповідає за передачу даних
+		let mergeData;
 
-		// Збираємо необхідні параметри
-		const params = {
-			testKey: 'testVal', // Нічого не значить, просто приклад
+		// Перевіряємо чи це клік чи просто запит
+		if (isUndefined(e)) {
+
+			// Робимо якісь наші параметри і з ними передаємо дані
+			mergeData = {
+				path: this.currentPath
+			};
+
+		} else {
+			// Забороняємо стандарний функціонал html
+			e.preventDefault();
+
+			// Робимо якісь наші параметри і з ними передаємо дані
+			mergeData = this.dataset;
 		}
 
-		// Робимо якісь наші параметри і з ними передаємо дані
-		const mergeData = { ...params, ...this.dataset };
-
-		// // Generating data for ajax
+		// Робимо ajax запит
 		self.setAction('getDir', mergeData, 'setDir');
 	}
 
@@ -95,7 +100,7 @@ const FileManager = function ()
 		const { list, prevPath } = result;
 
 		// Витягуємо блок в який будемо поміщати шаблон
-		const boxFolderList = $('.js-folder-list');
+		const boxFolderList = $(this.folderList);
 
 		// Очищаємо перед добавленням
 		boxFolderList.html('');
@@ -107,17 +112,7 @@ const FileManager = function ()
 		if (this.prevPath) {			
 
 			// Виводимо попердній шлях
-			boxFolderList.append(`<div class="folder-item d-flex-sides">
-									<div class="folder-item__main-info">
-										<div class="folder-item__img-hold folder-item__el img-box" data-js-action="get-prev-folder">${prevPath.icon}</div>
-										<div class="folder-item__text folder-item__el">
-											<button class="folder-item__title text-truncate w-h-100 js-click-item"
-												data-path="${this.prevPath}" 
-												data-name="${prevPath.prevName}" 
-												data-js-action="get-folder">${prevPath.name}</button>
-										</div>
-									</div>
-								</div>`);
+			boxFolderList.append(self.viewPrevListItem(prevPath));
 
 		}
 
@@ -130,6 +125,78 @@ const FileManager = function ()
 
 		// Оновлюємо tooltip
 		initializeTooltips();
+
+		// Оновлюємо вкладки
+		this.setMaterialTab(prevPath);
+	}
+
+
+
+	/**
+	 * Виводимо вкладку поточного матеріалу
+	 */
+	this.setMaterialTab = (prevPath) => {
+
+		// Витягуємо блок в який будемо поміщати шаблон
+		const boxFolderGroup = $(self.boxFolderGroup);
+
+		// Очищаємо і виводимо кнопку добавлення вкладки
+		boxFolderGroup.html(self.viewAddTabMaterial(prevPath));
+
+		// Виводимо вкладку з поточним файлом
+		boxFolderGroup.append(self.viewTabMaterial(prevPath));
+	}
+	
+	
+
+
+	/**
+	 * Html вкладки добавлення вкладки
+	 */
+	this.viewAddTabMaterial = ({ nameLabel, url }) => {
+		return `<li class="nav-item nav-item--add-tab">
+					<button class="nav-link btn btn-sm btn-icon btn-new-tab btn-light btn-action"
+						data-name="${nameLabel}"	
+						data-url="${url}"	
+						data-js-action="add-new-tab">
+						<svg class="icon icon-plus-circle"><use xlink:href="#icon-plus-circle"></use></svg>
+					</button>
+				</li>`;
+	}
+
+
+
+
+	/**
+	 * Html вкладки
+	 */
+	this.viewTabMaterial = ({ nameLabel, type, url }) => {
+		return `<li class="nav-item">
+					<button class="btn btn-sm btn-action btn-close"></button>
+					<button class="nav-link btn btn-sm btn-light btn-action active">
+						<svg class="icon icon-${type}-color"><use xlink:href="#icon-${type}-color"></use></svg>
+						${nameLabel}
+					</button>
+				</li>`;
+	}
+
+
+	
+	/**
+	 * Виводимо html кнопку перейти назад
+	 */
+	this.viewPrevListItem = (prevPath) => {
+		return `<div class="folder-item d-flex-sides">
+					<div class="folder-item__main-info">
+						<div class="folder-item__img-hold folder-item__el img-box" data-js-action="get-prev-folder">${prevPath.icon}</div>
+						<div class="folder-item__text folder-item__el">
+							<button class="folder-item__title text-truncate w-h-100"
+								data-path="${this.prevPath}" 
+								data-name="${prevPath.prevName}" 
+								data-js-action="get-folder">${prevPath.name}</button>
+						</div>
+					</div>
+				</div>`;
 	}
 
 
@@ -142,20 +209,21 @@ const FileManager = function ()
 		// Формуємо id елементу
 		const itemId = 'folder-item-' + key;
 
+		// Формуємо data інформацію
+		let attrData = `data-path="${path}"
+						data-name="${name}"
+						data-type="${type}"
+						data-js-action="get-folder"`;
+
 		// Повертаємо html
 		return `<div class="folder-item d-flex-sides" id="${itemId}">
 					<div class="folder-item__main-info">
 						<label class="folder-item__checkbox folder-item__el form-check-label hover-scale checkbox-file">
 							<input class="form-check-input" type="checkbox" value="">
 						</label>
-						<div class="folder-item__img-hold folder-item__el img-box" data-js-action="get-folder" data-path="${path}" data-name="${name}">${icon}</div>
+						<div class="folder-item__img-hold folder-item__el img-box" ${attrData}>${icon}</div>
 						<div class="folder-item__text folder-item__el">
-							<button
-								class="folder-item__title text-truncate js-click-item"
-								data-path="${path}" 
-								data-name="${name}"
-								data-js-action="get-folder"
-								${tooltipSize}>${name}</button>
+							<button class="folder-item__title text-truncate" ${attrData} ${tooltipSize}>${name}</button>
 						</div>
 					</div>
 					<div class="folder-item__date-create fz-info hide-tablet" ${tooltipDate}>${modified_time_ago}</div>
@@ -169,7 +237,7 @@ const FileManager = function ()
 							</li>
 						</ul>
 					</div>
-				</div>`
+				</div>`;
 	}
 
 
@@ -179,7 +247,8 @@ const FileManager = function ()
 	 */
 	this.init = function () {
 
-		// console.log('self', self)
+		// Виводимо інформацію при першому завантаженні
+		this.getDir();
 
 		// Отримуємо список файлів з папки
 		$(document).on('click', `[${self.dataType}]`, self.getDir);

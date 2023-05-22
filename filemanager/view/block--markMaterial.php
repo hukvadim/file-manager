@@ -1,3 +1,7 @@
+<?php
+	defined('security') or die('Access denied'); // Add light protection against file access
+?>
+
 <?php if ($types): ?>
 	<div class="page-history">
 		<div class="container position-relative">

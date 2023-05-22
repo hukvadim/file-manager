@@ -350,10 +350,5 @@ textarea.autogrow {
 	
 }
 
-@media screen and (max-width: 575px) {
-	.folder-list-header .folder-list-header__left {
-		margin-left: -8px;
-	}
-}
 
 

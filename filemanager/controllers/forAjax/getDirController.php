@@ -3,7 +3,7 @@ defined('security') or die('Access denied'); // Add light protection against fil
 
 // Формуємо шлях до папки
 $getPath = clean($_POST['path']);
-// print_arr($getPath); exit;
+
 // Отримуємо назву, щоб додавати назву файлу до alert
 $fileName = clean($_POST['name']);
 

@@ -46,8 +46,8 @@
 <script src="<?=setPath('libs')?>bootstrap/bootstrap.bundle.min.js"></script>
 <script src="<?=setPath('libs')?>mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
 <script src="<?=setPath('libs') ?>notifyMessage/notifyMessage.js"></script>
-<script src="<?=setPath('js') ?>fileManager.js<?= addTmpView() ?>"></script>
 <script src="<?=setPath('js')?>script.js<?=addTmpView()?>"></script>
+<script src="<?=setPath('js')?>fileManager.js<?= addTmpView() ?>"></script>
 
 <?php unset($_SESSION['answer']); // Errors, we will output in an array $_SESSION['answer'] and it must be shown once  ?>
 
