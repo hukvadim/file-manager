@@ -35,7 +35,7 @@ const FileManager = function ()
 		if (sendData.hasOwnProperty('forAjax')) {
 			
 			// Робимо ajax запит
-			setAjax(type, sendData);
+			setAjax(sendData.ajaxCallback, sendData);
 
 		} else {
 			
@@ -60,14 +60,14 @@ const FileManager = function ()
 	 */
 	this.getDir = () => {
 
-		// Робимо якісь наші параметри і з ними передаємо дані
+		// При першому завантаженні виводимо результати
 		sendData = {
 			forAjax: 'getDir',
 			path: this.currentPath
 		};
 
 		// Робимо ajax запит
-		this.setAction(false, 'updateTableItems', sendData)
+		setAjax('updateTableItems', sendData);
 	}
 
 
@@ -113,6 +113,7 @@ const FileManager = function ()
 	}
 
 
+	
 
 	/**
 	 * Виводимо вкладку поточного матеріалу
@@ -139,7 +140,7 @@ const FileManager = function ()
 		return `<li class="nav-item nav-item--add-tab">
 					<button class="nav-link btn btn-sm btn-icon btn-new-tab btn-light btn-action"
 						data-name="${nameLabel}"	
-						data-url="${url}"	
+						data-url="${url}"
 						data-for-js="addNewTab">
 						<svg class="icon icon-plus-circle"><use xlink:href="#icon-plus-circle"></use></svg>
 					</button>
@@ -174,8 +175,9 @@ const FileManager = function ()
 						<div class="folder-item__text folder-item__el">
 							<button class="folder-item__title text-truncate w-h-100"
 								data-path="${this.prevPath}" 
-								data-name="${prevPath.prevName}" 
-								data-js-action="get-folder">${prevPath.name}</button>
+								data-name="${prevPath.prevName}"
+								data-ajax-callback="updateTableItems"
+								data-for-ajax="getDir">${prevPath.name}</button>
 						</div>
 					</div>
 				</div>`;
@@ -195,6 +197,7 @@ const FileManager = function ()
 		let attrData = `data-path="${path}"
 						data-name="${name}"
 						data-type="${type}"
+						data-ajax-callback="updateTableItems"
 						data-for-ajax="getDir"`;
 
 		// Повертаємо html

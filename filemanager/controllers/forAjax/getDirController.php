@@ -1,6 +1,8 @@
 <?php
 defined('security') or die('Access denied'); // Add light protection against file access
 
+// print_arr($_POST); exit;
+
 // Формуємо шлях до папки
 $getPath = clean($_POST['path']);
 

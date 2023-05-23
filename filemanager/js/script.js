@@ -123,13 +123,13 @@ function setAjax(successCallback = null, data = {}, form = false, dataType = 'te
 			response = JSON.parse(response);
 
 			// Generate settings from the answer
-			let { value, type, link, callFunc, callFuncData } = response;
+			const { value, type, link, callFunc, callFuncData } = response;
 
 			// Display alerts for the user
 			if (value) runNotify({ levelMessage: type, message: value });
 
-			// If you need something more, we can additionally create a function
-			if (callFunc) fileManager[callFunc](response, callFuncData);
+			// // If you need something more, we can additionally create a function
+			// if (callFunc) fileManager[callFunc](response, callFuncData);
 
 			// If you need something more, we can additionally create a function
 			if (successCallback) fileManager[successCallback](response);
