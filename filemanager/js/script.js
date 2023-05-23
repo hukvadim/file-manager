@@ -75,7 +75,7 @@ $(".js-scroll-horizontal").mCustomScrollbar({
 /**
  * A general AJAX function for sending POST requests
  */
-function setAjax(data = {}, form = false, successCallback = null, dataType = 'text')
+function setAjax(successCallback = null, data = {}, form = false, dataType = 'text')
 {
 	if (dataType !== 'json' && dataType !== 'text')
 		throw new Error(`Invalid data type '${dataType}'`);
@@ -126,11 +126,10 @@ function setAjax(data = {}, form = false, successCallback = null, dataType = 'te
 			let { value, type, link, callFunc, callFuncData } = response;
 
 			// Display alerts for the user
-			// if (value) $.notify(value, { className: type, autoHideDelay: 12000 });
-			if (value) runNotify({ levelMessage: type, message: value, timer: 100000 });
+			if (value) runNotify({ levelMessage: type, message: value });
 
 			// If you need something more, we can additionally create a function
-			if (callFunc) window[callFunc](callFuncData, response);
+			if (callFunc) fileManager[callFunc](response, callFuncData);
 
 			// If you need something more, we can additionally create a function
 			if (successCallback) fileManager[successCallback](response);

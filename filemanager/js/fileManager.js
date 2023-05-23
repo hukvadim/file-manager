@@ -1,22 +1,4 @@
 /**
- * Викликаємо якусь подію відносно типу
- */
-// function setAction(type = false, params = false, callFunctionResult = false) {
-// 	// Generating data for ajax
-// 	const data = { 'form-type': type }
-
-// 	// Об'єднюємо загальні налаштуванні і передані дані 
-// 	const mergeData = { ...data, ...params };
-
-// 	// Calling a ajax
-// 	setAjax(mergeData, false, callFunctionResult);
-// }
-
-
-
-
-
-/**
  * Функціонал файлового менеджера
  */
 const FileManager = function ()
@@ -25,7 +7,8 @@ const FileManager = function ()
 	const self = this;
 
 	// Загальна інфа для роботи скірпта
-	this.dataType       = 'data-js-action';
+	this.dataForJs      = 'data-for-js';
+	this.dataForAjax    = 'data-for-ajax';
 	this.folderList     = '.js-folder-list';
 	this.boxFolderGroup = '.js-box-folder-group';
 	this.currentPath    = '.';
@@ -33,19 +16,58 @@ const FileManager = function ()
 	this.prevPath       = '';
 	this.nameMaterial   = '';
 
+	/**
+	 * Загальна функція, яка буде задавати потрібний тип
+	 */
+	this.setAction = function (event = false, type = false, sendData = {}) {
+
+		// Перевіряємо чи це клік чи просто запит
+		if (event) {
+
+			// Забороняємо стандарний функціонал html
+			event.preventDefault();
+
+			// Добавляємо дані атрибутів до переданого об'єкту
+			sendData = { ...sendData, ...this.dataset };
+		}
+		
+		// Відносно типу запускаємо потрібну функцію
+		if (sendData.hasOwnProperty('forAjax')) {
+			
+			// Робимо ajax запит
+			setAjax(type, sendData);
+
+		} else {
+			
+			// Просто викликаємо js функцію
+			self[sendData.forJs](sendData);
+		}
+	}
+
 
 	/**
-	 * Викликаємо якусь подію відносно типу
+	 * Добавляємо нову вкладку
 	 */
-	this.setAction = function (type = false, params = false, callFunctionResult = false)
-	{
-		// Generating data for ajax
-		const data = {
-			'form-type': type,
-		}
+	this.addNewTab = (result) => {
+		console.log('this', this)
+		console.log('result', result)
+	}
 
-		// Об'єднюємо налаштування і передані дані
-		setAjax({ ...data, ...params }, false, callFunctionResult);
+	
+
+	/**
+	 * Отримужмо список папок по заданому шляху
+	 */
+	this.getDir = () => {
+
+		// Робимо якісь наші параметри і з ними передаємо дані
+		sendData = {
+			forAjax: 'getDir',
+			path: this.currentPath
+		};
+
+		// Робимо ajax запит
+		this.setAction(false, 'updateTableItems', sendData)
 	}
 
 
@@ -53,49 +75,8 @@ const FileManager = function ()
 	/**
 	 * Виводимо інформацію про папку
 	 */
-	this.setDir = function (result) {
-
-		// Оновлюємо записи в таблиці
-		self.updateTableItems(result);
-	}
-
-
-
-	/**
-	 * Отримужмо список папок по заданому шляху
-	 */
-	this.getDir = function (e)
-	{	
-		// Цей об'єкт відповідає за передачу даних
-		let mergeData;
-
-		// Перевіряємо чи це клік чи просто запит
-		if (isUndefined(e)) {
-
-			// Робимо якісь наші параметри і з ними передаємо дані
-			mergeData = {
-				path: this.currentPath
-			};
-
-		} else {
-			// Забороняємо стандарний функціонал html
-			e.preventDefault();
-
-			// Робимо якісь наші параметри і з ними передаємо дані
-			mergeData = this.dataset;
-		}
-
-		// Робимо ajax запит
-		self.setAction('getDir', mergeData, 'setDir');
-	}
-
-
-
-	/**
-	 * Html карточка в таблиці
-	 */
-	this.updateTableItems = function (result)
-	{
+	this.updateTableItems = (result) =>	{
+	
 		// Щоб залишилася можливість подивитися result в console.log диструктуризуємо його на цьому етапі
 		const { list, prevPath } = result;
 
@@ -106,7 +87,7 @@ const FileManager = function ()
 		boxFolderList.html('');
 
 		// Зберігаємо попердній шлях
-		this.prevPath = prevPath.url;
+		this.prevPath = (isObject(prevPath)) ? prevPath.url : '.';
 
 		// Якщо є зворотній шлях тоді добавляємо кнопку повернутися назад
 		if (this.prevPath) {			
@@ -121,6 +102,7 @@ const FileManager = function ()
 
 			// Виводимо записи в таблицю
 			boxFolderList.append(self.viewListItem(key, listItemData));
+		
 		});
 
 		// Оновлюємо tooltip
@@ -158,7 +140,7 @@ const FileManager = function ()
 					<button class="nav-link btn btn-sm btn-icon btn-new-tab btn-light btn-action"
 						data-name="${nameLabel}"	
 						data-url="${url}"	
-						data-js-action="add-new-tab">
+						data-for-js="addNewTab">
 						<svg class="icon icon-plus-circle"><use xlink:href="#icon-plus-circle"></use></svg>
 					</button>
 				</li>`;
@@ -213,7 +195,7 @@ const FileManager = function ()
 		let attrData = `data-path="${path}"
 						data-name="${name}"
 						data-type="${type}"
-						data-js-action="get-folder"`;
+						data-for-ajax="getDir"`;
 
 		// Повертаємо html
 		return `<div class="folder-item d-flex-sides" id="${itemId}">
@@ -242,6 +224,7 @@ const FileManager = function ()
 
 
 
+
 	/**
 	 * Перша функція, яка буде викликана
 	 */
@@ -250,8 +233,11 @@ const FileManager = function ()
 		// Виводимо інформацію при першому завантаженні
 		this.getDir();
 
-		// Отримуємо список файлів з папки
-		$(document).on('click', `[${self.dataType}]`, self.getDir);
+		// Подія яку потрібно передати через ajax
+		$(document).on('click', `[${self.dataForAjax}]`, self.setAction);
+		
+		// Подія яку потрібно виконати js
+		$(document).on('click', `[${self.dataForJs}]`, self.setAction);
 	}
 }
 

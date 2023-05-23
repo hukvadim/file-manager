@@ -7,7 +7,7 @@ $getPath = clean($_POST['path']);
 // Отримуємо назву, щоб додавати назву файлу до alert
 $fileName = clean($_POST['name']);
 
-// General settings
+// Нараметри для оповіщення
 $alert['type'] = 'success'; // success | info | warn | error
 $alert['text'] = ($fileName) ? "Перейшли в папку $fileName" : 'Перейшли в основну папку';
 

@@ -4,17 +4,14 @@
 	// Переключаємо режим, щоб html не виводився
 	$systemOption['viewHtmlNeed'] = false;
 
-	// Sanitize input data received from POST
-	$formType = filter_input(INPUT_POST, 'form-type', FILTER_SANITIZE_STRING);
-
 	// Base check for send form
-	if (is_array($_POST) AND $formType OR $_FILES) {
+	if (is_array($_POST) OR $_FILES) {
 
 		// Change path to controller 
 		$baseControllersPath = './';
 
 		// Add path to form controller
-		$systemOption['page'] = 'forAjax/'.clean($_POST['form-type']);
+		$systemOption['page'] = 'forAjax/'.clean($_POST['forAjax']);
 
 		// Switch whether to load the controller or just issue a message
 		$systemOption['errorControllerNeed'] = false;

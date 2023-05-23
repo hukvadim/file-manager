@@ -29,7 +29,7 @@ define('MAX_UPLOAD_SIZE', 10485760);
 $baseControllersPath = MANAGERFOLDER;
 
 // Default lang
-$needLang = ($_GET['lang']) ? ($_GET['lang']) : DEFAULTLANG;;
+$needLang = ($_GET['lang']) ? ($_GET['lang']) : DEFAULTLANG;
 
 // Connect the lang file
 if (!include("lang/$needLang/lang.php"))
