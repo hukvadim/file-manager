@@ -210,15 +210,6 @@
 	opacity: 1 !important;
 	filter: brightness(0) saturate(100%) invert(40%) sepia(52%) saturate(4277%) hue-rotate(339deg) brightness(98%) contrast(87%);
 }
-@media screen and (min-width: 968px) {
-	.nav-files .nav-item .btn-close  {
-		opacity: 0;
-	}
-	.nav-files .nav-item:hover .btn-close {
-		opacity: .15;
-	}
-}
-
 .nav-files .nav-link {
 	--btn-size: 37px;
 	--bs-btn-color: var(--bs-body-color);
@@ -232,6 +223,7 @@
 	min-width: var(--max-size);
 	justify-content: flex-start;
 	padding-right: 40px;
+	transition: .25s;
 }
 .nav-files .btn-close:hover ~ .nav-link {
 	--bs-btn-icon-fill: rgba(var(--bs-danger-rgb), .32);
@@ -277,4 +269,19 @@
 .nav-files .nav-link:not(.active):hover {
 	--bs-btn-icon-fill: rgba(var(--pr-link-rgb), .35);
 	--bs-btn-icon-stroke: rgba(var(--pr-link-rgb), .85);
+}
+@media screen and (min-width: 968px) {
+	.nav-files .nav-item .btn-close {
+		opacity: 0;
+	}
+	.nav-files .dropdown-folder-set-path.nav-item .nav-link {
+		padding-right: 18px
+	}
+	.nav-files .nav-item:hover .btn-close {
+		opacity: .1
+	}
+	.nav-files .dropdown-folder-set-path.nav-item:hover .nav-link:not(.btn-icon),
+	.nav-files .dropdown-folder-set-path .nav-item:hover .btn-close ~ .nav-link {
+		padding-right: 40px
+	}
 }

@@ -1,8 +1,12 @@
 .dropdown-folder-set-path {
-	margin-left: 8px !important;
+	
 }
 .dropdown-folder-set-path .dropdown-menu {
 	min-width: 260px;
+	padding-bottom: 2px;
+}
+.dropdown-folder-set-path .input-hold-folder-path {
+	margin-bottom: 8px;
 }
 .dropdown-folder-set-path .btn-group-folders .btn,
 .dropdown-folder-set-path .input-hold-folder-path .form-control {
@@ -32,7 +36,22 @@
     justify-content: flex-start;
     transition: .24s ease;
 }
-.dropdown-folder-set-path .btn-group-folders .btn .icon {
+.dropdown-folder-set-path .btn-group-folders .btn-home {
+
+}
+.dropdown-folder-set-path .btn-group-folders .btn-home .icon {
+	opacity: .7;
+}
+.dropdown-folder-set-path .btn-group-folders .btn {
+
+}
+.dropdown-folder-set-path .btn-group-folders .btn > .icon:first-child {
+	margin-right: var(--icon-margin-md);
+}
+.dropdown-folder-set-path .btn-group-folders .btn:last-child {
+	margin-bottom: 8px;
+}
+.dropdown-folder-set-path .btn-group-folders .btn .icon-arrow {
 	font-size: 92%;
 	top: .3px;
 	color: var(--bs-gray-500);

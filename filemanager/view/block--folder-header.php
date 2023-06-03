@@ -1,7 +1,6 @@
 <?php
 	defined('security') or die('Access denied'); // Add light protection against file access
 ?>
-
 <div class="folder-list-header d-flex-sides">
 	<div class="folder-list-header__left d-flex-side-left">
 		<label class="form-check-label checkbox-file">

@@ -3,3 +3,4 @@ defined('security') or die('Access denied'); // Add light protection against fil
 
 // Розширення, які будемо підміняти
 $extList['gitattributes'] = 'git';
+$extList['LICENSE'] = 'lic';

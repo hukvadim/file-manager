@@ -9,7 +9,6 @@
 	border-radius: calc(var(--bd-radius-lg) + 2px);
 	background: var(--bs-btn-bg);
 	position: relative;
-	overflow: hidden;
 	background-color: var(--bs-white);
 }
 .folder-list-header .folder-list-header__left::before,
@@ -56,6 +55,19 @@
 }
 .folder-list-header .mCSB_scrollTools.mCSB_scrollTools_horizontal {
 	opacity: 0 !important;
+}
+.folder-list-header .dropdown-folder-set-path {
+
+}
+.folder-list-header .dropdown-folder-set-path .nav-link{
+	min-height: 37px;
+}
+.folder-list-header .dropdown-folder-set-path .btn-inner-text {
+	line-height: 1;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 130px;
 }
 
 

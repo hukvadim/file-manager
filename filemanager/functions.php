@@ -327,6 +327,9 @@ function getPrevPath($data)
 	// Отримуємо шлях, який чистимо від пустих значень
 	$prevPathArr = array_diff(explode('/', $data['path']), array(''));
 
+	// Збираємо шлях знову разом
+	$result['pathArr'] = $prevPathArr;
+
 	// Останній ключ в масиві
 	$key = array_key_last($prevPathArr);
 
@@ -358,6 +361,9 @@ function getPrevPath($data)
 
 	// Збираємо шлях знову разом
 	$result['url'] = implode('/', $prevPathArr);
+
+	// Збираємо шлях знову разом
+	$result['path'] = ($data['path'] == '.') ? '' : $data['path'];
 
 	// Формуємо іконку папки
 	$result['icon'] = viewIcon(['type' => 'dir']);

@@ -19,8 +19,8 @@
 		<symbol id="icon-git-pull-request" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 			<circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line>
 		</symbol>
-		<symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
-			<path d="M19 9L19 17C19 18.8856 19 19.8284 18.4142 20.4142C17.8284 21 16.8856 21 15 21L14 21L10 21L9 21C7.11438 21 6.17157 21 5.58579 20.4142C5 19.8284 5 18.8856 5 17L5 9"/><path d="M3 11L7.5 7L10.6713 4.18109C11.429 3.50752 12.571 3.50752 13.3287 4.18109L16.5 7L21 11"/><path d="M10 21V17C10 15.8954 10.8954 15 12 15V15C13.1046 15 14 15.8954 14 17V21"/>
+		<symbol id="icon-home" viewBox="0 0 24 24" fill="currentColor">
+			<path d="M9.135 20.773v-3.057c0-.78.637-1.414 1.423-1.414h2.875c.377 0 .74.15 1.006.414.267.265.417.625.417 1v3.057c-.002.325.126.637.356.867.23.23.544.36.87.36h1.962a3.46 3.46 0 002.443-1 3.41 3.41 0 001.013-2.422V9.867c0-.735-.328-1.431-.895-1.902l-6.671-5.29a3.097 3.097 0 00-3.949.072L3.467 7.965A2.474 2.474 0 002.5 9.867v8.702C2.5 20.464 4.047 22 5.956 22h1.916c.68 0 1.231-.544 1.236-1.218l.027-.009z"></path>
 		</symbol>
 		<symbol id="icon-more-vertical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
 			<circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle>
@@ -46,6 +46,9 @@
 		<symbol id="icon-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 			<polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
 		</symbol>
+		<symbol id="icon-arrow-right-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+			<line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+		</symbol>
 		<symbol id="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 			<polyline points="9 18 15 12 9 6"></polyline>
 		</symbol>
@@ -70,9 +73,11 @@
 		<symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 			<path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
 		</symbol>
+		<symbol id="icon-edit-line" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+			<path d="M18.6677 11.4071L11.0742 19.0006C9.5555 20.5193 3.98692 23.0503 2.46833 21.5317C0.949737 20.0131 3.48063 14.4445 4.99933 12.9258C4.99933 12.9258 9.55534 8.36959 12.5928 5.3323C12.6249 5.30029 12.6571 5.268 12.6896 5.23548C12.9268 4.99808 13.1767 4.74803 13.4379 4.49648C13.4481 4.508 13.4587 4.51929 13.4697 4.53032L19.4697 10.5303C19.4808 10.5413 19.492 10.5519 19.5035 10.5621C19.2519 10.8234 19.0017 11.0734 18.7642 11.3107C18.7318 11.3431 18.6996 11.3752 18.6677 11.4071ZM20.5047 9.44397L14.5561 3.49534C16.3425 2.04273 18.4918 1.10655 20.6927 3.30735C22.8935 5.50816 21.9573 7.65755 20.5047 9.44397Z"/><path d="M13.2501 22C13.2501 21.5858 13.5858 21.25 14.0001 21.25H20.0001C20.4143 21.25 20.7501 21.5858 20.7501 22C20.7501 22.4142 20.4143 22.75 20.0001 22.75H14.0001C13.5858 22.75 13.2501 22.4142 13.2501 22Z"/>
+		</symbol>
 		<symbol id="icon-maximize" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 			<polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line>
-		</symbol>
 		</symbol>
 		<symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 			<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>

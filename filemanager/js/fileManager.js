@@ -153,13 +153,44 @@ const FileManager = function ()
 	/**
 	 * Html вкладки
 	 */
-	this.viewTabMaterial = ({ nameLabel, type, url }) => {
-		return `<li class="nav-item">
+	this.viewTabMaterial = ({ nameLabel, type, url, path, pathArr }) => {
+
+		// Змінна для переключалки папок
+		foldersHtml = '';
+
+		// Якщо більше ніж два тоді формуємо кнопки інших папок
+		if (pathArr.length >= 2) {
+
+			// Початок блоку кнопок папок
+			foldersHtml += `<div class="btn-group-vertical w-100 btn-group-folders">`;
+
+			// Переходимо до головної
+			foldersHtml += `<button class="btn btn-sm btn-light btn-home"><svg class="icon icon-arrow icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg><svg class="icon icon-home"><use xlink:href="#icon-home"></use></svg></button>`;
+
+			// Добавляємо решту папок
+			pathArr.forEach((folder) => {
+				if (folder != '.') {
+					foldersHtml += `<button class="btn btn-sm btn-light"><svg class="icon icon-arrow icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>${folder}</button>`;
+				}
+			});
+
+			// Кінець блоку кнопок папок
+			foldersHtml += `</div>`;
+		}
+
+		return `<li class="nav-item dropdown-folder-set-path">
 					<button class="btn btn-sm btn-action btn-close"></button>
-					<button class="nav-link btn btn-sm btn-light btn-action active">
+					<button class="nav-link btn btn-sm btn-light btn-action active" data-bs-toggle="dropdown">
 						<svg class="icon icon-${type}-color"><use xlink:href="#icon-${type}-color"></use></svg>
-						${nameLabel}
+						<span class="btn-inner-text">${nameLabel}</span>
 					</button>
+					<div class="dropdown-menu">
+						<div class="input-hold-folder-path position-relative">
+							<input type="text" class="form-control form-control-sm" placeholder="Шлях до файлу" value="${path}">
+							<button class="btn btn-sm btn-icon btn-action btn-edit btn-pr-bg btn-similar-y position-absolute top-50 end-0 translate-middle-y"><svg class="icon icon-arrow-right-line"><use xlink:href="#icon-arrow-right-line"></use></svg></button>
+						</div>
+						${foldersHtml}
+					</div>
 				</li>`;
 	}
 
