@@ -21,6 +21,7 @@
 	color: var(--bs-link-color);
 	border-color: var(--bs-btn-border-color);
 	padding-left: 15px;
+	letter-spacing: .3px;
 }
 .dropdown-folder-set-path .input-hold-folder-path .btn-edit {
 	margin: 0;
@@ -58,4 +59,61 @@
 }
 .dropdown-folder-set-path .btn-group-folders .btn:hover {
 	padding-left: 16px;
+}
+
+
+
+
+/**
+ * Блок з пустим результатом
+ */
+.no-result-info {
+	--padding-x: 30px;
+	--padding-y: 0;
+	padding: var(--padding-x) var(--padding-y);
+}
+.no-result-info .no-result-info__top {
+	
+}
+.no-result-info .no-result-info__icon-hold {
+	padding-right: 20px;
+}
+.no-result-info .no-result-info__icon-hold:hover {
+	color: var(--pr-link);
+}
+.no-result-info .no-result-info__icon-hold .icon {
+	--sz: 36px;
+}
+.no-result-info .no-result-info__text {
+}
+.no-result-info .no-result-info__text-title {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--bs-gray-900);
+	margin: 0 0 4px;
+}
+.no-result-info .no-result-info__text-title span {
+	letter-spacing: 1px;
+}
+.no-result-info .no-result-info__text-inner {
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--bs-gray-500);
+	margin: 0;
+}
+.no-result-info .no-result-info__footer {
+	gap: 8px;
+	font-size: 15px;
+	margin-top: 34px;
+	padding-top: 34px;
+	border-top: 1.8px dashed var(--bs-gray-300);
+}
+.no-result-info .no-result-info__footer .icon {
+	--sz: 28px;
+	top: -2px;
+	margin-right: 8px;
+}
+
+.folder-list .no-result-info {
+	--padding-y: 34px;
 }

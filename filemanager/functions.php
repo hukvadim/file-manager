@@ -126,6 +126,10 @@ function dirToArray($dir = '.', $needAjax = false, $foldersFirst = true, $skipAd
 	if ($dir === '/')
 		$dir = '.';
 
+	// Перевіряємо чи папка існує, якщо не існує зупиняємо функцію
+	if (!is_dir($dir))
+		return 'not-exist';
+
 	// Розширення, які треба замінити
 	include 'extSwap.php';
 	
@@ -534,4 +538,66 @@ function viewStr($value = false)
 function clean($data)
 {
 	return htmlspecialchars(strip_tags(addslashes(trim($data))));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Function for work with files
+ */
+function createPath($pathArr)
+{
+	// Початкова змінна для формування шляху
+	$path = '';
+
+	// Якщо немає масиву не запускати цикл
+	if (arrExist($pathArr)) {
+		foreach ($pathArr as $segment) {
+
+			// Якщо це параметр головної сторінки, тоді пропускаємо ітерацію
+			if ($segment == '.')
+				continue;
+
+			// Додаємо поточний сегмент до шляху
+			$path .= (strpos($segment, '.') !== false) ? $segment : $segment. '/';
+
+			// Перевіряємо чи існує файл або папка
+			if (!is_dir($path) && !is_file($path)) {
+
+				// Якщо сегмент містить крапку, створюємо файл
+				if (strpos($segment, '.') !== false) {
+
+					// Створюємо файл
+					if (!touch($path))
+						return false;
+
+				} else {
+
+					// Якщо сегмент не містить крапку, створюємо папку
+					if (!mkdir($path))
+						return false;
+				}
+			}
+		}
+
+		// Успішно створено папку або файл
+		return true;
+	}
+
+	// Щось пішло не так і не створило папку або файл
+	return false;
 }

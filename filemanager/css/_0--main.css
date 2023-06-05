@@ -94,6 +94,10 @@ textarea.autogrow {
 	/*overflow: auto;*/
 }
 
+.cur-p {
+	cursor: pointer;
+}
+
 .radius-main {
 	border-radius: var(--bd-radius);
 }
@@ -336,6 +340,15 @@ textarea.autogrow {
 	margin: 0;
 }
 
+
+
+
+.list-no-result {
+	padding: 10px 20px;
+    font-size: 21px;
+    color: var(--bs-gray-500);
+    font-weight: 400;
+}
 
 
 

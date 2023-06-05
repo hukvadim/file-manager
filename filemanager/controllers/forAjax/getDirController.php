@@ -1,8 +1,6 @@
 <?php
 defined('security') or die('Access denied'); // Add light protection against file access
 
-// print_arr($_POST); exit;
-
 // Формуємо шлях до папки
 $getPath = clean($_POST['path']);
 
@@ -19,6 +17,9 @@ $return['list'] = dirToArray($getPath, true);
 
 // Формуємо шлях, щоб повернутися назад
 $return['prevPath'] = getPrevPath($_POST);
+
+// Формуємо шлях, щоб повернутися назад
+$return['getFile'] = is_file($getPath);
 
 // Encode result for ajax response
 jsonAlert($alert['text'], $alert['type'], $return);

@@ -285,3 +285,25 @@
 		padding-right: 40px
 	}
 }
+
+
+
+
+/**
+ * Loading
+ */
+.is-loading {
+  animation: textColorAnimation 2.2s linear infinite;
+}
+
+@keyframes textColorAnimation {
+	0% {
+		color: rgba(0, 0, 0, 0.2);
+	}
+	50% {
+		color: rgba(0, 0, 0, 0.65);
+	}
+	100% {
+		color: rgba(0, 0, 0, 0.2);
+	}
+}

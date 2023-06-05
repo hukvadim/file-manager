@@ -2,6 +2,11 @@
 const isUndefined = (el) => typeof el === 'undefined';
 const isObject    = (el) => typeof el === 'object';
 const isJSON      = (str) => { try { return (JSON.parse(str) && !!str); } catch (e) { return false; } };
+const isFile      = (path) => {
+	let filename = path.split('/').pop();
+	let isFile = /\.[^/.]+$/.test(filename);
+	return isFile;
+};
 
 // Tooltips for bootstrap
 // const tooltipList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
