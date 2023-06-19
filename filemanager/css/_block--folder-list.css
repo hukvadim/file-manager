@@ -11,24 +11,6 @@
 	position: relative;
 	background-color: var(--bs-white);
 }
-.folder-list-header .folder-list-header__left::before,
-.folder-list-header .folder-list-header__left::after {
-	content: '';
-	z-index: 2;
-	position: absolute;
-	top: 0;
-	width: 8px;
-	height: 100%;
-	background: linear-gradient(270deg, rgba(var(--bs-white-rgb),0) 0%, rgba(var(--bs-white-rgb),1) 80%, rgba(var(--bs-white-rgb),1) 100%);
-}
-.folder-list-header .folder-list-header__left::before {
-	left: 0;
-}
-.folder-list-header .folder-list-header__left::after {
-	right: 0;
-	transform: rotate(180deg);
-	width: 12px;
-}
 .folder-list-header .folder-list-header__right {
 	margin-right: 0;
 	gap: 5px;

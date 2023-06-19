@@ -68,7 +68,7 @@
  * Блок з пустим результатом
  */
 .no-result-info {
-	--padding-x: 30px;
+	--padding-x: 50px;
 	--padding-y: 0;
 	padding: var(--padding-x) var(--padding-y);
 }
@@ -77,18 +77,19 @@
 }
 .no-result-info .no-result-info__icon-hold {
 	padding-right: 20px;
+	color: var(--bs-gray-400);
 }
 .no-result-info .no-result-info__icon-hold:hover {
 	color: var(--pr-link);
 }
 .no-result-info .no-result-info__icon-hold .icon {
-	--sz: 36px;
+	--sz: 42px;
 }
 .no-result-info .no-result-info__text {
 }
 .no-result-info .no-result-info__text-title {
 	font-size: 22px;
-	font-weight: 700;
+	font-weight: 600;
 	color: var(--bs-gray-900);
 	margin: 0 0 4px;
 }
@@ -102,16 +103,15 @@
 	margin: 0;
 }
 .no-result-info .no-result-info__footer {
-	gap: 8px;
 	font-size: 15px;
 	margin-top: 34px;
 	padding-top: 34px;
 	border-top: 1.8px dashed var(--bs-gray-300);
+	font-weight: 500;
+	color: var(--bs-gray-600);
 }
-.no-result-info .no-result-info__footer .icon {
-	--sz: 28px;
-	top: -2px;
-	margin-right: 8px;
+.no-result-info .no-result-info__footer a {
+	padding: 0 4px;
 }
 
 .folder-list .no-result-info {

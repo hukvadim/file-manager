@@ -19,6 +19,8 @@ const FileManager = function ()
 
 	// Переклад файлового менеджера
 	this.lang = {
+		actionMark: 'Відмітити',
+		actionCreateTab: 'Створити вкладку',
 		actionCreateFolder: 'Створити папку',
 		actionCreateFile: 'Створити файл',
 		actionDownloadFolder: 'Скачати папку',
@@ -302,26 +304,25 @@ const FileManager = function ()
 		let linksHtml = '';
 
 		if (buttonNeed) {
-			linksHtml = `<div class="no-result-info__footer d-flex align-items-start">
-					<svg class="icon icon-detail icon-inbox-color"><use xlink:href="#icon-inbox-color"></use></svg>
-					Ось рекомендовані посилання на цей випадок
-					<a href="" class="link-primary">Створити файл,</a>
-					<a href="" class="link-primary">Створити папку</a>
-				</div>`;
+			linksHtml = `<div class="no-result-info__footer">
+							Ось рекомендовані посилання на цей випадок
+							<a href="" class="link-primary">Створити файл</a>
+							<a href="" class="link-primary">Створити папку</a>
+						</div>`;
 		}
 
 		return `<div class="no-result-info">
-				<div class="no-result-info__top d-flex align-items-center">
-					<div class="no-result-info__icon-hold hover-scale cur-p">
-						<svg class="icon icon-additem"><use xlink:href="#icon-additem"></use></svg>
+					<div class="no-result-info__top d-flex align-items-center">
+						<div class="no-result-info__icon-hold hover-scale cur-p">
+							<svg class="icon icon-additem"><use xlink:href="#icon-additem"></use></svg>
+						</div>
+						<div class="no-result-info__text">
+							<h2 class="no-result-info__text-title">${title}</h2>
+							<p class="no-result-info__text-inner">Добавити файли до папки?</p>
+						</div>
 					</div>
-					<div class="no-result-info__text">
-						<h2 class="no-result-info__text-title">${title}</h2>
-						<p class="no-result-info__text-inner">Почнемо щось розроблювати? 😉</p>
-					</div>
-				</div>
-				${linksHtml}
-			</div>`;
+					${linksHtml}
+				</div>`;
 	}
 
 
@@ -330,6 +331,19 @@ const FileManager = function ()
 	 * Html вкладки добавлення вкладки
 	 */
 	this.viewAddTabMaterial = ({ nameLabel, url }) => {
+		
+		// Якщо головне сторінка, тоді деякі вкладки добавляти не потрібно.
+		let itemMark = '';
+
+		if (url) {
+			itemMark = `<li>
+							<a class="dropdown-item" href="#">
+								<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
+								<span classs="dropdown-item-inner-text">${this.lang.actionMark}</span>
+							</a>
+						</li>`;
+		}
+
 		return `<li class="nav-item nav-item--add-tab">
 					<div class="dropdown">
 						<button class="nav-link btn btn-sm btn-icon btn-new-tab btn-light btn-action" data-bs-toggle="dropdown"
@@ -339,6 +353,14 @@ const FileManager = function ()
 							<svg class="icon icon-plus-circle"><use xlink:href="#icon-plus-circle"></use></svg>
 						</button>
 						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="#">
+									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
+									<span classs="dropdown-item-inner-text">${this.lang.actionCreateTab}</span>
+								</a>
+							</li>
+							
+							<li><hr class="dropdown-divider"></li>
 							<li>
 								<a class="dropdown-item" href="#">
 									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
@@ -455,6 +477,9 @@ const FileManager = function ()
 	 */
 	this.viewListItem = function (key, { icon, tooltipSize, tooltipDate, name, path, ext, type, size, modified_date, modified_time_ago }) {
 
+		// Html для dropdown
+		let dropdown = '';
+
 		// Формуємо id елементу
 		const itemId = 'folder-item-' + key;
 
@@ -464,6 +489,81 @@ const FileManager = function ()
 						data-type="${type}"
 						data-ajax-callback="updateTableItems"
 						data-for-ajax="getDir"`;
+
+		// Перелік можливостей відносно типу
+		const dropdownActions = {
+			'dir': [
+				{
+					'icon': 'icon-home',
+					'value': 'Відмітити',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Перейменувати',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Скопіювати',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Перемістити',
+				},
+				{
+					'value': 'hr',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Видалити',
+				},
+			],
+			'file': [
+				{
+					'icon': 'icon-home',
+					'value': 'Відмітити',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Перейменувати',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Відкрити',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Скопіювати',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Перемістити',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Скачати',
+				},
+				{
+					'value': 'hr',
+				},
+				{
+					'icon': 'icon-home',
+					'value': 'Видалити',
+				},
+			]
+		} 
+
+		// Dropdown для різних типів
+		dropdownActions[type].forEach(item => {
+
+			dropdown += (item.value === 'hr')
+				? `<li><hr class="dropdown-divider"></li>`
+				: `<li>
+						<a class="dropdown-item" href="#">
+							<svg class="icon ${item.icon}"><use xlink:href="#${item.icon}"></use></svg>
+							<span classs="dropdown-item-inner-text">${item.value}</span>
+						</a>
+					</li>`
+		});
 
 		// Повертаємо html
 		return `<div class="folder-item d-flex-sides" id="${itemId}">
@@ -480,24 +580,12 @@ const FileManager = function ()
 					<div class="dropdown dropstart folder-item__action folder-item__el">
 						<button class="btn btn-action btn-sm btn-icon btn-body-color btn-pr-bg hover-scale" type="button" data-bs-toggle="dropdown"><svg class="icon icon-more-vertical"><use xlink:href="#icon-more-vertical"></use></svg></button>
 						<ul class="dropdown-menu dropdown-menu-end">
-							<li>
-								<a class="dropdown-item" href="#">
-									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
-									<span classs="dropdown-item-inner-text">Зробити архів</span>
-								</a>
-								<a class="dropdown-item" href="#">
-									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
-									<span classs="dropdown-item-inner-text">Редагувати</span>
-								</a>
-								<a class="dropdown-item" href="#">
-									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
-									<span classs="dropdown-item-inner-text">Видалити</span>
-								</a>
-							</li>
+							${dropdown}
 						</ul>
 					</div>
 				</div>`;
 	}
+	
 
 
 
