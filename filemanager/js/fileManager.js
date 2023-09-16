@@ -86,12 +86,14 @@ const FileManager = function ()
 	/**
 	 * Отримужмо список папок по заданому шляху
 	 */
-	this.getDir = (sendData) => {
+	this.getDir = (sendData, textAlert = false, typeAlert = false) => {
 
 		// При першому завантаженні виводимо результати
 		sendData = {
 			forAjax: 'getDir',
-			path: this.currentPath
+			path: this.currentPath,
+			textAlert: textAlert,
+			typeAlert: typeAlert
 		};
 
 		// Робимо ajax запит
@@ -292,6 +294,63 @@ const FileManager = function ()
 
 
 
+	/**
+	 * Після видалення оповіщуємо користувача
+	 */
+	this.deleteAlert = (data) => {
+
+		// Виводимо інформацію при видалення
+		self.getDir(false, data.textAlert, data.typeAlert);
+	}
+
+
+
+	/**
+	 * Завантажуємо файл в папку
+	 */
+	this.uploadFile = () => {
+
+		// Спробуємо викликати вікно завантаження файлу
+		const fileInput = document.createElement('input');
+		fileInput.type     = 'file';
+		fileInput.multiple = true;
+
+		const handleFileSelect = (event) => {
+			
+			const files = Array.from(event.target.files);
+
+			// Створюємо FormData об'єкт
+			const formData = new FormData();
+
+			// Додаємо файли до об'єкта formData
+			files.forEach((file, index) => {
+				formData.append(`file${index}`, file);
+			});
+
+			// Додаємо інші дані, які ви хочете відправити
+			formData.append('forAjax', 'uploadFile');
+			formData.append('path', this.currentPath);
+
+			// Робимо AJAX-запит
+			fetch(option.pathManagerFile, {
+				method: 'POST',
+				body: formData,
+			})
+			.then(response => response.json())
+			.then(data => {
+
+				// Виводимо інформацію при першому завантаженні
+				self.getDir(false, data.textAlert, data.typeAlert);
+			});
+		}
+
+		fileInput.addEventListener('change', handleFileSelect);
+
+		// Викликаємо вікно завантаження файлу
+		fileInput.click();
+	}
+
+
 
 	/**
 	 * Html вкладки добавлення вкладки
@@ -348,8 +407,7 @@ const FileManager = function ()
 					<div class="dropdown">
 						<button class="nav-link btn btn-sm btn-icon btn-new-tab btn-light btn-action" data-bs-toggle="dropdown"
 							data-name="${nameLabel}"
-							data-url="${url}"
-							data-for-js="addNewTab">
+							data-url="${url}">
 							<svg class="icon icon-plus-circle"><use xlink:href="#icon-plus-circle"></use></svg>
 						</button>
 						<ul class="dropdown-menu">
@@ -375,7 +433,7 @@ const FileManager = function ()
 							</li>
 							<li><hr class="dropdown-divider"></li>
 							<li>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="#" data-for-js="uploadFile">
 									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionUploadFile}</span>
 								</a>
@@ -483,13 +541,6 @@ const FileManager = function ()
 		// Формуємо id елементу
 		const itemId = 'folder-item-' + key;
 
-		// Формуємо data інформацію
-		let attrData = `data-path="${path}"
-						data-name="${name}"
-						data-type="${type}"
-						data-ajax-callback="updateTableItems"
-						data-for-ajax="getDir"`;
-
 		// Перелік можливостей відносно типу
 		const dropdownActions = {
 			'dir': [
@@ -548,9 +599,15 @@ const FileManager = function ()
 				{
 					'icon': 'icon-home',
 					'value': 'Видалити',
+					'attr': 'data-for-ajax="deleteItem" data-ajax-callback="deleteAlert"'
 				},
 			]
-		} 
+		}
+
+		// Формуємо data інформацію
+		let attrDropdown = `data-path="${path}"
+							data-name="${name}"
+							data-type="${type}"`;
 
 		// Dropdown для різних типів
 		dropdownActions[type].forEach(item => {
@@ -558,12 +615,21 @@ const FileManager = function ()
 			dropdown += (item.value === 'hr')
 				? `<li><hr class="dropdown-divider"></li>`
 				: `<li>
-						<a class="dropdown-item" href="#">
+						<a class="dropdown-item" href="#" ${item.attr} ${attrDropdown}>
 							<svg class="icon ${item.icon}"><use xlink:href="#${item.icon}"></use></svg>
 							<span classs="dropdown-item-inner-text">${item.value}</span>
 						</a>
 					</li>`
 		});
+
+		
+		// Формуємо data інформацію
+		let attrItemData = `data-path="${path}"
+						data-name="${name}"
+						data-type="${type}"
+						data-ajax-callback="updateTableItems"
+						data-for-ajax="getDir"`;
+
 
 		// Повертаємо html
 		return `<div class="folder-item d-flex-sides" id="${itemId}">
@@ -571,9 +637,9 @@ const FileManager = function ()
 						<label class="folder-item__checkbox folder-item__el form-check-label hover-scale checkbox-file">
 							<input class="form-check-input" type="checkbox" value="">
 						</label>
-						<div class="folder-item__img-hold folder-item__el img-box" ${attrData}>${icon}</div>
+						<div class="folder-item__img-hold folder-item__el img-box" ${attrItemData}>${icon}</div>
 						<div class="folder-item__text folder-item__el">
-							<button class="folder-item__title text-truncate" ${attrData} ${tooltipSize}>${name}</button>
+							<button class="folder-item__title text-truncate" ${attrItemData} ${tooltipSize}>${name}</button>
 						</div>
 					</div>
 					<div class="folder-item__date-create fz-info hide-tablet" ${tooltipDate}>${modified_time_ago}</div>
@@ -605,7 +671,8 @@ const FileManager = function ()
 		$(document).on('click', `[${self.dataForJs}]`, self.setAction);
 
 		// Подія яку потрібно виконати js
-		$(document).on('input', `[${self.dataInputForJs}]`, self.setAction);;
+		$(document).on('input', `[${self.dataInputForJs}]`, self.setAction);
+
 	}
 }
 

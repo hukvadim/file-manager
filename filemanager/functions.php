@@ -601,3 +601,18 @@ function createPath($pathArr)
 	// Щось пішло не так і не створило папку або файл
 	return false;
 }
+
+
+
+/**
+ * Simple upload files
+ */
+function simpleUploadFile($files, $path)
+{
+	// Перевіряємо чи передані файли
+	if (count($files) > 0) {
+		foreach ($files as $file) {	
+			move_uploaded_file($file['tmp_name'], ($path == '.') ? $path . '/' .  $file['name'] : $path . $file['name']) ;
+		}
+	}
+}

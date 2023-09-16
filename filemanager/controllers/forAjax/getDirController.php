@@ -11,6 +11,14 @@ $fileName = clean($_POST['name']);
 $alert['type'] = 'success'; // success | info | warn | error
 $alert['text'] = ($fileName) ? "Перейшли в папку $fileName" : 'Перейшли в основну папку';
 
+// Якщо потрібно замінити текст оповіщення
+if ($_POST['textAlert'] != 'false')
+	$alert['text'] = $_POST['textAlert'];
+
+// Якщо потрібно замінити тип оповіщення
+if ($_POST['textAlert'] != 'false')
+	$alert['type'] = $_POST['typeAlert'];
+
 // Витягуємо інформацію про папку
 $return['demo'] = $_POST;
 $return['list'] = dirToArray($getPath, true);
