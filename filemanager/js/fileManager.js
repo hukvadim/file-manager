@@ -176,15 +176,24 @@ const FileManager = function ()
 	 }
 
 
+	 /**
+	  * Створюємо папку
+	  */
+	this.createFolder = (result) => {
+		console.log("result: ", result);
+
+	}
+
+
 
 	 /**
 	  * Після успішного відпрацювання поля і ajax запускаємо функцію
 	  */
-	 this.setFileEditor = (result) => {
+	this.setFileEditor = (result) => {
 
 		console.log("Редагуємо файл!!!", result);
 
-	 }
+	}
 
 
 
@@ -420,13 +429,13 @@ const FileManager = function ()
 							
 							<li><hr class="dropdown-divider"></li>
 							<li>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="#" data-ajax-callback="updateTableItems" data-for-ajax="createFolder">
 									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionCreateFolder}</span>
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="#">
+								<a class="dropdown-item" href="#" data-for-js="uploadFile">
 									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionCreateFile}</span>
 								</a>
