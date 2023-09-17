@@ -52,7 +52,7 @@ body {
 	scroll-behavior: smooth;
 }
 body::before {
-	opacity: .82;
+	opacity: .75;
 	content: '';
 	width: 100%;
 	height: 100%;
@@ -60,8 +60,8 @@ body::before {
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: rgb(27 244 131 / 24%);
-    background-image: radial-gradient(at 99% 5%, hsl(215.72deg 80.96% 85.66%) 0px, transparent 50%), radial-gradient(at 75% 32%, hsl(211.43deg 92.34% 79.41%) 0px, transparent 50%), radial-gradient(at 28% 76%, hsl(171.15deg 48.19% 63.8%) 0px, transparent 50%), radial-gradient(at 95% 41%, hsl(156.04deg 90.71% 82.66%) 0px, transparent 50%), radial-gradient(at 31% 30%, #bddfff 0px, transparent 50%), radial-gradient(at 6% 25%, hsl(203.13deg 100% 73.76%) 0px, transparent 50%), radial-gradient(at 50% 54%, hsl(171.15deg 38.87% 58.98%) 0px, transparent 50%);
+	background-color: rgb(59 252 233 / 56%);
+    background-image: radial-gradient(at 99% 5%, hsl(220.75deg 100% 75.14%) 0px, transparent 50%), radial-gradient(at 75% 32%, hsl(211.43deg 92.34% 79.41%) 0px, transparent 50%), radial-gradient(at 28% 76%, hsl(198.84deg 71.34% 69.52%) 0px, transparent 50%), radial-gradient(at 95% 41%, hsl(156.04deg 90.71% 82.66%) 0px, transparent 50%), radial-gradient(at 31% 30%, #bddfff 0px, transparent 50%), radial-gradient(at 6% 25%, hsl(223.27deg 100% 61.23%) 0px, transparent 50%), radial-gradient(at 50% 54%, hsl(171.15deg 98.12% 60.83%) 0px, transparent 50%);
 }
 
 html,
@@ -247,6 +247,7 @@ textarea.autogrow {
 	align-items: center;
 	flex-shrink: 0;
 	position: relative;
+	cursor: pointer;
 }
 .mask-squircle {
 	-webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' fill='none'%3E%3Cpath fill='%23000' d='M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0z'/%3E%3C/svg%3E");
