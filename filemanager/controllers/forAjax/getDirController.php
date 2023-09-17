@@ -12,11 +12,11 @@ $alert['type'] = 'success'; // success | info | warn | error
 $alert['text'] = ($fileName) ? "Перейшли в папку $fileName" : 'Перейшли в основну папку';
 
 // Якщо потрібно замінити текст оповіщення
-if ($_POST['textAlert'] != 'false')
+if (isset($_POST['textAlert']))
 	$alert['text'] = $_POST['textAlert'];
 
 // Якщо потрібно замінити тип оповіщення
-if ($_POST['textAlert'] != 'false')
+if (isset($_POST['typeAlert']))
 	$alert['type'] = $_POST['typeAlert'];
 
 // Витягуємо інформацію про папку
