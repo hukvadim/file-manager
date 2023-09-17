@@ -4,8 +4,6 @@ define('security', TRUE); // Add light protection against file access
 // Connect the config file
 include 'filemanager/config.php';
 
-print_arr($_SERVER); exit;
-
 // If the ajax request
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
     include MANAGERFOLDER.'ajax.php';
