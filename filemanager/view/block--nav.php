@@ -2,7 +2,7 @@
 	defined('security') or die('Access denied'); // Add light protection against file access
 ?>
 
-<nav class="navbase bg-light">
+<nav class="navbase">
 	<div class="container-fluid">
 		<div class="navbase__wrap d-flex-sides">
 			<div class="navbase__left navbase__box-item">

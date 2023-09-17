@@ -152,5 +152,3 @@ function setAjax(successCallback = null, data = {}, form = false, dataType = 'te
 }
 
 
-
-

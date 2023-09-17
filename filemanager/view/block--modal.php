@@ -13,7 +13,7 @@
 			<div class="modal-body">
 				<div class="form-group">
 					<label class="form-label">
-						<span class="form-label-text">Назва папки:</span>
+						<!-- <span class="form-label-text">Назва папки:</span> -->
 						<div class="form-control-hold">
 							<svg class='icon icon-folder'><use xlink:href='#icon-folder'></use></svg>
 							<input type="text" class="form-control form-control-lg form-control-gray" placeholder="Введіть назву папки" id="form-control-new-folder" data-input-for-js="inputBehaviorBtnStatus" data-for-btn="#modal-btn-add-folder" data-time-offset="200">
