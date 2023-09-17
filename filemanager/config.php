@@ -12,8 +12,8 @@ define('MANAGERFOLDER', 'filemanager/');
 define('MANAGERFILE', 'filemanager.php');
 
 // Абсолютний шлях до сайту
-define('DOMAIN', 'file-manager');
-define('DOMAIN_URL', 'http://'.DOMAIN.'/');
+define('DOMAIN', $_SERVER['HTTP_HOST']);
+define('DOMAIN_URL', $_SERVER['HTTP_X_FORWARDED_PROTO'].'://'.DOMAIN.'/');
 define('PATH', DOMAIN_URL.'/filemanager/');
 
 // Displaying a partition by default
