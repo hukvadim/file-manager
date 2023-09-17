@@ -31,6 +31,12 @@
 </footer>
 
 
+<?php 
+	// Загальне модальне вікно  
+	include 'block--modal.php';
+?>
+
+
 <script>
 	// Settings that will be passed to js
 	const option = {
@@ -46,6 +52,7 @@
 <script src="<?=setPath('libs')?>bootstrap/bootstrap.bundle.min.js"></script>
 <script src="<?=setPath('libs')?>mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
 <script src="<?=setPath('libs') ?>notifyMessage/notifyMessage.js"></script>
+<script src="<?=setPath('libs') ?>sweetalert2/sweetalert2.js"></script>
 <script src="<?=setPath('js')?>script.js<?=addTmpView()?>"></script>
 <script src="<?=setPath('js')?>fileManager.js<?= addTmpView() ?>"></script>
 

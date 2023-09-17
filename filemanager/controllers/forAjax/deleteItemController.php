@@ -12,12 +12,22 @@ $itemType = clean($_POST['type']);
 
 // Ініціалізуємо параметри для оповіщення
 $alert['type'] = 'success'; // success | info | warn | error
-$alert['text'] = ($fileName) ? "Видалено $fileName" : 'Елемент видалено';
+$alert['text'] = ($itemType == 'file') ? "Видалено файл $fileName" : "Видалено папку $fileName";
 
-// Видаляємо файл чи папку на сервері
-if (!unlink($filePath)) {
-    $alert['type'] = 'error'; // Встановлюємо тип оповіщення на помилку
-    $alert['text'] = 'Помилка під час видалення елементу';
+// Видаляємо файл на сервері
+if ($itemType == 'file') {
+    if (!unlink($filePath)) {
+        $alert['type'] = 'error'; // Встановлюємо тип оповіщення на помилку
+        $alert['text'] = 'Помилка під час видалення файлу';
+    }
+}
+
+// Видаляємо папку на сервері
+if ($itemType == 'dir') {
+    if (!removeDirectory($filePath)) {
+        $alert['type'] = 'error'; // Встановлюємо тип оповіщення на помилку
+        $alert['text'] = 'Помилка під час видалення папки';
+    }
 }
 
 // Формуємо відповідь для Ajax

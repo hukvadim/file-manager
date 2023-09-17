@@ -251,7 +251,6 @@
 }
 .nav-files .nav-link:not(.btn-icon) .icon {
 	font-size: 15px;
-	margin-right: 9px;
 	stroke-width: 2;
 	fill: var(--bs-btn-icon-fill);
     stroke: var(--bs-btn-icon-stroke);
@@ -306,4 +305,82 @@
 	100% {
 		color: rgba(0, 0, 0, 0.2);
 	}
+}
+
+
+
+
+
+
+/**
+ * Modal 
+ */
+.modal-backdrop {
+	--bs-backdrop-opacity: .5;
+	--bs-backdrop-bg: rgba(var(--bs-secondary-rgb), .5);
+}
+.modal-action {
+	--bs-modal-footer-gap: 24px;
+	--bs-modal-bg: var(--bs-white);
+	--bs-modal-footer-bg: var(--bs-white);
+	--bs-modal-footer-border-width: 0;
+	--bs-modal-padding: 24px;
+	--bs-modal-border-width: 5px;
+	--bs-modal-border-color: var(--bs-border-color);
+	--bs-modal-border-radius: 25px;
+	--bs-modal-inner-border-radius: var(--bs-modal-border-radius);
+	--bs-modal-header-padding: calc(var(--bs-modal-padding) - 2px) var(--bs-modal-padding);
+}
+.modal-action .form-control {
+	border-width: 2px;
+}
+.modal-header {
+	padding-right: 68px;
+}
+.modal-header .modal-title {
+	font-size: 20px;
+	font-weight: 600;
+}
+.modal-header .btn-close {
+	--btn-size: 30px;
+	--position: 28px;
+    position: absolute;
+    right: var(--position);
+    top: var(--position);
+    border: 2px solid var(--bs-border-color);
+    padding: 0;
+    border-radius: 12px;
+	background-color: rgba(var(--bs-primary-rgb), 0.02);
+	background-image: none;
+	opacity: .26;
+}
+.modal-header .btn-close .icon {
+	transition: none;
+}
+.modal-header .btn-close:hover {
+	color: var(--bs-danger);
+    border-color: rgba(var(--bs-danger-rgb), .2);
+	background-color: rgba(var(--bs-danger-rgb), .08);
+	opacity: 1;
+}
+
+.modal-content {
+	box-shadow: 0 5px 14px 0 rgb(var(--bs-secondary-rgb), .1);
+}
+.modal-content .modal-body {
+	padding: 28px var(--bs-modal-padding);
+}
+
+
+.modal-footer {
+	padding-top: 0;
+}
+.modal-footer .btn-cancel:hover {
+	color: var(--bs-danger);
+    border-color: rgba(var(--bs-danger-rgb), .2);
+	background-color: rgba(var(--bs-danger-rgb), .08);
+}
+.modal-footer .btn-add .icon {
+	font-size: 18px;
+	margin-right: 6px;
 }

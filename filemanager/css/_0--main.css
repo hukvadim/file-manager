@@ -94,6 +94,10 @@ textarea.autogrow {
 	/*overflow: auto;*/
 }
 
+.transition {
+	transition: .25s;
+}
+
 .cur-p {
 	cursor: pointer;
 }

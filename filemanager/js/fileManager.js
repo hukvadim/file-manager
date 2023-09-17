@@ -19,14 +19,14 @@ const FileManager = function ()
 
 	// Переклад файлового менеджера
 	this.lang = {
-		actionMark: 'Відмітити',
-		actionCreateTab: 'Створити вкладку',
-		actionCreateFolder: 'Створити папку',
-		actionCreateFile: 'Створити файл',
+		actionMark          : 'Відмітити',
+		actionCreateTab     : 'Створити вкладку',
+		actionCreateFolder  : 'Створити папку',
+		actionCreateFile    : 'Створити файл',
 		actionDownloadFolder: 'Скачати папку',
-		actionDownloadFile: 'Скачати файл',
-		actionUploadFolder: 'Загрузити папку',
-		actionUploadFile: 'Загрузити файл',
+		actionDownloadFile  : 'Скачати файл',
+		actionUploadFolder  : 'Загрузити папку',
+		actionUploadFile    : 'Загрузити файл',
 		viewListItemNoResult: 'Результатів не знайдено!',
 		viewListItemNotExist: 'Шлях на сервері не знайдений!',
 	}
@@ -66,12 +66,15 @@ const FileManager = function ()
 
 		} else if (sendData.hasOwnProperty('inputForJs')) {
 
+			// Якщо input має атрибут який задає час, використовуємо його
+			const timeOffset = (event.target.dataset.timeOffset)? event.target.dataset.timeOffset : 1500;
+
 			// Просто викликаємо js функцію
 			waitForFinalEvent(() => {
 
 				// Просто викликаємо js функцію
 				self[sendData.inputForJs](event, sendData);
-			}, 2500)
+			}, timeOffset)
 
 		} else {
 
@@ -81,19 +84,45 @@ const FileManager = function ()
 	}
 
 
+	
+	/**
+	 * Активовуємо кнопку або дизактивовуємо
+	 */
+	this.inputBehaviorBtnStatus = (e) => {
+
+		// Елемент з яким потрібно попрацювати
+		const el = e.target;
+		
+		// Дістаємо потрібні атрибути
+		const btn = document.querySelector(el.dataset.forBtn);
+
+		// Якщо якщо немає значення, робимо кнопку неактивною
+		if (isObject(btn))
+			btn.disabled = (el.value == '');
+	}
+
+
 
 
 	/**
 	 * Отримужмо список папок по заданому шляху
 	 */
-	this.getDir = (sendData, textAlert = false, typeAlert = false) => {
+	this.getDir = (sendData, textAlert = '', typeAlert = '') => {
+		
+		// Перевіряємо чи прийшли дані alert
+		if (isObject(sendData)) {
+			if (!isUndefined(sendData.textAlert) || !isUndefined(sendData.typeAlert)) {
+				textAlert = sendData.textAlert;
+				typeAlert = sendData.typeAlert;
+			}
+		}
 
 		// При першому завантаженні виводимо результати
 		sendData = {
 			forAjax: 'getDir',
 			path: this.currentPath,
-			textAlert: textAlert,
-			typeAlert: typeAlert
+			textAlert,
+			typeAlert
 		};
 
 		// Робимо ajax запит
@@ -138,7 +167,7 @@ const FileManager = function ()
 	/**
 	 * Питатися чи створити шляху
 	 */
-	 this.alertNotExistPath = (dataPath) => {
+	this.alertNotExistPath = (dataPath) => {
 	 	console.log("dataPath", dataPath);
 
 		// При першому завантаженні виводимо результати
@@ -160,28 +189,48 @@ const FileManager = function ()
 
 		// Повертаємо відповідь
 		return (result) ? true : false;
-	 }
+	}
 
 
 
 	 /**
 	  * Після успішного відпрацювання поля і ajax запускаємо функцію
 	  */
-	 this.alertNotExistPathSuccess = (result) => {
+	this.alertNotExistPathSuccess = (result) => {
 
 	 	// Якщо файл відкриваємо редактор
 	 	if (result.isFile) {
 	 		this.setFileEditor(result);
 	 	}
-	 }
+	}
 
 
 	 /**
 	  * Створюємо папку
 	  */
-	this.createFolder = (result) => {
-		console.log("result: ", result);
+	this.createFolder = () => {
+		
+		// Поле з яким працюємо
+		const el = $('#form-control-new-folder');
 
+		// Дістаємо назву папки з поля #form-control-new-folder
+		const folderName = el.val();
+		
+		// При першому завантаженні виводимо результати
+		sendData = {
+			forAjax: 'createFolder',
+			path: this.currentPath,
+			folderName
+		};
+
+		// Робимо ajax запит
+		setAjax('getDir', sendData);
+
+		// Очищуємо поле
+		el.val('');
+
+		// Закриваємо вспливаюче вікно
+		$('#modal-action').modal('hide');
 	}
 
 
@@ -308,6 +357,22 @@ const FileManager = function ()
 	 */
 	this.deleteAlert = (data) => {
 
+		
+		// Swal.fire({
+		// 	showDenyButton: true,
+		// 	icon: 'error',
+		// 	title: 'Точно видалити?',
+		// 	confirmButtonText: 'Так, видалити',
+		// 	denyButtonText: `Ні, не видаляти`,
+		// }).then((result) => {
+		// 	/* Read more about isConfirmed, isDenied below */
+		// 	if (result.isConfirmed) {
+		// 		Swal.fire('Saved!', '', 'success')
+		// 	} else if (result.isDenied) {
+		// 		Swal.fire('Changes are not saved', '', 'info')
+		// 	}
+		// })
+
 		// Виводимо інформацію при видалення
 		self.getDir(false, data.textAlert, data.typeAlert);
 	}
@@ -374,14 +439,14 @@ const FileManager = function ()
 		if (buttonNeed) {
 			linksHtml = `<div class="no-result-info__footer">
 							Ось рекомендовані посилання на цей випадок
-							<a href="" class="link-primary">Створити файл</a>
-							<a href="" class="link-primary">Створити папку</a>
+							<a href="#" class="link-primary">Створити файл</a>
+							<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#modal-action">Створити папку</a>
 						</div>`;
 		}
 
 		return `<div class="no-result-info">
 					<div class="no-result-info__top d-flex align-items-center">
-						<div class="no-result-info__icon-hold hover-scale cur-p">
+						<div class="no-result-info__icon-hold hover-scale cur-p" data-bs-toggle="modal" data-bs-target="#modal-action">
 							<svg class="icon icon-additem"><use xlink:href="#icon-additem"></use></svg>
 						</div>
 						<div class="no-result-info__text">
@@ -398,7 +463,7 @@ const FileManager = function ()
 	/**
 	 * Html вкладки добавлення вкладки
 	 */
-	this.viewAddTabMaterial = ({ nameLabel, url }) => {
+	this.viewAddTabMaterial = ({ nameLabel, url, path }) => {
 		
 		// Якщо головне сторінка, тоді деякі вкладки добавляти не потрібно.
 		let itemMark = '';
@@ -429,13 +494,13 @@ const FileManager = function ()
 							
 							<li><hr class="dropdown-divider"></li>
 							<li>
-								<a class="dropdown-item" href="#" data-ajax-callback="updateTableItems" data-for-ajax="createFolder">
+								<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-action">
 									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionCreateFolder}</span>
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="#" data-for-js="uploadFile">
+								<a class="dropdown-item" href="#">
 									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionCreateFile}</span>
 								</a>
@@ -443,7 +508,7 @@ const FileManager = function ()
 							<li><hr class="dropdown-divider"></li>
 							<li>
 								<a class="dropdown-item" href="#" data-for-js="uploadFile">
-									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
+									<svg class="icon icon-upload"><use xlink:href="#icon-upload"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionUploadFile}</span>
 								</a>
 							</li>
@@ -573,8 +638,9 @@ const FileManager = function ()
 					'value': 'hr',
 				},
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-trash-2',
 					'value': 'Видалити',
+					'attr': 'data-for-ajax="deleteItem" data-ajax-callback="deleteAlert"'
 				},
 			],
 			'file': [
@@ -606,7 +672,7 @@ const FileManager = function ()
 					'value': 'hr',
 				},
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-trash-2',
 					'value': 'Видалити',
 					'attr': 'data-for-ajax="deleteItem" data-ajax-callback="deleteAlert"'
 				},

@@ -6,7 +6,7 @@
 	<div class="container-fluid">
 		<div class="navbase__wrap d-flex-sides">
 			<div class="navbase__left navbase__box-item">
-				<a href="#" class="btn btn-link logo-link">
+				<a href="#" class="btn btn-link logo-link" data-path="." data-name="Головна" data-ajax-callback="updateTableItems" data-for-ajax="getDir">
 					<img src="<?=setPath('img')?>logo.svg" alt="" class="logo">
 				</a>
 			</div>

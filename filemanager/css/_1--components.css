@@ -47,7 +47,7 @@
 
 }
 .dropdown-folder-set-path .btn-group-folders .btn > .icon:first-child {
-	margin-right: var(--icon-margin-md);
+	/* margin-right: var(--icon-margin-md); */
 }
 .dropdown-folder-set-path .btn-group-folders .btn:last-child {
 	margin-bottom: 8px;
