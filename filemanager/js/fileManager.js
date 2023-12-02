@@ -6,21 +6,31 @@ const FileManager = function ()
 	// Контекст self для зручного використання внутрішніх методів та властивостей.
 	const self = this;
 
+	// Запам'ятовуємо шлях де ми були останній раз
+	const rememberPath = localStorage.getItem('currentPath');
+
+	// Запам'ятовуємо вкладки
+	const rememberTabActive = JSON.parse(localStorage.getItem('tabActive'));
+	const rememberTabs = JSON.parse(localStorage.getItem('tabs'));
+
 	// Загальна інфа для роботи скірпта
+	this.editorClass    = 'set-editor';
 	this.dataForJs      = 'data-for-js';
 	this.dataInputForJs = 'data-input-for-js';
 	this.dataForAjax    = 'data-for-ajax';
 	this.folderList     = '.js-folder-list';
 	this.boxFolderGroup = '.js-box-folder-group';
-	this.currentPath    = '.';
+	this.currentPath    = (rememberPath) ? rememberPath : '.';
 	this.currentTabId   = '';
 	this.prevPath       = '';
 	this.nameMaterial   = '';
+	this.tabActive      = (rememberTabActive) ? rememberTabActive : 0,
+	this.tabs           = (rememberTabs) ? rememberTabs : [];
 
 	// Переклад файлового менеджера
 	this.lang = {
 		actionMark          : 'Відмітити',
-		actionCreateTab     : 'Створити вкладку',
+		actionCreateTab     : 'Нова вкладка',
 		actionCreateFolder  : 'Створити папку',
 		actionCreateFile    : 'Створити файл',
 		actionDownloadFolder: 'Скачати папку',
@@ -29,6 +39,10 @@ const FileManager = function ()
 		actionUploadFile    : 'Загрузити файл',
 		viewListItemNoResult: 'Результатів не знайдено!',
 		viewListItemNotExist: 'Шлях на сервері не знайдений!',
+		textAddFile         : 'Добавити файли до папки?',
+		textFolder          : 'Папка',
+		textEmpty           : 'пуста...',
+		folderEmptyRecomend : 'Ось рекомендовані посилання на цей випадок',
 	}
 
 	/**
@@ -40,6 +54,9 @@ const FileManager = function ()
 
 		// Попередній шлях
 		if (prevPath) this.prevPath = prevPath;
+
+		// Зберігаємо шлях
+		localStorage.setItem('currentPath', (currentPath) ? currentPath : '.');
 	}
 
 
@@ -83,7 +100,6 @@ const FileManager = function ()
 		}
 	}
 
-
 	
 	/**
 	 * Активовуємо кнопку або дизактивовуємо
@@ -99,6 +115,67 @@ const FileManager = function ()
 		// Якщо якщо немає значення, робимо кнопку неактивною
 		if (isObject(btn))
 			btn.disabled = (el.value == '');
+	}
+
+
+
+	/**
+	 * Задаємо прелоадер
+	 */
+	this.setPreloader = () => {
+
+		// Витягуємо блок в який будемо поміщати шаблон
+		const boxFolderList = $(this.folderList);
+
+		// Виводимо прелоадер
+		boxFolderList.html('<div class="preloader-editor"><span></span><span></span><span></span><span></span></div>')
+	}
+
+
+
+	/**
+	 * Дістаємо контент файлу і показуємо редактор
+	 */
+	this.setFileEditor = (data) => {
+		
+		// Формуємо дані для запиту
+		sendData = {
+			...data,
+			forAjax: 'getFile'
+		};
+
+		// Робимо ajax запит
+		setAjax('setEditor', sendData);
+	}
+
+
+
+
+	/**
+	 * Після успішного відпрацювання поля і ajax запускаємо функцію
+	 */
+	this.setEditor = (result) => {
+		console.log("Редагуємо файл!!!", result);
+		
+		// Витягуємо блок в який будемо поміщати шаблон
+		const boxFolderList = $(this.folderList);
+
+		// Виводимо контент в html
+		boxFolderList.html(result.content);
+		
+		ace.require("ace/ext/language_tools");
+		const editor = ace.edit("page-content");
+		editor.getSession().setMode("ace/mode/" + result.ext);
+		editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: false
+		});
+		// editor.setOption("enableEmmet", true);
+		// editor.setTheme("ace/theme/monokai");
+
+		// Ховаємо tooltip
+		$('.tooltip').removeClass("show");
 	}
 
 
@@ -205,9 +282,10 @@ const FileManager = function ()
 	}
 
 
-	 /**
-	  * Створюємо папку
-	  */
+	
+	/**
+	 * Створюємо папку
+	 */
 	this.createFolder = () => {
 		
 		// Поле з яким працюємо
@@ -230,18 +308,37 @@ const FileManager = function ()
 		el.val('');
 
 		// Закриваємо вспливаюче вікно
-		$('#modal-action').modal('hide');
+		$('#modal-create-folder').modal('hide');
 	}
 
 
 
-	 /**
-	  * Після успішного відпрацювання поля і ajax запускаємо функцію
-	  */
-	this.setFileEditor = (result) => {
+	/**
+	 * Створюємо файл
+	 */
+	this.createFile = () => {
+		
+		// Поле з яким працюємо
+		const el = $('#form-control-new-file');
 
-		console.log("Редагуємо файл!!!", result);
+		// Дістаємо назву папки з поля #form-control-new-folder
+		const fileName = el.val();
+		
+		// При першому завантаженні виводимо результати
+		sendData = {
+			forAjax: 'createFile',
+			path: this.currentPath,
+			fileName
+		};
 
+		// Робимо ajax запит
+		setAjax('getDir', sendData);
+
+		// Очищуємо поле
+		el.val('');
+
+		// Закриваємо вспливаюче вікно
+		$('#modal-create-file').modal('hide');
 	}
 
 
@@ -327,8 +424,11 @@ const FileManager = function ()
 			}
 		}
 
-
-		// Оновлюємо вкладки
+		// Формуємо першу вкладку для виводу
+		if (this.tabs.length == 0)
+			this.tabs.push(prevPath);
+		
+		// Виводимо вкладки
 		this.setMaterialTab(prevPath);
 	}
 
@@ -338,17 +438,131 @@ const FileManager = function ()
 	/**
 	 * Виводимо вкладку поточного матеріалу
 	 */
-	this.setMaterialTab = (prevPath) => {
+	this.setMaterialTab = (tabData) => {
 
 		// Витягуємо блок в який будемо поміщати шаблон
 		const boxFolderGroup = $(self.boxFolderGroup);
+		
+		// Витягуємо блок в який будемо поміщати шаблон
+		const boxTab = $(`#tab-${this.tabActive}`);
 
-		// Очищаємо і виводимо кнопку добавлення вкладки
-		boxFolderGroup.html(self.viewAddTabMaterial(prevPath));
+		// Перевіряємо чи треба оновити вкладку чи вивести все
+		if (boxTab.length === 0) {
 
-		// Виводимо вкладку з поточним файлом
-		boxFolderGroup.append(self.viewTabMaterial(prevPath));
+			// Очищаємо і виводимо кнопку добавлення вкладки
+			boxFolderGroup.html(self.viewAddTabMaterial());
+	
+			// Виводимо вкладку з поточним файлом
+			this.tabs.forEach((tab, index) => {
+				boxFolderGroup.append(self.viewTabMaterial(tab, index));
+			})
+			
+		} else {
+
+			// Оновлюємо дані вкладки
+			boxTab.html(this.viewTabMaterial(tabData, this.tabActive, true));
+
+			// Оновлюємо поточну вкладку
+			this.tabs[this.tabActive] = tabData;
+		}
+		
+		// Запам'ятовуємо дані вкладок
+		localStorage.setItem('tabs', JSON.stringify(this.tabs));
+		localStorage.setItem('tabActive', this.tabActive);
 	}
+
+
+
+	/**
+	 * Добавляєному нову вкладку 
+	 */
+	this.createNewtab = (newTab = false) => {
+		
+		// Формуємо додаткову вкладку для виводу
+		if (this.tabs.length < 10) {
+
+			// Дані про нову вкладку
+			if(!newTab)
+				newTab = this.tabs[this.tabActive];
+
+			// // Для добавлення файлу!!!!
+			// newTab = {
+			// 	nameLabel: 'config.php',
+			// 	path: './filemanager/config.php',
+			// 	pathArr: ['.', 'filemanager'],
+			// 	type: 'file'
+			// }
+
+			// Добавляємо нову вкладку
+			this.tabActive = this.tabs.push(newTab) - 1;
+
+			// Виводимо її і змінюємо активну вкладку
+			this.setMaterialTab();
+
+		} else {
+
+			// Виводимо помилку
+			runNotify({ message: 'Можна максимально 10 вкладок!' });
+		}
+	}
+
+
+
+	/**
+	 * Видаляємо вкладку
+	 */
+	this.removeTab = ({ tabId }) => {
+
+		// Залишаємо одну вкладку
+		if (this.tabs.length != 1) {
+
+			// Дані про нову вкладку
+			this.tabs = this.tabs.filter((item, index) => index != tabId);
+
+			// Добавляємо нову вкладку
+			this.tabActive = isUndefined(this.tabs[this.tabActive]) ? this.tabActive - 1 : this.tabActive;
+
+			// Очищуємо вкладки, щоб згенерувалися нові
+			$(self.boxFolderGroup).empty();
+
+			// Виводимо її і змінюємо активну вкладку
+			this.setMaterialTab();
+		}
+	}
+
+
+
+	/**
+	 * Активовуємо вкладку
+	 */
+	this.setTab = ({ tabId }) => {
+
+		// Якщо це не поточна вкладка тоді запускаємо активацію
+		if (tabId != this.tabActive) {
+			
+			// Задаємо активацію вкладки
+			this.tabActive = tabId;
+			
+			// Отримуємо дані поточної вкладки
+			const tab = this.tabs[this.tabActive];
+
+			// Очищуємо вкладки, щоб згенерувалися нові
+			$(self.boxFolderGroup).empty();
+
+			// Виводимо вкладки
+			this.setMaterialTab(tab);
+
+			// Виводимо дані про поточний шлях відно вкладки
+			this.currentPath = (tab.path) ? tab.path : '.';
+
+			// Виводимо папку з оновленим шляхом
+			if (tab.type === 'dir')
+				this.getDir();
+			else
+				this.setFileEditor(tab);
+		}
+	}
+
 
 
 
@@ -356,22 +570,6 @@ const FileManager = function ()
 	 * Після видалення оповіщуємо користувача
 	 */
 	this.deleteAlert = (data) => {
-
-		
-		// Swal.fire({
-		// 	showDenyButton: true,
-		// 	icon: 'error',
-		// 	title: 'Точно видалити?',
-		// 	confirmButtonText: 'Так, видалити',
-		// 	denyButtonText: `Ні, не видаляти`,
-		// }).then((result) => {
-		// 	/* Read more about isConfirmed, isDenied below */
-		// 	if (result.isConfirmed) {
-		// 		Swal.fire('Saved!', '', 'success')
-		// 	} else if (result.isDenied) {
-		// 		Swal.fire('Changes are not saved', '', 'info')
-		// 	}
-		// })
 
 		// Виводимо інформацію при видалення
 		self.getDir(false, data.textAlert, data.typeAlert);
@@ -425,33 +623,32 @@ const FileManager = function ()
 	}
 
 
-
 	/**
-	 * Html вкладки добавлення вкладки
+	 * Вивід статичного тексту, якщо папка пуста
 	 */
 	this.viewNoResultInfo = (nameLabel, title = false, buttonNeed = true) => {
 
 		if (!title)
-			title = `Папка  <span>&ldquo;${nameLabel}&rdquo;</span>  пуста...`;
+			title = `${this.lang.textFolder}  <span>&ldquo;${nameLabel}&rdquo;</span>  ${this.lang.textEmpty}`;
 
 		let linksHtml = '';
 
 		if (buttonNeed) {
 			linksHtml = `<div class="no-result-info__footer">
-							Ось рекомендовані посилання на цей випадок
-							<a href="#" class="link-primary">Створити файл</a>
-							<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#modal-action">Створити папку</a>
+							${this.lang.folderEmptyRecomend}
+							<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#modal-create-file">${this.lang.actionCreateFile}</a>
+							<a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#modal-create-folder">${this.lang.actionCreateFolder}</a>
 						</div>`;
 		}
 
 		return `<div class="no-result-info">
 					<div class="no-result-info__top d-flex align-items-center">
-						<div class="no-result-info__icon-hold hover-scale cur-p" data-bs-toggle="modal" data-bs-target="#modal-action">
-							<svg class="icon icon-additem"><use xlink:href="#icon-additem"></use></svg>
+						<div class="no-result-info__icon-hold hover-scale cur-p" data-bs-toggle="modal" data-bs-target="#modal-create-folder">
+							<svg class="icon icon-additem"><use href="#icon-additem"></use></svg>
 						</div>
 						<div class="no-result-info__text">
 							<h2 class="no-result-info__text-title">${title}</h2>
-							<p class="no-result-info__text-inner">Добавити файли до папки?</p>
+							<p class="no-result-info__text-inner">${this.lang.textAddFile}</p>
 						</div>
 					</div>
 					${linksHtml}
@@ -461,54 +658,40 @@ const FileManager = function ()
 
 
 	/**
-	 * Html вкладки добавлення вкладки
+	 * Випливаючий список кнопок для файлів і папок 
 	 */
-	this.viewAddTabMaterial = ({ nameLabel, url, path }) => {
+	this.viewAddTabMaterial = () => {
 		
-		// Якщо головне сторінка, тоді деякі вкладки добавляти не потрібно.
-		let itemMark = '';
-
-		if (url) {
-			itemMark = `<li>
-							<a class="dropdown-item" href="#">
-								<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
-								<span classs="dropdown-item-inner-text">${this.lang.actionMark}</span>
-							</a>
-						</li>`;
-		}
-
 		return `<li class="nav-item nav-item--add-tab">
 					<div class="dropdown">
-						<button class="nav-link btn btn-sm btn-icon btn-new-tab btn-light btn-action" data-bs-toggle="dropdown"
-							data-name="${nameLabel}"
-							data-url="${url}">
-							<svg class="icon icon-plus-circle"><use xlink:href="#icon-plus-circle"></use></svg>
+						<button class="nav-link btn btn-sm btn-icon btn-new-tab btn-light btn-action" data-bs-toggle="dropdown">
+							<svg class="icon icon-plus-circle"><use href="#icon-plus-circle"></use></svg>
 						</button>
 						<ul class="dropdown-menu">
 							<li>
-								<a class="dropdown-item" href="#">
-									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
+								<a class="dropdown-item" href="#" data-for-js="createNewtab">
+									<svg class="icon icon-tab"><use href="#icon-tab"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionCreateTab}</span>
 								</a>
 							</li>
 							
 							<li><hr class="dropdown-divider"></li>
 							<li>
-								<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-action">
-									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
+								<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-create-folder">
+									<svg class="icon icon-folder-line"><use href="#icon-folder-line"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionCreateFolder}</span>
 								</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="#">
-									<svg class="icon icon-article"><use xlink:href="#icon-home"></use></svg>
+								<a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-create-file">
+									<svg class="icon icon-file-line"><use href="#icon-file-line"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionCreateFile}</span>
 								</a>
 							</li>
 							<li><hr class="dropdown-divider"></li>
 							<li>
 								<a class="dropdown-item" href="#" data-for-js="uploadFile">
-									<svg class="icon icon-upload"><use xlink:href="#icon-upload"></use></svg>
+									<svg class="icon icon-upload"><use href="#icon-upload"></use></svg>
 									<span classs="dropdown-item-inner-text">${this.lang.actionUploadFile}</span>
 								</a>
 							</li>
@@ -523,7 +706,7 @@ const FileManager = function ()
 	/**
 	 * Html вкладки
 	 */
-	this.viewTabMaterial = ({ nameLabel, type, url, path, pathArr }) => {
+	this.viewTabMaterial = ({ nameLabel, type, url, path, pathArr }, index = null, needUpdate = false) => {
 
 		// Змінна для переключалки папок
 		foldersHtml = '';
@@ -540,7 +723,7 @@ const FileManager = function ()
 						data-name="${nameLabel}"
 						data-type="${type}"
 						data-ajax-callback="updateTableItems"
-						data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg><svg class="icon icon-home"><use xlink:href="#icon-home"></use></svg></button>`;
+						data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use href="#icon-arrow-right"></use></svg><svg class="icon icon-home"><use href="#icon-home"></use></svg></button>`;
 
 			// Для підстановки для шляху
 			let pathPart = '';
@@ -558,7 +741,7 @@ const FileManager = function ()
 						data-name="${nameLabel}"
 						data-type="${type}"
 						data-ajax-callback="updateTableItems"
-						data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>${folder}</button>`;
+						data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use href="#icon-arrow-right"></use></svg>${folder}</button>`;
 				}
 			});
 
@@ -566,20 +749,27 @@ const FileManager = function ()
 			foldersHtml += `</div>`;
 		}
 
-		return `<li class="nav-item dropdown-folder-set-path">
-					<button class="btn btn-sm btn-action btn-close"></button>
-					<button class="nav-link btn btn-sm btn-light btn-action active" data-bs-toggle="dropdown">
-						<svg class="icon icon-${type}-color"><use xlink:href="#icon-${type}-color"></use></svg>
+		// Початок наповнення вкладки
+		let boxTab = (!needUpdate) ? `<li class="nav-item dropdown-folder-set-path ${this.tabActive == index ? 'active' : ''}" id="tab-${index}">` : '';
+		
+		// Основне вмістиме вкладки
+		boxTab += `<button class="btn btn-sm btn-action btn-close" data-for-js="removeTab" data-tab-id="${index}"></button>
+					<button class="nav-link btn btn-sm btn-light btn-action btn-tab" data-bs-toggle="dropdown" data-for-js="setTab" data-tab-id="${index}">
+						<svg class="icon icon-${type}-color"><use href="#icon-${type}-color"></use></svg>
 						<span class="btn-inner-text">${nameLabel}</span>
 					</button>
 					<div class="dropdown-menu">
 						<div class="input-hold-folder-path position-relative">
 							<input type="search" class="form-control form-control-sm" placeholder="Шлях до файлу" value="${path}" data-input-for-js="getDirInput">
-							<!-- <button class="btn btn-sm btn-icon btn-action btn-edit btn-pr-bg btn-similar-y position-absolute top-50 end-0 translate-middle-y"><svg class="icon icon-arrow-right-line"><use xlink:href="#icon-arrow-right-line"></use></svg></button> -->
 						</div>
 						${foldersHtml}
-					</div>
-				</li>`;
+					</div>`;
+		
+		// Закінчуємо формувати вкладку
+		boxTab += `</li>`;
+
+		// Повертаємо html вкладки
+		return boxTab;
 	}
 
 
@@ -619,19 +809,19 @@ const FileManager = function ()
 		const dropdownActions = {
 			'dir': [
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-star',
 					'value': 'Відмітити',
 				},
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-edit',
 					'value': 'Перейменувати',
 				},
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-copy',
 					'value': 'Скопіювати',
 				},
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-git-pull',
 					'value': 'Перемістити',
 				},
 				{
@@ -645,11 +835,11 @@ const FileManager = function ()
 			],
 			'file': [
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-star',
 					'value': 'Відмітити',
 				},
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-git-pull',
 					'value': 'Перейменувати',
 				},
 				{
@@ -657,7 +847,7 @@ const FileManager = function ()
 					'value': 'Відкрити',
 				},
 				{
-					'icon': 'icon-home',
+					'icon': 'icon-copy',
 					'value': 'Скопіювати',
 				},
 				{
@@ -691,7 +881,7 @@ const FileManager = function ()
 				? `<li><hr class="dropdown-divider"></li>`
 				: `<li>
 						<a class="dropdown-item" href="#" ${item.attr} ${attrDropdown}>
-							<svg class="icon ${item.icon}"><use xlink:href="#${item.icon}"></use></svg>
+							<svg class="icon ${item.icon}"><use href="#${item.icon}"></use></svg>
 							<span classs="dropdown-item-inner-text">${item.value}</span>
 						</a>
 					</li>`
@@ -702,8 +892,8 @@ const FileManager = function ()
 		let attrItemData = `data-path="${path}"
 						data-name="${name}"
 						data-type="${type}"
-						data-ajax-callback="updateTableItems"
-						data-for-ajax="getDir"`;
+						data-ajax-callback="${type == 'dir' ? 'updateTableItems' : 'setEditor'}"
+						data-for-ajax="${type == 'dir' ? 'getDir' : 'getFile'}"`;
 
 
 		// Повертаємо html
@@ -719,7 +909,7 @@ const FileManager = function ()
 					</div>
 					<div class="folder-item__date-create fz-info hide-tablet" ${tooltipDate}>${modified_time_ago}</div>
 					<div class="dropdown dropstart folder-item__action folder-item__el">
-						<button class="btn btn-action btn-sm btn-icon btn-body-color btn-pr-bg hover-scale" type="button" data-bs-toggle="dropdown"><svg class="icon icon-more-vertical"><use xlink:href="#icon-more-vertical"></use></svg></button>
+						<button class="btn btn-action btn-sm btn-icon btn-body-color btn-pr-bg hover-scale" type="button" data-bs-toggle="dropdown"><svg class="icon icon-more-vertical"><use href="#icon-more-vertical"></use></svg></button>
 						<ul class="dropdown-menu dropdown-menu-end">
 							${dropdown}
 						</ul>
@@ -736,8 +926,17 @@ const FileManager = function ()
 	 */
 	this.init = function () {
 
+		// Дивимося, яка була активність останнього разу чи файл чи папка
+		const tab = this.tabs[this.tabActive];
+
 		// Виводимо інформацію при першому завантаженні
-		this.getDir();
+		if (tab.type === 'dir')
+			this.getDir();
+		else
+			this.setFileEditor(tab);
+
+		// Виводимо вкладки
+		this.setMaterialTab();
 
 		// Подія яку потрібно передати через ajax
 		$(document).on('click', `[${self.dataForAjax}]`, self.setAction);

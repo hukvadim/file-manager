@@ -5,11 +5,11 @@ defined('security') or die('Access denied'); // Add light protection against fil
 $getPath = clean($_POST['path']);
 
 // Отримуємо назву, щоб додавати назву файлу до alert
-$fileName = clean($_POST['name']);
+$fileName = basename($getPath);
 
 // Нараметри для оповіщення
 $alert['type'] = 'success'; // success | info | warn | error
-$alert['text'] = ($fileName) ? "Перейшли в папку $fileName" : 'Перейшли в основну папку';
+$alert['text'] = ($fileName and $fileName != '.') ? "Перейшли в папку $fileName" : 'Перейшли в основну папку';
 
 // Якщо потрібно замінити текст оповіщення
 if (isset($_POST['textAlert']) and $_POST['textAlert'])

@@ -214,6 +214,24 @@ function sortFiles($files, $foldersFirst = true)
 
 
 
+/**
+ * Підміняємо розширення для редактора коду
+ */
+function setEditorExt($ext = '')
+{
+	// Якщо немає розширення тоді ставимо просто текст
+	if (!$ext) $ext = 'text';
+
+	// Розширення, які будемо підміняти
+	$extList['text'] = 'text';
+	$extList['LICENSE'] = 'lic';
+
+	// Повертаємо замінене розширення
+	return array_key_exists($ext, $extList) ? $extList[$ext] : $ext;
+}
+
+
+
 
 
 /**

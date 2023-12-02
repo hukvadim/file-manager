@@ -107,6 +107,9 @@
     transform: translateY(-50%);
     font-size: 25px;	
 }
+.form-control-hold .icon.icon-file {
+	left: 17px;
+}
 .form-control-hold .form-control {
 	padding-left: 58px;
 }

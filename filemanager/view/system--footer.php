@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 	defined('security') or die('Access denied'); // Add light protection against file access
 ?>
 
@@ -53,6 +56,8 @@
 <script src="<?=setPath('libs')?>mCustomScrollbar/jquery.mCustomScrollbar.min.js"></script>
 <script src="<?=setPath('libs') ?>notifyMessage/notifyMessage.js"></script>
 <script src="<?=setPath('libs') ?>sweetalert2/sweetalert2.js"></script>
+<script src="<?=setPath('libs') ?>ace/src-min/ace.js"></script>
+<script src="<?=setPath('libs') ?>ace/src-min/ext-language_tools.js"></script>
 <script src="<?=setPath('js')?>script.js<?=addTmpView()?>"></script>
 <script src="<?=setPath('js')?>fileManager.js<?= addTmpView() ?>"></script>
 

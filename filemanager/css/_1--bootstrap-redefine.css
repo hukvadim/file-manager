@@ -79,7 +79,7 @@
 	font-size: 130%;
 }
 .dropdown-item > .icon:first-child {
-	margin-right: var(--icon-margin-lg);
+	margin-right: 14px;
 }
 
 
