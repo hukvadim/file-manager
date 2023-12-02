@@ -119,15 +119,8 @@ function setAjax(successCallback = null, data = {}, form = false, dataType = 'te
 
 			// Виводимо прелоадер
 			if (data.forAjax == 'getFile') {
-
-				// Виводимо прелоадер
-				fileManager.setPreloader();
-
-				// Добавляємо клас редактора
 				$(fileManager.folderList).addClass(fileManager.editorClass)
 			} else {
-
-				// Також відразу добавляємо клас для редактора
 				$(fileManager.folderList).removeClass(fileManager.editorClass)
 			}
 
@@ -152,13 +145,7 @@ function setAjax(successCallback = null, data = {}, form = false, dataType = 'te
 			// if (callFunc) fileManager[callFunc](response, callFuncData);
 
 			// If you need something more, we can additionally create a function
-			if (response.content) {
-				$('.preloader-editor').fadeOut(1000, () => {
-					if (successCallback) fileManager[successCallback](response);
-				});
-			} else {
-				if (successCallback) fileManager[successCallback](response);
-			}
+			if (successCallback) fileManager[successCallback](response);
 
 			// Link to the link, if available
 			if (link) setTimeout(() => { window.location.href = link }, 1500);

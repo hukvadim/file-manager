@@ -119,20 +119,8 @@ const FileManager = function ()
 
 
 
-	/**
-	 * Задаємо прелоадер
-	 */
-	this.setPreloader = () => {
 
-		// Витягуємо блок в який будемо поміщати шаблон
-		const boxFolderList = $(this.folderList);
-
-		// Виводимо прелоадер
-		boxFolderList.html('<div class="preloader-editor"><span></span><span></span><span></span><span></span></div>')
-	}
-
-
-
+	
 	/**
 	 * Дістаємо контент файлу і показуємо редактор
 	 */
@@ -143,10 +131,10 @@ const FileManager = function ()
 			...data,
 			forAjax: 'getFile'
 		};
-
 		// Робимо ajax запит
 		setAjax('setEditor', sendData);
 	}
+
 
 
 
@@ -425,7 +413,7 @@ const FileManager = function ()
 		}
 
 		// Формуємо першу вкладку для виводу
-		if (this.tabs.length == 0)
+		if (this.tabs.length == 0 || isUndefined(this.tabs))
 			this.tabs.push(prevPath);
 		
 		// Виводимо вкладки
@@ -482,7 +470,7 @@ const FileManager = function ()
 		if (this.tabs.length < 10) {
 
 			// Дані про нову вкладку
-			if(!newTab)
+			if(!newTab || newTab['forJs'] == 'createNewtab')
 				newTab = this.tabs[this.tabActive];
 
 			// // Для добавлення файлу!!!!
@@ -712,41 +700,43 @@ const FileManager = function ()
 		foldersHtml = '';
 
 		// Якщо більше ніж два тоді формуємо кнопки інших папок
-		if (pathArr.length >= 2) {
+		if (Array.isArray(pathArr)) {
+			if (pathArr.length >= 2) {
 
-			// Початок блоку кнопок папок
-			foldersHtml += `<div class="btn-group-vertical w-100 btn-group-folders">`;
+				// Початок блоку кнопок папок
+				foldersHtml += `<div class="btn-group-vertical w-100 btn-group-folders">`;
 
-			// Переходимо до головної
-			foldersHtml += `<button class="btn btn-sm btn-light btn-home"
-						data-path="."
-						data-name="${nameLabel}"
-						data-type="${type}"
-						data-ajax-callback="updateTableItems"
-						data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use href="#icon-arrow-right"></use></svg><svg class="icon icon-home"><use href="#icon-home"></use></svg></button>`;
+				// Переходимо до головної
+				foldersHtml += `<button class="btn btn-sm btn-light btn-home"
+							data-path="."
+							data-name="${nameLabel}"
+							data-type="${type}"
+							data-ajax-callback="updateTableItems"
+							data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use href="#icon-arrow-right"></use></svg><svg class="icon icon-home"><use href="#icon-home"></use></svg></button>`;
 
-			// Для підстановки для шляху
-			let pathPart = '';
+				// Для підстановки для шляху
+				let pathPart = '';
 
-			// Добавляємо решту папок
-			pathArr.forEach((folder) => {
+				// Добавляємо решту папок
+				pathArr.forEach((folder) => {
 
-				// Формаємо шлях до папки
-				pathPart += folder + '/';
+					// Формаємо шлях до папки
+					pathPart += folder + '/';
 
-				// Виводимо назву папки
-				if (folder != '.') {
-					foldersHtml += `<button class="btn btn-sm btn-light"
-						data-path="${pathPart}"
-						data-name="${nameLabel}"
-						data-type="${type}"
-						data-ajax-callback="updateTableItems"
-						data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use href="#icon-arrow-right"></use></svg>${folder}</button>`;
-				}
-			});
+					// Виводимо назву папки
+					if (folder != '.') {
+						foldersHtml += `<button class="btn btn-sm btn-light"
+							data-path="${pathPart}"
+							data-name="${nameLabel}"
+							data-type="${type}"
+							data-ajax-callback="updateTableItems"
+							data-for-ajax="getDir"><svg class="icon icon-arrow icon-arrow-right"><use href="#icon-arrow-right"></use></svg>${folder}</button>`;
+					}
+				});
 
-			// Кінець блоку кнопок папок
-			foldersHtml += `</div>`;
+				// Кінець блоку кнопок папок
+				foldersHtml += `</div>`;
+			}
 		}
 
 		// Початок наповнення вкладки
@@ -930,10 +920,14 @@ const FileManager = function ()
 		const tab = this.tabs[this.tabActive];
 
 		// Виводимо інформацію при першому завантаженні
-		if (tab.type === 'dir')
+		if (!isUndefined(tab)) {
+			if (tab.type === 'dir')
+				this.getDir();
+			else
+				this.setFileEditor(tab);
+		} else {
 			this.getDir();
-		else
-			this.setFileEditor(tab);
+		}
 
 		// Виводимо вкладки
 		this.setMaterialTab();
