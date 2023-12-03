@@ -14,11 +14,12 @@ const FileManager = function ()
 	const rememberTabs = JSON.parse(localStorage.getItem('tabs'));
 
 	// Загальна інфа для роботи скірпта
-	this.editorClass    = 'set-editor';
+	this.editorBox    = $('.js-editor');
+	this.editorId       = 'js-editor';
 	this.dataForJs      = 'data-for-js';
 	this.dataInputForJs = 'data-input-for-js';
 	this.dataForAjax    = 'data-for-ajax';
-	this.folderList     = '.js-folder-list';
+	this.folderList     = $('.js-folder-list');
 	this.boxFolderGroup = '.js-box-folder-group';
 	this.currentPath    = (rememberPath) ? rememberPath : '.';
 	this.currentTabId   = '';
@@ -143,24 +144,11 @@ const FileManager = function ()
 	 * Після успішного відпрацювання поля і ajax запускаємо функцію
 	 */
 	this.setEditor = (result) => {
-		console.log("Редагуємо файл!!!", result);
+		console.log(result);
 		
-		// Витягуємо блок в який будемо поміщати шаблон
-		const boxFolderList = $(this.folderList);
-
 		// Виводимо контент в html
-		boxFolderList.html(result.content);
-		
-		ace.require("ace/ext/language_tools");
-		const editor = ace.edit("page-content");
 		editor.getSession().setMode("ace/mode/" + result.ext);
-		editor.setOptions({
-			enableBasicAutocompletion: true,
-			enableSnippets: true,
-			enableLiveAutocompletion: false
-		});
-		// editor.setOption("enableEmmet", true);
-		// editor.setTheme("ace/theme/monokai");
+		editor.getSession().setValue(result.content);
 
 		// Ховаємо tooltip
 		$('.tooltip').removeClass("show");
@@ -362,16 +350,14 @@ const FileManager = function ()
 
 			// Викликаємо редактор файлу
 			this.setFileEditor(result);
-		} else {
 
-			// Витягуємо блок в який будемо поміщати шаблон
-			const boxFolderList = $(this.folderList);
+		} else {
 
 			// Зберігаємо попердній шлях
 			const prevPathStr = (isObject(prevPath)) ? prevPath.url : '.';
 
 			// Очищаємо перед добавленням
-			boxFolderList.html('');
+			self.folderList.html('');
 
 			// Задаємо шляхи
 			this.setPath(prevPath.path, prevPathStr);
@@ -380,7 +366,7 @@ const FileManager = function ()
 			if (prevPath.path != '') {
 
 				// Виводимо попердній шлях
-				boxFolderList.append(self.viewPrevListItem(prevPath));
+				self.folderList.append(self.viewPrevListItem(prevPath));
 
 				// Формуємо змінну шляху в якому ми зараз є
 				this.currentPath = prevPath.path;
@@ -390,12 +376,12 @@ const FileManager = function ()
 			if (list == notExist) {
 
 				// Виводимо повідомлення, що папки не існує
-				boxFolderList.append(self.viewNoResultInfo(prevPath.nameLabel, self.lang.viewListItemNotExist, false));
+				self.folderList.append(self.viewNoResultInfo(prevPath.nameLabel, self.lang.viewListItemNotExist, false));
 
 			} else if (!list.length) {
 
 				// Виводимо повідомлення, що папка пуста
-				boxFolderList.append(self.viewNoResultInfo(prevPath.nameLabel));
+				self.folderList.append(self.viewNoResultInfo(prevPath.nameLabel));
 
 			} else {
 
@@ -403,7 +389,7 @@ const FileManager = function ()
 				$.each(list, function (key, listItemData) {
 
 					// Виводимо записи в таблицю
-					boxFolderList.append(self.viewListItem(key, listItemData));
+					self.folderList.append(self.viewListItem(key, listItemData));
 
 				});
 

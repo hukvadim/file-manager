@@ -224,7 +224,7 @@ function setEditorExt($ext = '')
 
 	// Розширення, які будемо підміняти
 	$extList['text'] = 'text';
-	$extList['LICENSE'] = 'lic';
+	$extList['md'] = 'text';
 
 	// Повертаємо замінене розширення
 	return array_key_exists($ext, $extList) ? $extList[$ext] : $ext;

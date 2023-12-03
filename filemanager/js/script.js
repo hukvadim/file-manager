@@ -8,6 +8,20 @@ const isFile      = (path) => {
 	return isFile;
 };
 
+
+// Ініціалізуємо редактор
+ace.require("ace/ext/language_tools");
+const editor = ace.edit('js-editor');
+editor.getSession().setMode("ace/mode/text");
+editor.setOptions({
+	enableBasicAutocompletion: true,
+	enableSnippets: true,
+	enableLiveAutocompletion: false
+});
+// editor.setOption("enableEmmet", true);
+// editor.setTheme("ace/theme/monokai");
+
+
 // Tooltips for bootstrap
 // const tooltipList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]')).map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 function initializeTooltips() {
@@ -119,15 +133,19 @@ function setAjax(successCallback = null, data = {}, form = false, dataType = 'te
 
 			// Виводимо прелоадер
 			if (data.forAjax == 'getFile') {
-				$(fileManager.folderList).addClass(fileManager.editorClass)
+
+				// Видаляємо клас, який відповідає за редагування файлу
+				fileManager.folderList.addClass('hide')
+				fileManager.editorBox.removeClass('hide')
 			} else {
-				$(fileManager.folderList).removeClass(fileManager.editorClass)
+
+				// Щоб не робити повторювального видалення редактору перевіряємо чи існує клас
+				fileManager.folderList.removeClass('hide')
+				fileManager.editorBox.addClass('hide')
 			}
 
 		},
 		success: function(response) {
-
-			// console.log("response", response);
 
 			// We check if the json has really come to us.
 			if (!isJSON(response)) return runNotify({ message: 'Ajax cannot accept a response from the controller' });
@@ -140,9 +158,6 @@ function setAjax(successCallback = null, data = {}, form = false, dataType = 'te
 
 			// Display alerts for the user
 			if (value) runNotify({ levelMessage: type, message: value });
-
-			// // If you need something more, we can additionally create a function
-			// if (callFunc) fileManager[callFunc](response, callFuncData);
 
 			// If you need something more, we can additionally create a function
 			if (successCallback) fileManager[successCallback](response);

@@ -37,6 +37,8 @@ defined('security') or die('Access denied'); // Add light protection against fil
 
 		</div>
 
+		<div class="box-editor js-editor hide" id="js-editor"></div>
+
 	</div>
 </div>
 

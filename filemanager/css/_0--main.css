@@ -106,6 +106,10 @@ textarea.autogrow {
 	/*overflow: auto;*/
 }
 
+.hide {
+	display: none !important;
+}
+
 .transition {
 	transition: .25s;
 }
